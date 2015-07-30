@@ -1,17 +1,55 @@
-<!doctype html> 
-<html lang="en"> 
-<head> 
-	<meta charset="UTF-8" />
-	<title>Calciumtrice Game</title>
-<!--	<script type="text/javascript" src="js/phaser.min.js"></script>-->
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://94.23.21.129/zeds/proto2/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+	<meta charset="UTF-8">
+	<title>Phaser - Making your first game, part 1</title>
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="js/phaser.js"></script>
-	<script type="text/javascript" src="js/game.js"></script>
-	<script type="text/javascript" src="js/boot.js."></script>
-	<script type="text/javascript" src="js/preload.js"></script>
-	<script type="text/javascript" src="js/menu.js"></script>
-	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/Level.js"></script>
+	<script type="text/javascript" src="js/Player.js"></script>
+    
+    
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-    <div id="divGame"></div>
-</body>
-</html>
+<div id="game"><canvas width="800" height="608" style="display:none; touch-action: none; -webkit-user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas></div>
+<script type="text/javascript">
+
+var game = new Phaser.Game(800, 608, Phaser.CANVAS, 'game', { preload: preload, create: create, update: update });
+
+var level = null;
+var player = null;
+var ak47 = null;
+
+	var sprite;
+function preload() {
+	game.physics.startSystem(Phaser.Physics.ARCADE);
+	level = new Level(game);
+	level.preload();
+	player = new Player(game);
+	player.preload();
+}
+ 
+function create() {
+	level.create();
+	player.create();
+	game.physics.enable(player, Phaser.Physics.ARCADE);
+}
+ 
+function update() {
+	level.update();
+	player.update();
+	
+}
+</script>
+
+
+
+</body></html>
