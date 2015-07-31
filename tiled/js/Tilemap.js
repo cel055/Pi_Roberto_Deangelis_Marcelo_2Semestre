@@ -50,11 +50,6 @@ TileMap.prototype.createFromObject = function (name, gid, key, frame, exists, au
             }
 
             group.add(sprite);
-
-            for (var property in this.objects[name][i].properties)
-            {
-                group.set(sprite, property, this.objects[name][i].properties[property], false, false, 0, true);
-            }
             return sprite;
         }
     }
