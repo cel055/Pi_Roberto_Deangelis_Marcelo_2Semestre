@@ -31,8 +31,8 @@ Jogador.prototype.cria = function () {
     this.anchor.setTo(0.5, 1);
     this.game.camera.follow(this);
     this.criaAnimacoes();
-    
-    if(!this.tecla_Norte || !this.tecla_Sul || !this.tecla_Leste || !this.tecla_Oeste){
+
+    if (!this.tecla_Norte || !this.tecla_Sul || !this.tecla_Leste || !this.tecla_Oeste) {
         this.criaBotoes();
     }
 
@@ -78,6 +78,14 @@ Jogador.prototype.update = function () {
     this.shadow.body.velocity.x = 0;
     this.position.setTo(this.shadow.position.x, this.shadow.position.y);
 
+    var direcao = this.direcaoJogador();
+
+    if (this.tecla_Norte.isUp && this.tecla_Sul.isUp && this.tecla_Leste.isUp && this.tecla_Oeste.isUp) {
+        this.jogadorGira(direcao);
+    } else {
+        this.jogadorAnda();
+    }
+
     if (this.controle.left.isDown) {
         this.shadow.body.velocity.x -= 50;
         this.scale.x = -1;
@@ -99,4 +107,72 @@ Jogador.prototype.update = function () {
     else {
         this.animations.play('idle');
     }
+};
+
+Jogador.prototype.direcaoJogador = function () {
+    var mouse = this.game.input.mousePointer;
+    var angulo = Math.atan2(mouse.y - this.y, mouse.x - this.x) * (180 / Math.PI);
+    if (angulo > 157 || angulo < -157) {
+        //left w
+        return this.direcoes[3];
+    }
+    if (angulo > -112 && angulo < -67) {
+        //up n
+        return this.direcoes[0];
+    }
+    if (angulo > -22 && angulo < 22) {
+        //right e
+        return this.direcoes[2];
+    }
+    if (angulo > 67 && angulo < 112) {
+        //down s
+        return this.direcoes[1];
+    }
+    if (angulo > -157 && angulo < -112) {
+        //up left nw
+        return this.direcoes[4];
+    }
+    if (angulo > -67 && angulo < -22) {
+        //up left ne
+        return this.direcoes[5];
+    }
+    if (angulo > 112 && angulo < 157) {
+        //up left sw
+        return this.direcoes[6];
+    }
+    //up left se
+    return this.direcoes[7];
+};
+
+Jogador.prototype.jogadorGira = function (direcao) {
+    switch (direcao) {
+        case this.direcoes[3]:
+            this.frame = 44;
+            break;
+        case this.direcoes[0]:
+            this.frame = 17;
+            break;
+        case this.direcoes[2]:
+            this.frame = 35;
+            break;
+        case this.direcoes[1]:
+            this.frame = 62;
+            break;
+        case this.direcoes[4]:
+            this.frame = 8;
+            break;
+        case this.direcoes[5]:
+            this.frame = 24;
+            break;
+        case this.direcoes[6]:
+            this.frame = 52;
+            break;
+        case this.direcoes[7]:
+            this.frame = 71;
+            break;
+    }
+};
+
+Jogador.prototype.jogadorAnda = function (direcao) {
+
 };
