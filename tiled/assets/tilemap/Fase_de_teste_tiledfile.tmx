@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="28">
+ <tileset firstgid="1" name="tileset-calciumtrice" tilewidth="16" tileheight="16">
+  <image source="../tileset/dungeon_tileset_calciumtrice.png" trans="ff00ff" width="480" height="560"/>
+ </tileset>
+ <layer name="ground" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt0UERgEAAxLBzcv71YAgZXZg8YqC955wLAAAAAAAAH/H8TN3TDz+W1T398GNZ3dMPP5bVPf3wY1nd0w8/ltU9/fBjWd3TDz+W1T398GNZ3dMPP5bVPf3wY1nd0w8/ltU9/fBjWd3TDz+W1T398GNZ3dMPP5bVPf3wY1nd0w8/ltU9/fBjWd3TDz+W1T398GNZ3dMPP5bVPf3wY1nd0w8/ltU9/fBjWd3TDz+W1T398GNZ3dMPP5bVPf3wY1nd0w8/ltU9/fBjWd3TDz+W1T398GNZ3dMPP5bVPf3wY1ndEwAAAACAb3gBTVmWkw==
+  </data>
+ </layer>
+ <layer name="walls" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztysEJACAMADHXFnQOQZe1jtBfhQTud60BAAAAAADAP3o0CjeT7+9WtAt3ki8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPBeE1Th3
+  </data>
+ </layer>
+ <layer name="details" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
+  </data>
+ </layer>
+ <objectgroup name="itens">
+  <object id="1" name="chest" gid="573" x="480.667" y="438" width="16" height="16"/>
+  <object id="2" name="chest" gid="573" x="509" y="438" width="16" height="16"/>
+  <object id="3" name="chest" gid="573" x="538.333" y="438" width="16" height="16"/>
+  <object id="4" name="chest" gid="573" x="565" y="438" width="16" height="16"/>
+  <object id="5" name="fire" gid="975" x="630.667" y="436.667" width="16" height="16"/>
+  <object id="6" name="swich" gid="586" x="539.667" y="509" width="16" height="16"/>
+  <object id="12" name="GoldBag" gid="577" x="610.667" y="478" width="16" height="16"/>
+  <object id="20" name="GoldBag" gid="577" x="664.333" y="483.333" width="16" height="16"/>
+  <object id="21" name="GoldBag" gid="577" x="617.333" y="517" width="16" height="16"/>
+  <object id="22" name="GoldBag" gid="577" x="659.333" y="528.333" width="16" height="16"/>
+  <object id="23" name="GoldBag" gid="577" x="607" y="548.333" width="16" height="16"/>
+  <object id="24" name="GoldBag" gid="577" x="641.667" y="573" width="16" height="16"/>
+  <object id="25" name="HelthPotion" gid="721" x="498.333" y="567.667" width="16" height="16"/>
+  <object id="26" name="PlayerSpawn" gid="961" x="440" y="484" width="16" height="16"/>
+ </objectgroup>
+</map>
