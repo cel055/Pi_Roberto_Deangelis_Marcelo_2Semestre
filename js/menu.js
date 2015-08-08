@@ -21,7 +21,7 @@ create: function(){
         if(this.button.input.pointerTimeDown()){
             this.button.animations.play('atack');
             this.time.events.add(Phaser.Timer.SECOND*1.2, function(){
-                this.state.start('game');   
+                this.state.start('stageTeste');   
             }, this);
         }
         else if(this.button.input.pointerOver()){
