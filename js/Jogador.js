@@ -3,6 +3,7 @@
 var Jogador = function (_game, _x, _y, _key, _frame) {
     Phaser.Sprite.call(this, _game, _x, _y, _key, _frame);
     this.controle;
+    this.vida = 100;
     this.game = _game;
     this.shadow;
 };
@@ -183,4 +184,8 @@ Jogador.prototype.jogadorAnda = function (direcao) {
         }
     }
     this.animations.play(animacao);
+};
+
+Jogador.prototype.recebeAtaque = function(ataque){
+    this.vida -= ataque;
 };
