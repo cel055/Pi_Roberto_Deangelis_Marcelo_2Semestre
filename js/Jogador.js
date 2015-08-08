@@ -188,4 +188,8 @@ Jogador.prototype.jogadorAnda = function (direcao) {
 
 Jogador.prototype.recebeAtaque = function(ataque){
     this.vida -= ataque;
+    if(this.vida <= 0){
+        return false;
+    }
+    return true;
 };
