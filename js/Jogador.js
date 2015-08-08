@@ -91,7 +91,7 @@ Jogador.prototype.update = function () {
 
 Jogador.prototype.direcaoJogador = function () {
     var mouse = this.game.input.mousePointer;
-    var angulo = Math.atan2(mouse.y - this.y, mouse.x - this.x) * (180 / Math.PI);
+    var angulo = Math.atan2(mouse.worldY - this.y, mouse.worldX - this.x) * (180 / Math.PI);
     if (angulo > -112 && angulo < -67) {
         //cima N
         return this.direcoes[0];
