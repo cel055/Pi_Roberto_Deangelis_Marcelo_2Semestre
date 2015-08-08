@@ -261,6 +261,70 @@
                  "width":16,
                  "x":440,
                  "y":484
+                }, 
+                {
+                 "gid":581,
+                 "height":16,
+                 "id":28,
+                 "name":"torch",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":596,
+                 "y":297.333333333333
+                }, 
+                {
+                 "gid":581,
+                 "height":16,
+                 "id":30,
+                 "name":"torch",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":626,
+                 "y":298.666666666667
+                }, 
+                {
+                 "gid":581,
+                 "height":16,
+                 "id":31,
+                 "name":"torch",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":664.666666666667,
+                 "y":297.333333333333
+                }, 
+                {
+                 "gid":581,
+                 "height":16,
+                 "id":32,
+                 "name":"torch",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":645.333333333333,
+                 "y":301.333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -269,7 +333,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":28,
+ "nextobjectid":33,
  "orientation":"orthogonal",
  "properties":
     {
@@ -280,7 +344,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/..\/..\/Pi_Roberto_Deangelis_Marcelo_2Semestre\/tiled\/assets\/tileset\/dungeon_tileset_calciumtrice.png",
+         "image":"..\/tileset\/dungeon_tileset_calciumtrice.png",
          "imageheight":560,
          "imagewidth":480,
          "margin":0,

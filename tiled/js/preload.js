@@ -7,6 +7,7 @@ Calciumtrice.Preload.prototype ={
         this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loading');
         this.load.setPreloadSprite(this.preloadBar);
         this.load.tilemap('mapaJson', 'assets/tilemap/Calciumtrice-eggs0.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('mapaJsonTeste', 'assets/tilemap/Fase_de_teste_jsonfile.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tileset', 'assets/tileset/dungeon_tileset_calciumtrice.png');
         this.load.spritesheet('tilesetSpriteSheet', 'assets/tileset/dungeon_tileset_calciumtrice.png', 16, 16);
         this.load.spritesheet('warrior', 'assets/sprites/warrior_calciumtrice.png', 32, 32);
