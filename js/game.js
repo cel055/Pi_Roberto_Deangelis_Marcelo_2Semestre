@@ -22,7 +22,7 @@ Calciumtrice.Game.prototype = {
         
         this.criaTorch();
         this.criaChest();
-        this.player = this.mapa.createFromObject('itens', 961, 'warrior', 0, true, true, Jogador);
+        this.player = this.mapa.createFromObject('itens', 961, 'heroi', 0, true, true, Jogador);
         this.player.cria();
     },
     update: function () {

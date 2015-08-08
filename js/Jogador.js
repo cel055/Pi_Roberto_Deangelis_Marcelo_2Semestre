@@ -10,6 +10,8 @@ var Jogador = function (_game, _x, _y, _key, _frame) {
 Jogador.prototype = Object.create(Phaser.Sprite.prototype);
 Jogador.prototype.constructor = Jogador;
 
+Jogador.prototype.velocidade = 50;
+
 Jogador.prototype.tecla_Norte;
 Jogador.prototype.tecla_Sul;
 Jogador.prototype.tecla_Leste;
@@ -60,10 +62,10 @@ Jogador.prototype.criaAnimacoes = function () {
 };
 
 Jogador.prototype.criaBotoes = function () {
-    this.prototype.tecla_Norte = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
-    this.prototype.tecla_Sul = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
-    this.prototype.tecla_Leste = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
-    this.prototype.tecla_Oeste = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+    Jogador.prototype.tecla_Norte = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+    Jogador.prototype.tecla_Sul = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+    Jogador.prototype.tecla_Leste = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+    Jogador.prototype.tecla_Oeste = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
 };
 
 Jogador.prototype.criaSombra = function () {
@@ -76,7 +78,6 @@ Jogador.prototype.criaSombra = function () {
 Jogador.prototype.update = function () {
     this.shadow.body.velocity.y = 0;
     this.shadow.body.velocity.x = 0;
-    this.position.setTo(this.shadow.position.x, this.shadow.position.y);
 
     var direcao = this.direcaoJogador();
 
@@ -85,6 +86,7 @@ Jogador.prototype.update = function () {
     } else {
         this.jogadorAnda(direcao);
     }
+    this.position.setTo(this.shadow.position.x, this.shadow.position.y);
 };
 
 Jogador.prototype.direcaoJogador = function () {
@@ -152,5 +154,87 @@ Jogador.prototype.jogadorGira = function (direcao) {
 };
 
 Jogador.prototype.jogadorAnda = function (direcao) {
-    
+    if (this.tecla_Norte.isDown) {
+        this.shadow.body.velocity.y -= this.velocidade;
+        if (direcao == this.direcoes[0]) { // N Up
+            this.animations.play('N');
+        } else if (direcao == this.direcoes[1]) { // S Down
+            this.animations.play('rev_S');
+        } else if (direcao == this.direcoes[3]) { // W Left
+            this.animations.play('O');
+        } else if (direcao == this.direcoes[2]) { // E Right
+            this.animations.play('L');
+        } else if (direcao == this.direcoes[4]) { // NW Up Left
+            this.animations.play('NO');
+        } else if (direcao == this.direcoes[5]) { // NE Up Right
+            this.animations.play('NE');
+        } else if (direcao == this.direcoes[6]) { // SW Down Left
+            this.animations.play('SO');
+        } else if (direcao == this.direcoes[7]) { // SE Down Right
+            this.animations.play('SE');
+        }
+
+    } else if (this.tecla_Sul.isDown) {
+        this.shadow.body.velocity.y += this.velocidade;
+        if (direcao == this.direcoes[1]) { // N
+            this.animations.play('rev_N');
+        } else if (direcao == this.direcoes[3]) { // S
+            this.animations.play('S');
+        } else if (direcao == this.direcoes[0]) { // W
+            this.animations.play('O');
+        } else if (direcao == this.direcoes[2]) { // E
+            this.animations.play('L');
+        } else if (direcao == this.direcoes[4]) { // NW Up Left
+            this.animations.play('rev_NO');
+        } else if (direcao == this.direcoes[5]) { // NE Up Right
+            this.animations.play('rev_NE');
+        } else if (direcao == this.direcoes[6]) { // SW Down Left
+            this.animations.play('SO');
+        } else if (direcao == this.direcoes[7]) { // SE Down Right
+            this.animations.play('SE');
+        }
+
+    }
+
+    if (this.tecla_Oeste.isDown) {
+        this.shadow.body.velocity.x -= this.velocidade;
+        if (direcao == this.direcoes[0]) { // W
+            this.animations.play('O');
+        } else if (direcao == this.direcoes[2]) { // E
+            this.animations.play('rev_L');
+        } else if (direcao == this.direcoes[1]) { // N
+            this.animations.play('N');
+        } else if (direcao == this.direcoes[3]) { // S
+            this.animations.play('S');
+        } else if (direcao == this.direcoes[4]) { // NW Up Left
+            this.animations.play('NO');
+        } else if (direcao == this.direcoes[5]) { // NE Up Right
+            this.animations.play('rev_NE');
+        } else if (direcao == this.direcoes[6]) { // SW Down Left
+            this.animations.play('SO');
+        } else if (direcao == this.direcoes[7]) { // SE Down Right
+            this.animations.play('SE');
+        }
+
+    } else if (this.tecla_Leste.isDown) {
+        this.shadow.body.velocity.x += this.velocidade;
+        if (direcao == this.direcoes[0]) { // W
+            this.animations.play('rev_O');
+        } else if (direcao == this.direcoes[2]) { // E
+            this.animations.play('L');
+        } else if (direcao == this.direcoes[1]) { // N
+            this.animations.play('N');
+        } else if (direcao == this.direcoes[3]) { // S
+            this.animations.play('S');
+        } else if (direcao == this.direcoes[4]) { // NW Up Left
+            this.animations.play('rev_NO');
+        } else if (direcao == this.direcoes[5]) { // NE Up Right
+            this.animations.play('NE');
+        } else if (direcao == this.direcoes[6]) { // SW Down Left
+            this.animations.play('rev_SO');
+        } else if (direcao == this.direcoes[7]) { // SE Down Right
+            this.animations.play('SE');
+        }
+
+    }
 };
