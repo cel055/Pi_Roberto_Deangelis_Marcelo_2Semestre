@@ -7,12 +7,14 @@ Calciumtrice.Game.prototype = {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.mapa = new TileMap(this.game, "mapaJsonTeste");
         
-        this.mapa.addTilesetImage("dungeon_tileset_calciumtrice", "tileset-calciumtrice");
+        this.mapa.addTilesetImage("tileset-calciumtrice", "tileset");
 
         this.layerGround = this.mapa.createLayer("ground");
         this.layerDetails = this.mapa.createLayer("details");
         this.layerWalls = this.mapa.createLayer("walls");
-
+        
+        this.layerGround.resizeWorld();
+        
         this.mapa.setCollisionBetween(1, 1000, true, 'walls');
         
         this.criaTorch();
@@ -23,6 +25,7 @@ Calciumtrice.Game.prototype = {
         this.criaSwitch();
         this.player = this.mapa.createFromObject('itens', 961, 'warrior', 0, true, true, Jogador);
         this.player.cria();
+        this.camera.follow(this.player);
         this.game.world.bringToTop(this.layerDetails);
     },
     update: function () {
@@ -45,12 +48,25 @@ Calciumtrice.Game.prototype = {
             element.body.immovable = true;
         }, this);
     },
-    criaFire: function () {
-        this.fire = this.mapa.createFromObject('itens', 961, 'tilesetSpriteSheet', 0, true, true);
-        this.fire.animations.add('firing', [974, 975, 976]. 3, true);
+    criafire: function () {
+        this.fire = this.mapa.createFromObject('itens', 975, 'tilesetSpriteSheet', 974, true, true);
+        this.fire.animations.add('firing', [974, 975, 976], 3, true);
+        this.fire.animations.play('firing');
     },
     criahealthPotion: function(){
-        this.fire = this.mapa.createFromObject('itens', 961, 'warrior', 0, true, true);
+        this.fire = this.mapa.createFromObject('itens', 721, 'tilesetSpriteSheet', 720, true, true);
+    },
+    criaGoldBag: function(){
+        this.goldBags = this.game.add.group();
+        this.goldBags.enableBody = true;
+        this.mapa.createFromObjects('itens', 577, 'tilesetSpriteSheet', 576, true, true, this.goldBags);
+        this.goldBags.forEach(function (element) {
+            element.enableBody = true;
+            element.body.immovable = true;
+        }, this);
+    },
+    criaSwitch: function(){
+        this.alavanca = this.mapa.createFromObject('itens', 586, 'tilesetSpriteSheet', 585, true, true);
     },
     openChest: function () {
         this.chest.frame = 573;
