@@ -83,80 +83,58 @@ Jogador.prototype.update = function () {
     if (this.tecla_Norte.isUp && this.tecla_Sul.isUp && this.tecla_Leste.isUp && this.tecla_Oeste.isUp) {
         this.jogadorGira(direcao);
     } else {
-        this.jogadorAnda();
-    }
-
-    if (this.controle.left.isDown) {
-        this.shadow.body.velocity.x -= 50;
-        this.scale.x = -1;
-        this.animations.play('walk');
-    }
-    else if (this.controle.right.isDown) {
-        this.shadow.body.velocity.x += 50;
-        this.scale.x = 1;
-        this.animations.play('walk');
-    }
-    else if (this.controle.down.isDown) {
-        this.shadow.body.velocity.y += 50;
-        this.animations.play('walk');
-    }
-    else if (this.controle.up.isDown) {
-        this.shadow.body.velocity.y -= 50;
-        this.animations.play('walk');
-    }
-    else {
-        this.animations.play('idle');
+        this.jogadorAnda(direcao);
     }
 };
 
 Jogador.prototype.direcaoJogador = function () {
     var mouse = this.game.input.mousePointer;
     var angulo = Math.atan2(mouse.y - this.y, mouse.x - this.x) * (180 / Math.PI);
-    if (angulo > 157 || angulo < -157) {
-        //left w
-        return this.direcoes[3];
-    }
     if (angulo > -112 && angulo < -67) {
-        //up n
+        //cima N
         return this.direcoes[0];
     }
-    if (angulo > -22 && angulo < 22) {
-        //right e
-        return this.direcoes[2];
-    }
     if (angulo > 67 && angulo < 112) {
-        //down s
+        //baixo S
         return this.direcoes[1];
     }
+    if (angulo > -22 && angulo < 22) {
+        //direita L
+        return this.direcoes[2];
+    }
+    if (angulo > 157 || angulo < -157) {
+        //esquerda O
+        return this.direcoes[3];
+    }
     if (angulo > -157 && angulo < -112) {
-        //up left nw
+        //cima esquerda NO
         return this.direcoes[4];
     }
     if (angulo > -67 && angulo < -22) {
-        //up left ne
+        //cima direita NE
         return this.direcoes[5];
     }
     if (angulo > 112 && angulo < 157) {
-        //up left sw
+        //baixo esquerda SO
         return this.direcoes[6];
     }
-    //up left se
+    //baixao direita SE
     return this.direcoes[7];
 };
 
 Jogador.prototype.jogadorGira = function (direcao) {
     switch (direcao) {
-        case this.direcoes[3]:
-            this.frame = 44;
-            break;
         case this.direcoes[0]:
             this.frame = 17;
+            break;
+        case this.direcoes[1]:
+            this.frame = 62;
             break;
         case this.direcoes[2]:
             this.frame = 35;
             break;
-        case this.direcoes[1]:
-            this.frame = 62;
+        case this.direcoes[3]:
+            this.frame = 44;
             break;
         case this.direcoes[4]:
             this.frame = 8;
@@ -174,5 +152,5 @@ Jogador.prototype.jogadorGira = function (direcao) {
 };
 
 Jogador.prototype.jogadorAnda = function (direcao) {
-
+    
 };
