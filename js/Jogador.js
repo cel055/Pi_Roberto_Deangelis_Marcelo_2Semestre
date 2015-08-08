@@ -25,7 +25,7 @@ Jogador.prototype.noroeste = [8, 7, 6, 5, 4, 3, 2, 1, 0];
 Jogador.prototype.nordeste = [26, 25, 24, 23, 22, 21, 20, 19, 18];
 Jogador.prototype.suldoeste = [53, 52, 51, 50, 49, 48, 47, 46, 45];
 Jogador.prototype.suldeste = [71, 70, 69, 68, 67, 66, 65, 64, 63];
-Jogador.prototype.direcoes = ["N", "S", "L", "O", "NO", "NE", "SO", "SE"];
+Jogador.prototype.direcoes = ["N", "S", "L", "O", "NO", "NL", "SO", "SL"];
 
 Jogador.prototype.cria = function () {
     this.game.physics.arcade.enable(this);
@@ -47,18 +47,18 @@ Jogador.prototype.criaAnimacoes = function () {
     this.animations.add('L', this.leste, 10, true);
     this.animations.add('O', this.oeste, 10, true);
     this.animations.add('NO', this.noroeste, 10, true);
-    this.animations.add('NE', this.nordeste, 10, true);
+    this.animations.add('NL', this.nordeste, 10, true);
     this.animations.add('SO', this.suldoeste, 10, true);
-    this.animations.add('SE', this.suldeste, 10, true);
+    this.animations.add('SL', this.suldeste, 10, true);
 
     this.animations.add('rev_N', this.norte.reverse(), 10, true);
     this.animations.add('rev_S', this.sul.reverse(), 10, true);
     this.animations.add('rev_L', this.leste.reverse(), 10, true);
     this.animations.add('rev_O', this.oeste.reverse(), 10, true);
     this.animations.add('rev_NO', this.noroeste.reverse(), 10, true);
-    this.animations.add('rev_NE', this.nordeste.reverse(), 10, true);
+    this.animations.add('rev_NL', this.nordeste.reverse(), 10, true);
     this.animations.add('rev_SO', this.suldoeste.reverse(), 10, true);
-    this.animations.add('rev_SE', this.suldeste.reverse(), 10, true);
+    this.animations.add('rev_SL', this.suldeste.reverse(), 10, true);
 };
 
 Jogador.prototype.criaBotoes = function () {
@@ -154,87 +154,33 @@ Jogador.prototype.jogadorGira = function (direcao) {
 };
 
 Jogador.prototype.jogadorAnda = function (direcao) {
+    var animacao = direcao;
+    var invertido = false;
+
     if (this.tecla_Norte.isDown) {
         this.shadow.body.velocity.y -= this.velocidade;
-        if (direcao == this.direcoes[0]) { // N Up
-            this.animations.play('N');
-        } else if (direcao == this.direcoes[1]) { // S Down
-            this.animations.play('rev_S');
-        } else if (direcao == this.direcoes[3]) { // W Left
-            this.animations.play('O');
-        } else if (direcao == this.direcoes[2]) { // E Right
-            this.animations.play('L');
-        } else if (direcao == this.direcoes[4]) { // NW Up Left
-            this.animations.play('NO');
-        } else if (direcao == this.direcoes[5]) { // NE Up Right
-            this.animations.play('NE');
-        } else if (direcao == this.direcoes[6]) { // SW Down Left
-            this.animations.play('SO');
-        } else if (direcao == this.direcoes[7]) { // SE Down Right
-            this.animations.play('SE');
+        if (direcao.indexOf("S") != -1) {
+            animacao = "rev_" + animacao;
+            invertido = true;
         }
-
     } else if (this.tecla_Sul.isDown) {
         this.shadow.body.velocity.y += this.velocidade;
-        if (direcao == this.direcoes[1]) { // N
-            this.animations.play('rev_N');
-        } else if (direcao == this.direcoes[3]) { // S
-            this.animations.play('S');
-        } else if (direcao == this.direcoes[0]) { // W
-            this.animations.play('O');
-        } else if (direcao == this.direcoes[2]) { // E
-            this.animations.play('L');
-        } else if (direcao == this.direcoes[4]) { // NW Up Left
-            this.animations.play('rev_NO');
-        } else if (direcao == this.direcoes[5]) { // NE Up Right
-            this.animations.play('rev_NE');
-        } else if (direcao == this.direcoes[6]) { // SW Down Left
-            this.animations.play('SO');
-        } else if (direcao == this.direcoes[7]) { // SE Down Right
-            this.animations.play('SE');
+        if (direcao.indexOf("N") != -1) {
+            animacao = "rev_" + animacao;
+            invertido = true;
         }
-
     }
 
     if (this.tecla_Oeste.isDown) {
         this.shadow.body.velocity.x -= this.velocidade;
-        if (direcao == this.direcoes[0]) { // W
-            this.animations.play('O');
-        } else if (direcao == this.direcoes[2]) { // E
-            this.animations.play('rev_L');
-        } else if (direcao == this.direcoes[1]) { // N
-            this.animations.play('N');
-        } else if (direcao == this.direcoes[3]) { // S
-            this.animations.play('S');
-        } else if (direcao == this.direcoes[4]) { // NW Up Left
-            this.animations.play('NO');
-        } else if (direcao == this.direcoes[5]) { // NE Up Right
-            this.animations.play('rev_NE');
-        } else if (direcao == this.direcoes[6]) { // SW Down Left
-            this.animations.play('SO');
-        } else if (direcao == this.direcoes[7]) { // SE Down Right
-            this.animations.play('SE');
+        if (direcao.indexOf("L") != -1 && !invertido) {
+            animacao = "rev_" + animacao;
         }
-
     } else if (this.tecla_Leste.isDown) {
         this.shadow.body.velocity.x += this.velocidade;
-        if (direcao == this.direcoes[0]) { // W
-            this.animations.play('rev_O');
-        } else if (direcao == this.direcoes[2]) { // E
-            this.animations.play('L');
-        } else if (direcao == this.direcoes[1]) { // N
-            this.animations.play('N');
-        } else if (direcao == this.direcoes[3]) { // S
-            this.animations.play('S');
-        } else if (direcao == this.direcoes[4]) { // NW Up Left
-            this.animations.play('rev_NO');
-        } else if (direcao == this.direcoes[5]) { // NE Up Right
-            this.animations.play('NE');
-        } else if (direcao == this.direcoes[6]) { // SW Down Left
-            this.animations.play('rev_SO');
-        } else if (direcao == this.direcoes[7]) { // SE Down Right
-            this.animations.play('SE');
+        if (direcao.indexOf("O") != -1 && !invertido) {
+            animacao = "rev_" + animacao;
         }
-
     }
+    this.animations.play(animacao);
 };
