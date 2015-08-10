@@ -21,10 +21,19 @@ Calciumtrice.Fase_03.prototype = {
         this.player.cria();
         this.camera.follow(this.player);
         
+        this.porta = this.mapa.createFromObject('itens', 16, 'heroi', 0, true, true);
+        this.porta.enableBody = true;
+        this.game.physics.arcade.enable(this.porta);
+        
         this.game.world.bringToTop(this.layerDetails);
     },
     update: function () {
         this.game.physics.arcade.collide(this.player.shadow, this.layerWalls);
+        this.game.physics.arcade.overlap(this.player.shadow, this.porta, this.proximaFase);
         
     },
+    proximaFase: function(){
+        Calciumtrice.game.state.start('fase_01');
+        console.log('porta');
+    }
 };

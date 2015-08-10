@@ -5,6 +5,7 @@ Calciumtrice.Fase_01 = function () {};
 Calciumtrice.Fase_01.prototype = {
     create: function () {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
+        
         this.mapa = new TileMap(this.game, "fase_01");
         
         this.mapa.addTilesetImage("tileset_tiled", "grassLandTileset");
@@ -22,6 +23,8 @@ Calciumtrice.Fase_01.prototype = {
         this.camera.follow(this.player);
         
         this.porta = this.mapa.createFromObject('itens', 16, 'heroi', 0, true, true);
+        this.porta.enableBody = true;
+        this.game.physics.arcade.enable(this.porta);
         
         this.game.world.bringToTop(this.layerDetails);
     },
@@ -31,7 +34,6 @@ Calciumtrice.Fase_01.prototype = {
         
     },
     proximaFase: function(){
-        this.state.start('fase_02');
-        console.log('porta');
+        Calciumtrice.game.state.start('fase_02');
     }
 };
