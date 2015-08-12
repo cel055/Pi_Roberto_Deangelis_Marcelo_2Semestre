@@ -1,0 +1,18 @@
+Tilesets:
+
+PathAndObjects_0.png
+http://opengameart.org/content/rpg-tiles-cobble-stone-paths-town-objects
+
+hyptosis_tile-art-batch-3.png
+Modified batch-3 to create divider walls.
+http://opengameart.org/content/lots-of-free-2d-tiles-and-sprites-by-hyptosis
+
+city_outside.png
+http://opengameart.org/content/lpc-city-outside
+
+forest_tiles.png
+http://opengameart.org/content/lpc-forest-tiles
+
+interior.png
+Added transparency to some of the tiles, added my own "walls".
+http://opengameart.org/content/lpc-house-interior-and-decorations
