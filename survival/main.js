@@ -42,6 +42,7 @@ window.onload = function () {
     }
 
     function onUpdate() {
+        //Inutil, so para movimentacao
         var xSpeed = 0;
         var ySpeed = 0;
         if (cursors.up.isDown) {
@@ -66,10 +67,13 @@ window.onload = function () {
                 player.y += ySpeed;
             }
         }
+        //Aqui acaba a movimentacao
+        
+        //Aqui ta a magica
         var mouseAngle = Math.atan2(player.y - game.input.y, player.x - game.input.x);
         maskGraphics.clear();
-        maskGraphics.lineStyle(2, 0xffffff, 1);
-        maskGraphics.beginFill(0xffff00);
+        maskGraphics.lineStyle(2, 0xffff00, 1);
+//        maskGraphics.beginFill(0xffff00);
         maskGraphics.moveTo(player.x, player.y);
         for (var i = 0; i < numberOfRays; i++) {
             var rayAngle = mouseAngle - (lightAngle / 2) + (lightAngle / numberOfRays) * i
