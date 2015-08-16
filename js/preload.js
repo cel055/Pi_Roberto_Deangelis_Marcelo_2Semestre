@@ -15,6 +15,7 @@ Calciumtrice.Preload.prototype ={
         this.load.spritesheet('tilesetSpriteSheet', 'assets/tileset/dungeon_tileset_calciumtrice.png', 16, 16);
         this.load.spritesheet('warrior', 'assets/sprites/warrior_calciumtrice.png', 32, 32);
         this.load.spritesheet('heroi', 'assets/sprites/char.png', 55.5, 64.8);
+        this.load.spritesheet('tiro', 'assets/sprites/bala.png', 14, 8);
     },
     create: function(){
         this.state.start('menu');

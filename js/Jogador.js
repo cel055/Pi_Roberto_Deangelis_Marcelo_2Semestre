@@ -3,8 +3,10 @@
 var Jogador = function (_game, _x, _y, _key, _frame) {
     Phaser.Sprite.call(this, _game, _x, _y, _key, _frame);
     this.vida = 100;
+    this.tiros;
     this.luz;
     this.shadow;
+    this.tempoProximoTiro = 0;
     this.norte = [17, 16, 15, 14, 13, 12, 11, 10, 9];
     this.sul = [62, 61, 60, 59, 58, 57, 56, 55, 54];
     this.leste = [35, 34, 33, 32, 31, 30, 29, 28, 27];
@@ -19,6 +21,9 @@ Jogador.prototype = Object.create(Phaser.Sprite.prototype);
 Jogador.prototype.constructor = Jogador;
 
 Jogador.prototype.velocidade = 50;
+Jogador.prototype.velocidadeTiro = 500;
+Jogador.prototype.frequenciaTiro = 100;
+
 Jogador.prototype.aberturaLuz = Math.PI / 4;
 Jogador.prototype.comprimentoLuz = 100;
 Jogador.prototype.raiosLuz = 20;
@@ -45,6 +50,23 @@ Jogador.prototype.cria = function () {
 
     this.luz = this.game.add.graphics(0, 0);
     this.criaSombra();
+    this.criaTiros();
+};
+
+Jogador.prototype.criaTiros = function (){
+    this.tiros = this.game.add.group();
+    this.game.physics.arcade.enable(this.tiros);
+    this.tiros.enableBody = true;
+    this.tiros.createMultiple(30, "tiro", 0, false);
+    this.tiros.forEach(function (sprite){
+        sprite.anchor.setTo(0, 0.5);
+        sprite.outOfBoundsKill = true;
+        sprite.checkWorldBounds = true;
+        sprite.animations.add('inicioTiro');
+        sprite.events.onAnimationComplete = function (){
+            this.frame = 8;
+        };
+    }, this);
 };
 
 Jogador.prototype.criaAnimacoes = function () {
@@ -89,6 +111,9 @@ Jogador.prototype.update = function () {
     var radianos = Math.atan2(this.y - this.mouse.worldY, this.x - this.mouse.worldX);
     this.desenhaLuz(radianos);
     var direcao = this.direcaoJogador(radianos);
+    if(this.mouse.isDown){
+        this.atira();
+    }
     if (this.tecla_Norte.isUp && this.tecla_Sul.isUp && this.tecla_Leste.isUp && this.tecla_Oeste.isUp) {
         this.jogadorGira(direcao);
     } else {
@@ -98,7 +123,13 @@ Jogador.prototype.update = function () {
 };
 
 Jogador.prototype.atira = function (){
-    
+    if(this.game.time.now > this.tempoProximoTiro && this.tiros.countDead() > 0){
+        this.tempoProximoTiro = this.game.time.now + this.frequenciaTiro;
+        var tiro = this.tiros.getFirstExists(false);
+        tiro.reset(this.position.x, this.position.y - this.height / 2);
+        tiro.rotation = this.game.physics.arcade.moveToPointer(tiro, this.velocidadeTiro, this.mouse);
+        tiro.animations.play("inicioTiro");
+    }
 };
 
 Jogador.prototype.desenhaLuz = function (radianos) {
