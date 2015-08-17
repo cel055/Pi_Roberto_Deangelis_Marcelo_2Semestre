@@ -24,8 +24,8 @@ Jogador.prototype.velocidade = 50;
 Jogador.prototype.velocidadeTiro = 500;
 Jogador.prototype.frequenciaTiro = 100;
 
-Jogador.prototype.aberturaLuz = Math.PI / 4;
-Jogador.prototype.comprimentoLuz = 100;
+Jogador.prototype.aberturaLuz = Math.PI / 3;
+Jogador.prototype.comprimentoLuz = 200;
 Jogador.prototype.raiosLuz = 20;
 
 Jogador.prototype.tecla_Norte;
