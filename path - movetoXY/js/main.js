@@ -31,6 +31,7 @@ function create(){
     personagem = game.add.sprite(160, 64, 'car');
     game.physics.enable(personagem);
     personagem.body.collideWorldBounds = true;
+	personagem.body.immovable = true;
     personagem.anchor.setTo(0, 0);
     
     inimigos = game.add.group();
@@ -81,7 +82,7 @@ function update(){
     for(var i = 0; i < inimigos.children.length; i++){
         if(inimigos.children[i].podeanda){
             //inimigos.children[i]
-            gera(inimigos.children[i],inimigos.children[i].x, inimigos.children[i].y, personagem.x-1, personagem.y);
+            gera(inimigos.children[i],inimigos.children[i].x, inimigos.children[i].y, personagem.x, personagem.y);
         }   
     }
 }
@@ -90,21 +91,21 @@ function move(_inimigo, _path){
     
     var _pos = 1;
 
-//    game.physics.arcade.moveToXY(_inimigo, _path[_pos].x * 32, _path[_pos].y * 32, 100);
+    game.physics.arcade.moveToXY(_inimigo, _path[_pos].x * 32, _path[_pos].y * 32, 100);
 
-    // Movimenta o Sprite;        
-    if(layer.getTileX(_inimigo.body.x) != _path[_pos].x){
-//        _inimigo.body.x = _path[_pos].x * 32;
-        _inimigo.tween = game.add.tween(_inimigo).to({ x: _path[_pos].x * 32 , y: _path[_pos].y * 32 }, 200, Phaser.Easing.Linear.None, true);
-    }else{
-        if(layer.getTileY(_inimigo.body.y) != _path[_pos].y){
-//            _inimigo.body.y = _path[_pos].y * 32
-        _inimigo.tween = game.add.tween(_inimigo).to({ x: _path[_pos].x * 32 , y: _path[_pos].y * 32 }, 200, Phaser.Easing.Linear.None, true);
-        }
-    }
+//    // Movimenta o Sprite;        
+//    if(layer.getTileX(_inimigo.body.x) != _path[_pos].x){
+////        _inimigo.body.x = _path[_pos].x * 32;
+//        _inimigo.tween = game.add.tween(_inimigo).to({ x: _path[_pos].x * 32 , y: _path[_pos].y * 32 }, 200, Phaser.Easing.Linear.None, true);
+//    }else{
+//        if(layer.getTileY(_inimigo.body.y) != _path[_pos].y){
+////            _inimigo.body.y = _path[_pos].y * 32
+//        _inimigo.tween = game.add.tween(_inimigo).to({ x: _path[_pos].x * 32 , y: _path[_pos].y * 32 }, 200, Phaser.Easing.Linear.None, true);
+//        }
+//    }
     
 //    easystar.stopAvoidingAdditionalPoint( _path[0].y, _path[0].x );
-    easystar.avoidAdditionalPoint( _path[_pos].x, _path[_pos].y );
+//    easystar.avoidAdditionalPoint( _path[_pos].x, _path[_pos].y );
     
 //    _inimigo.tween = game.add.tween(_inimigo).to({ x: _path[_pos].x * 32 , y: _path[_pos].y * 32 }, 200, Phaser.Easing.Linear.None, true);
     
@@ -124,6 +125,7 @@ function criaInimigo(_x, _y){
     game.physics.enable(inimigo);
     inimigo.enableBody = true;
 	inimigo.body.collideWorldBounds = true;
+	inimigo.body.immovable = false;
     
     inimigos.add(inimigo);
     
@@ -145,64 +147,6 @@ function anda(_path, _inimigo){
     }
 }
 
-//function move(_inimigo, _x, _y, _velocidade){
-//    
-//    var posx;
-//    var posy;
-//    
-//    if(_inimigo.x > _x){
-//        moveX(_inimigo, _x, true,_velocidade);
-//    }else if(_inimigo.x < _x){
-//        moveX(_inimigo, _x, false,_velocidade);
-//    }
-//    
-//    if(_inimigo.y > _y){
-//        moveY(_inimigo, _y, true,_velocidade);
-//    }else if(_inimigo.y < _y){
-//        moveY(_inimigo, _y, false,_velocidade);
-//    }
-//    
-//    function moveX(_inimigo, _local, _dir,_velocidade){
-//        if(_dir){
-//            if(_inimigo.x > _local){
-//               _inimigo.body.velocity.x = -_velocidade;     
-//            }else{
-//                 _inimigo.podeanda = true;
-//                return;
-//            }
-//        }else{
-//            if(_inimigo.x < _local){
-//                _inimigo.body.velocity.x = _velocidade;     
-//            }else{
-//                _inimigo.podeanda = true;
-//                return;
-//            }
-//        }
-//        
-////        game.time.events.add(Phaser.Timer.SECOND *  0.5, function(){moveX(_inimigo, _local, _dir,_velocidade)}, this);
-//    }
-//    
-//    function moveY(_inimigo, _local, _dir,_velocidade){
-//        if(_dir){
-//            if(_inimigo.y > _local){
-//               _inimigo.body.velocity.y = -_velocidade;     
-//            }else{
-//                 _inimigo.podeanda = true;
-//                return;
-//            }
-//        }else{
-//            if(_inimigo.y < _local){
-//                _inimigo.body.velocity.y = _velocidade;     
-//            }else{
-//                _inimigo.podeanda = true;
-//                return;
-//            }
-//        }
-//        
-////        game.time.events.add(Phaser.Timer.SECOND *  0.5, function(){moveY(_inimigo, _local, _dir,_velocidade)}, this);
-//        
-//    }
-//}
 
 function convert(_obj){
     var elemento = [];
