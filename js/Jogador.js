@@ -2,10 +2,11 @@
 
 var Jogador = function (_game, _x, _y, _key, _frame) {
     Phaser.Sprite.call(this, _game, _x, _y, _key, _frame);
-    this.controle;
     this.vida = 100;
-    this.game = _game;
+    this.tiros;
+    this.luz;
     this.shadow;
+    this.tempoProximoTiro = 0;
     this.norte = [17, 16, 15, 14, 13, 12, 11, 10, 9];
     this.sul = [62, 61, 60, 59, 58, 57, 56, 55, 54];
     this.leste = [35, 34, 33, 32, 31, 30, 29, 28, 27];
@@ -20,12 +21,19 @@ Jogador.prototype = Object.create(Phaser.Sprite.prototype);
 Jogador.prototype.constructor = Jogador;
 
 Jogador.prototype.velocidade = 50;
+Jogador.prototype.velocidadeTiro = 500;
+Jogador.prototype.frequenciaTiro = 100;
+
+Jogador.prototype.aberturaLuz = Math.PI / 3;
+Jogador.prototype.comprimentoLuz = 200;
+Jogador.prototype.raiosLuz = 20;
 
 Jogador.prototype.tecla_Norte;
 Jogador.prototype.tecla_Sul;
 Jogador.prototype.tecla_Leste;
 Jogador.prototype.tecla_Oeste;
-Jogador.prototype.tecla_Shift;
+Jogador.prototype.tecla_Corrida;
+Jogador.prototype.mouse;
 
 Jogador.prototype.direcoes = ["N", "S", "L", "O", "NO", "NL", "SO", "SL"];
 
@@ -36,11 +44,29 @@ Jogador.prototype.cria = function () {
     this.game.camera.follow(this);
     this.criaAnimacoes();
 
-    if (!this.tecla_Norte || !this.tecla_Sul || !this.tecla_Leste || !this.tecla_Oeste) {
-        this.criaBotoes();
+    if (!this.tecla_Norte || !this.tecla_Sul || !this.tecla_Leste || !this.tecla_Oeste || !this.mouse) {
+        this.criaInputs();
     }
 
+    this.luz = this.game.add.graphics(0, 0);
     this.criaSombra();
+    this.criaTiros();
+};
+
+Jogador.prototype.criaTiros = function (){
+    this.tiros = this.game.add.group();
+    this.game.physics.arcade.enable(this.tiros);
+    this.tiros.enableBody = true;
+    this.tiros.createMultiple(30, "tiro", 0, false);
+    this.tiros.forEach(function (sprite){
+        sprite.anchor.setTo(0, 0.5);
+        sprite.outOfBoundsKill = true;
+        sprite.checkWorldBounds = true;
+        sprite.animations.add('inicioTiro');
+        sprite.events.onAnimationComplete = function (){
+            this.frame = 8;
+        };
+    }, this);
 };
 
 Jogador.prototype.criaAnimacoes = function () {
@@ -63,12 +89,13 @@ Jogador.prototype.criaAnimacoes = function () {
     this.animations.add('rev_SL', this.suldeste.reverse(), 10, true);
 };
 
-Jogador.prototype.criaBotoes = function () {
+Jogador.prototype.criaInputs = function () {
     Jogador.prototype.tecla_Norte = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
     Jogador.prototype.tecla_Sul = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
     Jogador.prototype.tecla_Leste = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
     Jogador.prototype.tecla_Oeste = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
-    Jogador.prototype.tecla_Shift = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
+    Jogador.prototype.tecla_Corrida = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
+    Jogador.prototype.mouse = this.game.input.mousePointer;
 };
 
 Jogador.prototype.criaSombra = function () {
@@ -81,9 +108,12 @@ Jogador.prototype.criaSombra = function () {
 Jogador.prototype.update = function () {
     this.shadow.body.velocity.y = 0;
     this.shadow.body.velocity.x = 0;
-
-    var direcao = this.direcaoJogador();
-
+    var radianos = Math.atan2(this.y - this.mouse.worldY, this.x - this.mouse.worldX);
+    this.desenhaLuz(radianos);
+    var direcao = this.direcaoJogador(radianos);
+    if(this.mouse.isDown){
+        this.atira();
+    }
     if (this.tecla_Norte.isUp && this.tecla_Sul.isUp && this.tecla_Leste.isUp && this.tecla_Oeste.isUp) {
         this.jogadorGira(direcao);
     } else {
@@ -92,9 +122,50 @@ Jogador.prototype.update = function () {
     this.position.setTo(this.shadow.position.x, this.shadow.position.y);
 };
 
-Jogador.prototype.direcaoJogador = function () {
-    var mouse = this.game.input.mousePointer;
-    var angulo = Math.atan2(mouse.worldY - this.y, mouse.worldX - this.x) * (180 / Math.PI);
+Jogador.prototype.atira = function (){
+    if(this.game.time.now > this.tempoProximoTiro && this.tiros.countDead() > 0){
+        this.tempoProximoTiro = this.game.time.now + this.frequenciaTiro;
+        var tiro = this.tiros.getFirstExists(false);
+        tiro.reset(this.position.x, this.position.y - this.height / 2);
+        tiro.rotation = this.game.physics.arcade.moveToPointer(tiro, this.velocidadeTiro, this.mouse);
+        tiro.animations.play("inicioTiro");
+    }
+};
+
+Jogador.prototype.desenhaLuz = function (radianos) {
+    this.luz.clear();
+    this.luz.lineStyle(1, 0xFFFF00, 1);
+//    this.luz.beginFill(0xffff00);
+    this.luz.moveTo(this.position.x, this.position.y - this.height / 2);
+    for (var i = 0; i < this.raiosLuz; i++) {
+        var anguloRaio = radianos - (this.aberturaLuz / 2) + (this.aberturaLuz / this.raiosLuz) * i;
+        var ultimoX = this.position.x;
+        var ultimoY = this.position.y;
+        for (var j = 1; j <= this.comprimentoLuz; j++) {
+            var atualX = Math.round(this.position.x - (2 * j) * Math.cos(anguloRaio));
+            var atualY = Math.round((this.position.y - this.height / 2) - (2 * j) * Math.sin(anguloRaio));
+//                if (wallsBitmap.getPixel32(landingX, landingY) == 0) {
+            ultimoX = atualX;
+            ultimoY = atualY;
+//                }
+//                else {
+//                    this.luz.lineTo(lastX, lastY);
+//                    break;
+//                }
+        }
+        this.luz.lineTo(ultimoX, ultimoY);
+    }
+    this.luz.lineTo(this.position.x, this.position.y - this.height / 2);
+    this.luz.endFill();
+};
+
+Jogador.prototype.direcaoJogador = function (radianos) {
+    var angulo = radianos * (180 / Math.PI);
+    if (angulo > 0) {
+        angulo -= 180;
+    } else {
+        angulo += 180;
+    }
     if (angulo > -112 && angulo < -67) {
         //cima N
         return this.direcoes[0];
@@ -161,7 +232,7 @@ Jogador.prototype.jogadorAnda = function (direcao) {
     var invertido = false;
     var velocidadeAtual = this.velocidade;
 
-    if(this.tecla_Shift.isDown){
+    if (this.tecla_Corrida.isDown) {
         velocidadeAtual *= 2.5;
     }
 
