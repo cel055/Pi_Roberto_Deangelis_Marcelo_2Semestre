@@ -10,6 +10,14 @@ Calciumtrice.Preload.prototype ={
         this.load.tilemap('fase_01', 'assets/tilemap/fase_01.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('fase_02', 'assets/tilemap/fase_02.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('fase_03', 'assets/tilemap/fase_03.json', null, Phaser.Tilemap.TILED_JSON);
+        
+        
+        
+        this.load.tilemap('mapaComCasa', 'assets/tilemap/mapaCasa.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('casa', 'assets/tilemap/casa.json', null, Phaser.Tilemap.TILED_JSON);
+        
+        
+        
         this.load.image('tileset', 'assets/tileset/dungeon_tileset_calciumtrice.png');
         this.load.image('grassLandTileset', 'assets/tileset/grassland.png');
         this.load.spritesheet('tilesetSpriteSheet', 'assets/tileset/dungeon_tileset_calciumtrice.png', 16, 16);
