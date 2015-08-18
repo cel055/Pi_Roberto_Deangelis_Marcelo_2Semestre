@@ -34,6 +34,6 @@ Calciumtrice.Fase_03.prototype = {
     },
     proximaFase: function(){
         Calciumtrice.game.state.start('fase_01');
-        console.log('porta');
+        
     }
 };
