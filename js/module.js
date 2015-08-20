@@ -2,16 +2,17 @@
  * Created by knash on 15-03-14.
  */
 
-RPG.Map.Module = function(game, key) {
+Module = function(game, key) {
+    Phaser.Tilemap.call(this, game, key);
     this.game = game;
     this.tilemap = game.add.tilemap(key);
-    // Add the tilesets
-    for (var i = 0; i < this.tilemap.tilesets.length; i++) {
-        this.tilemap.addTilesetImage(this.tilemap.tilesets[i].name);
-    }
+    this.tilemap.addTilesetImage('tileset_tiled', 'grassLandTileset');
 };
 
-RPG.Map.Module.prototype = {
+Module.prototype = Object.create(Phaser.Tilemap.prototype);
+Module.prototype.constructor = Module;
+
+Module.prototype = {
     // Pass through to the Phaser.TileMap createLayer function
     createLayer: function(args) {
         return this.tilemap.createLayer.apply(this.tilemap, arguments);
@@ -33,7 +34,7 @@ RPG.Map.Module.prototype = {
     findObjectsByType: function(type) {
         var self = this;
         var result = [];
-        this.tilemap.objects['objects'].forEach(function(element) {
+        this.tilemap.objects['objetos'].forEach(function(element) {
             if (element.type === type) {
                 // Phaser uses top left, Tiled bottom left so we have to adjust the y position
                 // also keep in mind that the cup images are a bit smaller than the tile which is 16x16
@@ -73,5 +74,54 @@ RPG.Map.Module.prototype = {
         });
 
         return sprite;
+    },
+    createFromObject: function (name, gid, key, frame, exists, autoCull, CustomClass, adjustY) {
+    var group = this.game.world;
+    if (typeof exists === 'undefined') {
+        exists = true;
     }
+    if (typeof autoCull === 'undefined') {
+        autoCull = false;
+    }
+    if (typeof CustomClass === 'undefined') {
+        CustomClass = Phaser.Sprite;
+    }
+    if (typeof adjustY === 'undefined') {
+        adjustY = true;
+    }
+
+    if (!this.objects[name])
+    {
+        console.warn('Tilemap.createFromObject: Invalid object name given: ' + name);
+        return;
+    }
+
+    var sprite;
+
+    for (var i = 0, len = this.objects[name].length; i < len; i++)
+    {
+        if (this.objects[name][i].gid === gid)
+        {
+            sprite = new CustomClass(this.game, this.objects[name][i].x, this.objects[name][i].y, key, frame);
+
+            sprite.name = this.objects[name][i].name;
+            sprite.visible = this.objects[name][i].visible;
+            sprite.autoCull = autoCull;
+            sprite.exists = exists;
+
+            if (this.objects[name][i].rotation)
+            {
+                sprite.angle = this.objects[name][i].rotation;
+            }
+
+            if (adjustY)
+            {
+                sprite.y -= sprite.height;
+            }
+
+            group.add(sprite);
+            return sprite;
+        }
+    }
+}
 };

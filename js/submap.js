@@ -3,14 +3,13 @@
  */
 
 // x, y are tile coords
-RPG.Map.SubMap = function(module, tileX, tileY) {
+SubMap = function(module, tileX, tileY) {
     this.module = module;
     this.tileX = tileX || 0;
     this.tileY = tileY || 0;
 
     this.tileLayers = this.module.createLayers(
-        'floor', 'indoors0', 'indoors1', 'outdoors0', 'outdoors1'
-    );
+        'chao', 'paredes', 'ladoDeFora');
 
     // We need to be able to position these.
     var layer;
@@ -25,7 +24,7 @@ RPG.Map.SubMap = function(module, tileX, tileY) {
     }
 };
 
-RPG.Map.SubMap.prototype = {
+SubMap.prototype = {
     setPosition: function(x, y) {
         var layer;
         for (var key in this.tileLayers) {
@@ -41,13 +40,11 @@ RPG.Map.SubMap.prototype = {
     },
 
     setIndoorAlpha: function(alpha) {
-        this.tileLayers['floor'].alpha = alpha;
-        this.tileLayers['indoors0'].alpha = alpha;
-        this.tileLayers['indoors1'].alpha = alpha;
+        this.tileLayers['chao'].alpha = alpha;
+        this.tileLayers['paredes'].alpha = alpha;
     },
 
     setOutdoorAlpha: function(alpha) {
-        this.tileLayers['outdoors0'].alpha = alpha;
-        this.tileLayers['outdoors1'].alpha = alpha;
+        this.tileLayers['ladoDeFora'].alpha = alpha;
     }
 };

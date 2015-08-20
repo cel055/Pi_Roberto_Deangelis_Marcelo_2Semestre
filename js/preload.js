@@ -13,8 +13,8 @@ Calciumtrice.Preload.prototype ={
         
         
         
-        this.load.tilemap('mapaComCasa', 'assets/tilemap/mapaCasa.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('casa', 'assets/tilemap/casa.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('mapaGlobalJSON', 'assets/tilemap/mapacomCasa.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('casaJSON', 'assets/tilemap/casa.json', null, Phaser.Tilemap.TILED_JSON);
         
         
         
