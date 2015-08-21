@@ -3,10 +3,12 @@
 var Jogador = function (_game, _x, _y, _key, _frame) {
     Phaser.Sprite.call(this, _game, _x, _y, _key, _frame);
     this.vida = 100;
+    this.numTiros = 0;
+    this.tempoProximoTiro = 0;
+    this.carregando = false;
     this.tiros;
     this.luz;
     this.shadow;
-    this.tempoProximoTiro = 0;
     this.norte = [17, 16, 15, 14, 13, 12, 11, 10, 9];
     this.sul = [62, 61, 60, 59, 58, 57, 56, 55, 54];
     this.leste = [35, 34, 33, 32, 31, 30, 29, 28, 27];
@@ -21,8 +23,11 @@ Jogador.prototype = Object.create(Phaser.Sprite.prototype);
 Jogador.prototype.constructor = Jogador;
 
 Jogador.prototype.velocidade = 50;
+
 Jogador.prototype.velocidadeTiro = 500;
 Jogador.prototype.frequenciaTiro = 100;
+Jogador.prototype.maxTiros = 50;
+Jogador.prototype.tempoRecarregamentoArma = 3;
 
 Jogador.prototype.aberturaLuz = Math.PI / 3;
 Jogador.prototype.comprimentoLuz = 200;
@@ -33,6 +38,7 @@ Jogador.prototype.tecla_Sul;
 Jogador.prototype.tecla_Leste;
 Jogador.prototype.tecla_Oeste;
 Jogador.prototype.tecla_Corrida;
+Jogador.prototype.tecla_Recarrega;
 Jogador.prototype.mouse;
 
 Jogador.prototype.direcoes = ["N", "S", "L", "O", "NO", "NL", "SO", "SL"];
@@ -95,6 +101,7 @@ Jogador.prototype.criaInputs = function () {
     Jogador.prototype.tecla_Leste = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
     Jogador.prototype.tecla_Oeste = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
     Jogador.prototype.tecla_Corrida = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
+    Jogador.prototype.tecla_Recarrega = this.game.input.keyboard.addKey(Phaser.Keyboard.R);
     Jogador.prototype.mouse = this.game.input.mousePointer;
 };
 
@@ -123,6 +130,9 @@ Jogador.prototype.update = function () {
 };
 
 Jogador.prototype.atira = function (){
+    if(this.carregando){
+        return;
+    }
     if(this.game.time.now > this.tempoProximoTiro && this.tiros.countDead() > 0){
         this.tempoProximoTiro = this.game.time.now + this.frequenciaTiro;
         var tiro = this.tiros.getFirstExists(false);
@@ -270,4 +280,8 @@ Jogador.prototype.recebeAtaque = function (ataque) {
         return false;
     }
     return true;
+};
+
+Jogador.prototype.mataBala = function (bala){
+    bala.kill();
 };
