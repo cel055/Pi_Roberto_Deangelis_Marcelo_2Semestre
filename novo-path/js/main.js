@@ -40,15 +40,15 @@ function create(){
     game.camera.follow(personagem);
     
     cursors = game.input.keyboard.createCursorKeys();
-        
+    //PAra a fase
     mapaAtual = convert((map.layer).data);
     
-    game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);    
-    
+    game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);  
+    //PAra a fase
     easystar.setGrid(mapaAtual);
-    
+    //PAra a fase
     easystar.setAcceptableTiles([30]); 
-    
+    //PAra a fase
     easystar.enableDiagonals(); 
     
 //    criaInimigo(0, 0);
@@ -63,7 +63,7 @@ function create(){
     game.physics.enable(cowboy);
     cowboy.enableBody = true;
 	cowboy.body.collideWorldBounds = true;
-
+    //PAra a fase
 	easystar.calculate();	
 	
 //    game.physics.arcade.collide(personagem, inimigos);
