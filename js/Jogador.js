@@ -2,13 +2,20 @@
 
 var Jogador = function (_game, _x, _y, _key, _frame) {
     Phaser.Sprite.call(this, _game, _x, _y, _key, _frame);
+    this.wallLayers;
+    this.chaoLayer;
+    this.linhaVisao = new Phaser.Line();
+
     this.vida = 100;
+
     this.numTiros = 0;
     this.tempoProximoTiro = 0;
     this.carregando = false;
+
     this.tiros;
     this.luz;
     this.shadow;
+
     this.norte = [17, 16, 15, 14, 13, 12, 11, 10, 9];
     this.sul = [62, 61, 60, 59, 58, 57, 56, 55, 54];
     this.leste = [35, 34, 33, 32, 31, 30, 29, 28, 27];
@@ -43,7 +50,9 @@ Jogador.prototype.mouse;
 
 Jogador.prototype.direcoes = ["N", "S", "L", "O", "NO", "NL", "SO", "SL"];
 
-Jogador.prototype.cria = function () {
+Jogador.prototype.cria = function (layerOfWall, layerGround) {
+    this.wallLayers = layerOfWall;
+    this.chaoLayer = layerGround;
     this.game.physics.arcade.enable(this);
     this.enableBody = true;
     this.anchor.setTo(0.5, 1);
@@ -59,17 +68,17 @@ Jogador.prototype.cria = function () {
     this.criaTiros();
 };
 
-Jogador.prototype.criaTiros = function (){
+Jogador.prototype.criaTiros = function () {
     this.tiros = this.game.add.group();
     this.game.physics.arcade.enable(this.tiros);
     this.tiros.enableBody = true;
     this.tiros.createMultiple(30, "tiro", 0, false);
-    this.tiros.forEach(function (sprite){
+    this.tiros.forEach(function (sprite) {
         sprite.anchor.setTo(0, 0.5);
         sprite.outOfBoundsKill = true;
         sprite.checkWorldBounds = true;
         sprite.animations.add('inicioTiro');
-        sprite.events.onAnimationComplete = function (){
+        sprite.events.onAnimationComplete = function () {
             this.frame = 8;
         };
     }, this);
@@ -116,9 +125,9 @@ Jogador.prototype.update = function () {
     this.shadow.body.velocity.y = 0;
     this.shadow.body.velocity.x = 0;
     var radianos = Math.atan2(this.y - this.mouse.worldY, this.x - this.mouse.worldX);
-    this.desenhaLuz(radianos);
+    this.desenhaLuz2(radianos);
     var direcao = this.direcaoJogador(radianos);
-    if(this.mouse.isDown){
+    if (this.mouse.isDown) {
         this.atira();
     }
     if (this.tecla_Norte.isUp && this.tecla_Sul.isUp && this.tecla_Leste.isUp && this.tecla_Oeste.isUp) {
@@ -129,11 +138,11 @@ Jogador.prototype.update = function () {
     this.position.setTo(this.shadow.position.x, this.shadow.position.y);
 };
 
-Jogador.prototype.atira = function (){
-    if(this.carregando){
+Jogador.prototype.atira = function () {
+    if (this.carregando) {
         return;
     }
-    if(this.game.time.now > this.tempoProximoTiro && this.tiros.countDead() > 0){
+    if (this.game.time.now > this.tempoProximoTiro && this.tiros.countDead() > 0) {
         this.tempoProximoTiro = this.game.time.now + this.frequenciaTiro;
         var tiro = this.tiros.getFirstExists(false);
         tiro.reset(this.position.x, this.position.y - this.height / 2);
@@ -162,6 +171,30 @@ Jogador.prototype.desenhaLuz = function (radianos) {
 //                    this.luz.lineTo(lastX, lastY);
 //                    break;
 //                }
+        }
+        this.luz.lineTo(ultimoX, ultimoY);
+    }
+    this.luz.lineTo(this.position.x, this.position.y - this.height / 2);
+    this.luz.endFill();
+};
+
+Jogador.prototype.desenhaLuz2 = function (radianos) {
+    this.luz.clear();
+    this.luz.lineStyle(1, 0xFFFF00, 1);
+//    this.luz.beginFill(0xffff00);
+    this.luz.moveTo(this.position.x, this.position.y - this.height / 2);
+    for (var i = 0; i < this.raiosLuz; i++) {
+        var anguloRaio = radianos - (this.aberturaLuz / 2) + (this.aberturaLuz / this.raiosLuz) * i;
+        var ultimoX = Math.round(this.position.x - (2 * this.comprimentoLuz) * Math.cos(anguloRaio));
+        var ultimoY = Math.round((this.position.y - this.height / 2) - (2 * this.comprimentoLuz) * Math.sin(anguloRaio));
+
+        this.linhaVisao.start.set(this.position.x, this.position.y - this.height / 2);
+        this.linhaVisao.end.set(ultimoX, ultimoY);
+
+        var listaTiles = this.wallLayers.getRayCastTiles(this.linhaVisao, 4, false, false);
+        if (listaTiles.length != 0) {
+            ultimoX = this.wallLayers.getTileX(listaTiles[0].x);
+            ultimoY = this.wallLayers.getTileY(listaTiles[0].y);
         }
         this.luz.lineTo(ultimoX, ultimoY);
     }
@@ -282,6 +315,6 @@ Jogador.prototype.recebeAtaque = function (ataque) {
     return true;
 };
 
-Jogador.prototype.mataBala = function (bala){
+Jogador.prototype.mataBala = function (bala) {
     bala.kill();
 };
