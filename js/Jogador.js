@@ -3,7 +3,6 @@
 var Jogador = function (_game, _x, _y, _key, _frame) {
     Phaser.Sprite.call(this, _game, _x, _y, _key, _frame);
     this.wallLayers;
-    this.chaoLayer;
     this.linhaVisao = new Phaser.Line();
 
     this.vida = 100;
@@ -37,8 +36,8 @@ Jogador.prototype.maxTiros = 50;
 Jogador.prototype.tempoRecarregamentoArma = 3;
 
 Jogador.prototype.aberturaLuz = Math.PI / 3;
-Jogador.prototype.comprimentoLuz = 200;
-Jogador.prototype.raiosLuz = 20;
+Jogador.prototype.comprimentoLuz = 150;
+Jogador.prototype.raiosLuz = 100;
 
 Jogador.prototype.tecla_Norte;
 Jogador.prototype.tecla_Sul;
@@ -50,9 +49,8 @@ Jogador.prototype.mouse;
 
 Jogador.prototype.direcoes = ["N", "S", "L", "O", "NO", "NL", "SO", "SL"];
 
-Jogador.prototype.cria = function (layerOfWall, layerGround) {
+Jogador.prototype.cria = function (layerOfWall) {
     this.wallLayers = layerOfWall;
-    this.chaoLayer = layerGround;
     this.game.physics.arcade.enable(this);
     this.enableBody = true;
     this.anchor.setTo(0.5, 1);
@@ -125,7 +123,7 @@ Jogador.prototype.update = function () {
     this.shadow.body.velocity.y = 0;
     this.shadow.body.velocity.x = 0;
     var radianos = Math.atan2(this.y - this.mouse.worldY, this.x - this.mouse.worldX);
-    this.desenhaLuz2(radianos);
+    this.desenhaLuz(radianos);
     var direcao = this.direcaoJogador(radianos);
     if (this.mouse.isDown) {
         this.atira();
@@ -154,47 +152,29 @@ Jogador.prototype.atira = function () {
 Jogador.prototype.desenhaLuz = function (radianos) {
     this.luz.clear();
     this.luz.lineStyle(1, 0xFFFF00, 1);
-//    this.luz.beginFill(0xffff00);
+    this.luz.beginFill(0xffff00);
     this.luz.moveTo(this.position.x, this.position.y - this.height / 2);
-    for (var i = 0; i < this.raiosLuz; i++) {
-        var anguloRaio = radianos - (this.aberturaLuz / 2) + (this.aberturaLuz / this.raiosLuz) * i;
-        var ultimoX = this.position.x;
-        var ultimoY = this.position.y;
-        for (var j = 1; j <= this.comprimentoLuz; j++) {
-            var atualX = Math.round(this.position.x - (2 * j) * Math.cos(anguloRaio));
-            var atualY = Math.round((this.position.y - this.height / 2) - (2 * j) * Math.sin(anguloRaio));
-//                if (wallsBitmap.getPixel32(landingX, landingY) == 0) {
-            ultimoX = atualX;
-            ultimoY = atualY;
-//                }
-//                else {
-//                    this.luz.lineTo(lastX, lastY);
-//                    break;
-//                }
-        }
-        this.luz.lineTo(ultimoX, ultimoY);
-    }
-    this.luz.lineTo(this.position.x, this.position.y - this.height / 2);
-    this.luz.endFill();
-};
-
-Jogador.prototype.desenhaLuz2 = function (radianos) {
-    this.luz.clear();
-    this.luz.lineStyle(1, 0xFFFF00, 1);
-//    this.luz.beginFill(0xffff00);
-    this.luz.moveTo(this.position.x, this.position.y - this.height / 2);
-    for (var i = 0; i < this.raiosLuz; i++) {
-        var anguloRaio = radianos - (this.aberturaLuz / 2) + (this.aberturaLuz / this.raiosLuz) * i;
+    for (var j = 0; j < this.raiosLuz; j++) {
+        var anguloRaio = radianos - (this.aberturaLuz / 2) + (this.aberturaLuz / this.raiosLuz) * j;
         var ultimoX = Math.round(this.position.x - (2 * this.comprimentoLuz) * Math.cos(anguloRaio));
         var ultimoY = Math.round((this.position.y - this.height / 2) - (2 * this.comprimentoLuz) * Math.sin(anguloRaio));
 
         this.linhaVisao.start.set(this.position.x, this.position.y - this.height / 2);
         this.linhaVisao.end.set(ultimoX, ultimoY);
 
-        var listaTiles = this.wallLayers.getRayCastTiles(this.linhaVisao, 4, false, false);
-        if (listaTiles.length != 0) {
-            ultimoX = this.wallLayers.getTileX(listaTiles[0].x);
-            ultimoY = this.wallLayers.getTileY(listaTiles[0].y);
+        var listaTiles = this.wallLayers.getRayCastTiles(this.linhaVisao, 15, true, true);
+        var menorDistancia = this.comprimentoLuz * 2;
+        for(var i = 0; i < listaTiles.length; i++){
+            var xTile = listaTiles[i].x * listaTiles[i].width;
+            var yTile = listaTiles[i].y * listaTiles[i].height;
+            var xAtual = Math.abs(this.position.x - xTile);
+            var yAtual = Math.abs(this.position.y - yTile);
+            var distanciaAtual = Math.sqrt(xAtual * xAtual + yAtual * yAtual);
+            if(menorDistancia > distanciaAtual){
+                menorDistancia = distanciaAtual;
+                ultimoX = xTile + listaTiles[i].width/2;
+                ultimoY = yTile + listaTiles[i].height/2;
+            }
         }
         this.luz.lineTo(ultimoX, ultimoY);
     }

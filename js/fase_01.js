@@ -19,7 +19,7 @@ Calciumtrice.Fase_01.prototype = {
         this.mapa.setCollisionBetween(1, 1000, true, 'walls');
         
         this.player = this.mapa.createFromObject('itens', 15, 'heroi', 0, true, true, Jogador);
-        this.player.cria(this.layerWalls, this.layerGround);
+        this.player.cria(this.layerWalls);
         this.camera.follow(this.player);
         
         this.porta = this.mapa.createFromObject('itens', 16, 'heroi', 0, true, true);
