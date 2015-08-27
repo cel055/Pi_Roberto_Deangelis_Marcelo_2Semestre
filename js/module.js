@@ -2,7 +2,7 @@
  * Created by knash on 15-03-14.
  */
 
-Module = function(game, key) {
+var Module = function(game, key) {
     Phaser.Tilemap.call(this, game, key);
     this.game = game;
     this.tilemap = game.add.tilemap(key);
@@ -12,15 +12,10 @@ Module = function(game, key) {
 Module.prototype = Object.create(Phaser.Tilemap.prototype);
 Module.prototype.constructor = Module;
 
-Module.prototype = {
-    // Pass through to the Phaser.TileMap createLayer function
-    createLayer: function(args) {
+Module.prototype.createLayer = function(args) {
         return this.tilemap.createLayer.apply(this.tilemap, arguments);
-    },
-
-    // Expects strings for the layer names
-    // Returns a map containing the layers
-    createLayers: function(args) {
+    };
+Module.prototype.createLayers = function(args) {
         var result = {};
         var key;
         for (var i = 0; i < arguments.length; i++) {
@@ -28,10 +23,9 @@ Module.prototype = {
             result[key] = this.tilemap.createLayer(key);
         }
         return result;
-    },
+    };
 
-    // Searches the object layer for a specific type
-    findObjectsByType: function(type) {
+Module.prototype.findObjectsByType = function(type) {
         var self = this;
         var result = [];
         this.tilemap.objects['objetos'].forEach(function(element) {
@@ -44,9 +38,9 @@ Module.prototype = {
             }
         });
         return result;
-    },
+    };
 
-    getCollisionSprites: function(layer, group, tileX, tileY) {
+    Module.prototype.getCollisionSprites = function(layer, group, tileX, tileY) {
         tileX = tileX || 0;
         tileY = tileY || 0;
 
@@ -62,9 +56,9 @@ Module.prototype = {
             result.push(sprite);
         });
         return result;
-    },
+    };
 
-    spriteFromObject: function(element, group) {
+    Module.prototype.spriteFromObject = function(element, group) {
         var sprite = group.create(element.x, element.y, element.properties.sprite);
 
         // Copy all properties to the sprite
@@ -74,9 +68,9 @@ Module.prototype = {
         });
 
         return sprite;
-    },
+    };
     
-    createFromObject: function (name, gid, key, frame, exists, autoCull, CustomClass, adjustY) {
+    Module.prototype.createFromObject = function (name, gid, key, frame, exists, autoCull, CustomClass, adjustY) {
     var group = this.game.world;
     if (typeof exists === 'undefined') {
         exists = true;
@@ -125,4 +119,3 @@ Module.prototype = {
         }
     }
 }
-};

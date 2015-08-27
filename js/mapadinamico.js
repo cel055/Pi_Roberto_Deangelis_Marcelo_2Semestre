@@ -9,14 +9,18 @@ Calciumtrice.Mapa_Dinamico.prototype = {
         this.mapaGlobal = new Module(this.game, 'mapaGlobalJSON');
         this.modules = {};
         this.modules['casa-00'] = new Module(this.game, 'casaJSON');
+        console.log(this.mapaGlobal);
         
 //        this.mapaGlobal.addTilesetImage('tileset_tiled', 'grassLandTileset');
         this.layerChao = this.mapaGlobal.createLayer('chao');
+        this.layerParede = this.mapaGlobal.createLayer('paredes');
         this.layerChao.resizeWorld();
         
+        this.mapaGlobal.setCollisionBetween(1, 1000, true, 'paredes');
         
         this.player = this.mapaGlobal.createFromObject('objetos', 8, 'heroi', 0, true, true, Jogador);
-        this.player.cria();
+        console.log(this.player);
+        this.player.cria(this.layerParede ,this.layerChao);
         
         // Place the subMaps
         this.subMaps = {};
@@ -52,5 +56,6 @@ Calciumtrice.Mapa_Dinamico.prototype = {
     },
     update: function () {        
         this.game.physics.arcade.overlap(this.player.shadow, this.doorGroup, this.doorHandler, null, this);
+        this.game.physics.arcade.collide(this.player.shadow, this.layerParede);
     }
 };

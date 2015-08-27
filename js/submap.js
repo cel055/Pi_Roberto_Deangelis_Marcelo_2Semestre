@@ -16,6 +16,8 @@ SubMap = function(module, tileX, tileY) {
         if (this.tileLayers.hasOwnProperty(key)) {
             layer = this.tileLayers[key];
             layer.fixedToCamera = false;
+            //Speed at which this layer scrolls horizontally, relative to the camera 
+            //(e.g. scrollFactorX of 0.5 scrolls half as quickly as the 'normal' camera-locked layers do).
             layer.scrollFactorX = 0;
             layer.scrollFactorY = 0;
             layer.position.set(this.tileX*32, this.tileY*32);

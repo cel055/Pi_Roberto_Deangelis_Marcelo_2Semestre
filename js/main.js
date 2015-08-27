@@ -9,6 +9,7 @@ function main(){
     Calciumtrice.game.state.add('game', Calciumtrice.Game);
     Calciumtrice.game.state.add('menu', Calciumtrice.Menu);
     Calciumtrice.game.state.add('mapaDinamico', Calciumtrice.Mapa_Dinamico);
+    Calciumtrice.game.state.add('tutorial', Calciumtrice.Mapa_tutorial);
     Calciumtrice.game.state.add('fase_01', Calciumtrice.Fase_01);
     Calciumtrice.game.state.add('fase_02', Calciumtrice.Fase_02);
     Calciumtrice.game.state.add('fase_03', Calciumtrice.Fase_03);
