@@ -8,8 +8,7 @@ SubMap = function(module, tileX, tileY) {
     this.tileX = tileX || 0;
     this.tileY = tileY || 0;
 
-    this.tileLayers = this.module.createLayers(
-        'chao', 'paredes', 'ladoDeFora');
+    this.tileLayers = this.module.createLayers('chao', 'paredes', 'ladoDeFora');
 
     // We need to be able to position these.
     var layer;

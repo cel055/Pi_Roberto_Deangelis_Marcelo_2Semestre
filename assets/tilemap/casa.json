@@ -28,7 +28,7 @@
          "name":"ladoDeFora",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":11,
          "x":0,
          "y":0

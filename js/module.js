@@ -75,6 +75,7 @@ Module.prototype = {
 
         return sprite;
     },
+    
     createFromObject: function (name, gid, key, frame, exists, autoCull, CustomClass, adjustY) {
     var group = this.game.world;
     if (typeof exists === 'undefined') {
