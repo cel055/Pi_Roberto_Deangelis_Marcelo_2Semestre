@@ -12,6 +12,6 @@ create: function(){
         
     },
     novoJogo: function(){
-        this.game.state.start('mapaDinamico');   
+        this.game.state.start('fase_01');   
     }
 }

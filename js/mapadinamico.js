@@ -20,22 +20,22 @@ Calciumtrice.Mapa_Dinamico.prototype = {
         
         this.player = this.mapaGlobal.createFromObject('objetos', 8, 'heroi', 0, true, true, Jogador);
         console.log(this.player);
-        this.player.cria(this.layerParede ,this.layerChao);
+        this.player.cria(this.layerParede);
         
         // Place the subMaps
-        this.subMaps = {};
-		//Roberto - aqui pega tudos os objtetos do tipo submap e adiciona no objeto subMaps
-        var subMapLocations = this.mapaGlobal.findObjectsByType('submap');
-        var location, tileX, tileY;
-        for (var i = 0; i < subMapLocations.length; i++) {
-            location = subMapLocations[i];
-            tileX = location.x / 32;
-            tileY = location.y / 32;
-			//linha 12 modules
-            this.subMaps[location.name] = new SubMap(this.modules[location.properties.sub_map], tileX, tileY);
-        }
-        this.subMaps['casa00'].setIndoorAlpha(0);
-        
+//        this.subMaps = {};
+//		//Roberto - aqui pega tudos os objtetos do tipo submap e adiciona no objeto subMaps
+//        var subMapLocations = this.mapaGlobal.findObjectsByType('submap');
+//        var location, tileX, tileY;
+//        for (var i = 0; i < subMapLocations.length; i++) {
+//            location = subMapLocations[i];
+//            tileX = location.x / 32;
+//            tileY = location.y / 32;
+//			//linha 12 modules
+//            this.subMaps[location.name] = new SubMap(this.modules[location.properties.sub_map], tileX, tileY);
+//        }
+//        this.subMaps['casa00'].setIndoorAlpha(0);
+//        
         this.doorGroup = this.game.add.group();
         var tiledDoors = this.mapaGlobal.findObjectsByType('porta');
         this.doors = {};
