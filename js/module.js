@@ -12,9 +12,9 @@ var Module = function(game, key) {
 Module.prototype = Object.create(Phaser.Tilemap.prototype);
 Module.prototype.constructor = Module;
 
-Module.prototype.createLayer = function(args) {
-        return this.tilemap.createLayer.apply(this.tilemap, arguments);
-    };
+//Module.prototype.createLayer = function(args) {
+//        return this.tilemap.createLayer.apply(this.tilemap, arguments);
+//    };
 Module.prototype.createLayers = function(args) {
         var result = {};
         var key;

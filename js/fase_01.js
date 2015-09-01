@@ -8,12 +8,12 @@ Calciumtrice.Fase_01.prototype = {
         
         this.easystar = new EasyStar.js();
         
-        this.mapa = new TileMap(this.game, "fase_01");
+        this.mapa = new TileMap(this.game, "pathTeste");
         
         this.mapa.addTilesetImage("tileset_tiled", "grassLandTileset");
 
         this.layerGround = this.mapa.createLayer("ground");
-        this.layerDetails = this.mapa.createLayer("details");
+//        this.layerDetails = this.mapa.createLayer("details");
         this.layerWalls = this.mapa.createLayer("walls");
         
         this.layerGround.resizeWorld();
@@ -26,23 +26,23 @@ Calciumtrice.Fase_01.prototype = {
         
         this.easystar.setAcceptableTiles([1]); 
         
-        this.easystar.enableDiagonals(); 
+//        this.easystar.enableDiagonals(); 
         
         
-        this.player = this.mapa.createFromObject('itens', 15, 'heroi', 0, true, true, Jogador);
+        this.player = this.mapa.createFromObject('objectsTile', 9, 'heroi', 0, true, true, Jogador);
         this.player.cria(this.layerWalls, this.layerGround);
         this.camera.follow(this.player);
         
         
-        this.inimigo = this.mapa.createFromObject('itens', 16, 'heroi', 0, true, true, Inimigo);
+        this.inimigo = this.mapa.createFromObject('objectsTile', 6, 'heroi', 0, true, true, Inimigo);
         this.inimigo.cria();
-        this.inimigo.mask = this.player.luz;
+//        this.inimigo.mask = this.player.luz;
         
 //        this.porta = this.mapa.createFromObject('itens', 16, 'heroi', 0, true, true);
 //        this.porta.enableBody = true;
 //        this.game.physics.arcade.enable(this.porta);
         
-        this.game.world.bringToTop(this.layerDetails);
+//        this.game.world.bringToTop(this.layerDetails);
     },
     update: function () {
         this.game.physics.arcade.collide(this.player.shadow, this.layerWalls);
@@ -63,7 +63,7 @@ function convert(_obj){
         
         elemento[i] = [];
         for(var j = 0; j < _obj[i].length; j++){
-            elemento[i][j] = (_obj[i][j]).index;
+            elemento[i][j] = _obj[i][j].index;
         }
     }
     return elemento;
