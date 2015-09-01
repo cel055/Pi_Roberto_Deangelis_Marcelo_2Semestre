@@ -7,7 +7,7 @@ var Jogador = function (_game, _x, _y, _key, _frame) {
 
     this.vida = 100;
 
-    this.numTiros = 0;
+    this.numTiros = 25;
     this.tempoProximoTiro = 0;
     this.carregando = false;
 
@@ -117,6 +117,7 @@ Jogador.prototype.criaSombra = function () {
     this.game.physics.arcade.enable(this.shadow);
     this.shadow.alpha = 0;
     this.shadow.anchor.setTo(0.5, 1);
+    this.shadow.body.immovable = true;
 };
 
 Jogador.prototype.update = function () {
@@ -125,6 +126,9 @@ Jogador.prototype.update = function () {
     var radianos = Math.atan2(this.y - this.mouse.worldY, this.x - this.mouse.worldX);
     this.desenhaLuz(radianos);
     var direcao = this.direcaoJogador(radianos);
+    if(this.tecla_Recarrega.isDown && !this.carregando){
+        this.recarrega();
+    }
     if (this.mouse.isDown) {
         this.atira();
     }
@@ -136,11 +140,26 @@ Jogador.prototype.update = function () {
     this.position.setTo(this.shadow.position.x, this.shadow.position.y);
 };
 
+Jogador.prototype.recarrega = function (){
+    this.carregando = true;
+    this.game.time.events.add(Phaser.Timer.SECOND * this.tempoRecarregamentoArma, this.fimRecarrega, this);
+};
+
+Jogador.prototype.fimRecarrega = function (){
+    this.numTiros = 25;
+    this.carregando = false;
+};
+
 Jogador.prototype.atira = function () {
+    if(this.numTiros <= 0){
+        this.recarrega();
+        return ;
+    }
     if (this.carregando) {
         return;
     }
     if (this.game.time.now > this.tempoProximoTiro && this.tiros.countDead() > 0) {
+        this.numTiros--;
         this.tempoProximoTiro = this.game.time.now + this.frequenciaTiro;
         var tiro = this.tiros.getFirstExists(false);
         tiro.reset(this.position.x, this.position.y - this.height / 2);
