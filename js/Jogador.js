@@ -8,7 +8,7 @@ var Jogador = function (_game, _x, _y, _key, _frame) {
     this.vida = 100;
 
     this.mira;
-    this.numTiros = 25;
+    this.numTiros = 12;
     this.tempoProximoTiro = 0;
     this.carregando = false;
 
@@ -31,14 +31,14 @@ Jogador.prototype.constructor = Jogador;
 
 Jogador.prototype.velocidade = 50;
 
-Jogador.prototype.velocidadeTiro = 500;
-Jogador.prototype.frequenciaTiro = 100;
+Jogador.prototype.velocidadeTiro = 1000;
+Jogador.prototype.frequenciaTiro = 200;
 Jogador.prototype.maxTiros = 50;
-Jogador.prototype.tempoRecarregamentoArma = 3;
+Jogador.prototype.tempoRecarregamentoArma = 1;
 
 Jogador.prototype.aberturaLuz = Math.PI / 3;
 Jogador.prototype.comprimentoLuz = 150;
-Jogador.prototype.raiosLuz = 100;
+Jogador.prototype.raiosLuz = 200;
 
 Jogador.prototype.tecla_Norte;
 Jogador.prototype.tecla_Sul;
@@ -179,8 +179,8 @@ Jogador.prototype.desenhaLuz = function (radianos) {
     this.luz.moveTo(this.position.x, this.position.y - this.height / 2);
     for (var j = 0; j < this.raiosLuz; j++) {
         var anguloRaio = radianos - (this.aberturaLuz / 2) + (this.aberturaLuz / this.raiosLuz) * j;
-        var ultimoX = Math.round(this.position.x - (2 * this.comprimentoLuz) * Math.cos(anguloRaio));
-        var ultimoY = Math.round((this.position.y - this.height / 2) - (2 * this.comprimentoLuz) * Math.sin(anguloRaio));
+        var ultimoX = this.position.x - (2 * this.comprimentoLuz) * Math.cos(anguloRaio);
+        var ultimoY = (this.position.y - this.height / 2) - (2 * this.comprimentoLuz) * Math.sin(anguloRaio);
 
         this.linhaVisao.start.set(this.position.x, this.position.y - this.height / 2);
         this.linhaVisao.end.set(ultimoX, ultimoY);

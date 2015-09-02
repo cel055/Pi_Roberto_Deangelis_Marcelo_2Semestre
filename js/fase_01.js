@@ -12,6 +12,9 @@ Calciumtrice.Fase_01.prototype = {
         
         this.mapa.addTilesetImage("tileset_tiled", "grassLandTileset");
 
+        this.layerGroundVisivel = this.mapa.createLayer("ground");
+        this.layerGroundVisivel.alpha = 0.5;
+        
         this.layerGround = this.mapa.createLayer("ground");
 //        this.layerDetails = this.mapa.createLayer("details");
         this.layerWalls = this.mapa.createLayer("walls");
@@ -36,7 +39,9 @@ Calciumtrice.Fase_01.prototype = {
         
         this.inimigo = this.mapa.createFromObject('objectsTile', 6, 'heroi', 0, true, true, Inimigo);
         this.inimigo.cria();
-//        this.inimigo.mask = this.player.luz;
+        this.inimigo.mask = this.player.luz;
+        
+        this.layerGround.mask = this.player.luz;
         
 //        this.porta = this.mapa.createFromObject('itens', 16, 'heroi', 0, true, true);
 //        this.porta.enableBody = true;
@@ -51,6 +56,7 @@ Calciumtrice.Fase_01.prototype = {
         this.game.physics.arcade.overlap(this.player.shadow, this.porta, this.proximaFase);
         this.inimigo.pathFind(this.easystar, this.layerGround, this.player.shadow);
         
+        this.layerGround.alpha = 0.5 + Math.random() * 0.5;
     },
     proximaFase: function(){
         Calciumtrice.game.state.start('fase_02');
