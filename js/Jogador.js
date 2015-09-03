@@ -36,9 +36,9 @@ Jogador.prototype.frequenciaTiro = 200;
 Jogador.prototype.maxTiros = 50;
 Jogador.prototype.tempoRecarregamentoArma = 1;
 
-Jogador.prototype.aberturaLuz = Math.PI / 3;
-Jogador.prototype.comprimentoLuz = 150;
-Jogador.prototype.raiosLuz = 200;
+Jogador.prototype.aberturaLuz = Math.PI * 2;
+Jogador.prototype.comprimentoLuz = 100;
+Jogador.prototype.raiosLuz = 360;
 
 Jogador.prototype.tecla_Norte;
 Jogador.prototype.tecla_Sul;
@@ -54,7 +54,7 @@ Jogador.prototype.cria = function (layerOfWall) {
     this.wallLayers = layerOfWall;
     this.game.physics.arcade.enable(this);
     this.enableBody = true;
-    this.anchor.setTo(0.5, 1);
+    this.anchor.setTo(0.5, 0.8);
     this.game.camera.follow(this);
     this.criaAnimacoes();
 
@@ -173,26 +173,36 @@ Jogador.prototype.atira = function () {
 };
 
 Jogador.prototype.desenhaLuz = function (radianos) {
+    var comprimentoGrande = 2 * this.comprimentoLuz;
+    var comprimentoPequeno = this.comprimentoLuz;
+    var distAtual, anguloRaio, ultimoX, ultimoY, listaTiles, menorDistancia;
+    var xTile, yTile, xAtual, yAtual, distanciaAtual;
+    
     this.luz.clear();
     this.luz.lineStyle(1, 0xFFFF00, 1);
     this.luz.beginFill(0xffff00);
-    this.luz.moveTo(this.position.x, this.position.y - this.height / 2);
+    this.luz.moveTo(this.position.x, this.position.y);
     for (var j = 0; j < this.raiosLuz; j++) {
-        var anguloRaio = radianos - (this.aberturaLuz / 2) + (this.aberturaLuz / this.raiosLuz) * j;
-        var ultimoX = this.position.x - (2 * this.comprimentoLuz) * Math.cos(anguloRaio);
-        var ultimoY = (this.position.y - this.height / 2) - (2 * this.comprimentoLuz) * Math.sin(anguloRaio);
+        if (j >= 135 && j <= 225) {
+            distAtual = comprimentoGrande * 2;
+        } else {
+            distAtual = comprimentoPequeno;
+        }
+        anguloRaio = radianos - (this.aberturaLuz / 2) + (this.aberturaLuz / this.raiosLuz) * j;
+        ultimoX = this.position.x - distAtual * Math.cos(anguloRaio);
+        ultimoY = this.position.y - distAtual * Math.sin(anguloRaio);
 
-        this.linhaVisao.start.set(this.position.x, this.position.y - this.height / 2);
+        this.linhaVisao.start.set(this.position.x, this.position.y);
         this.linhaVisao.end.set(ultimoX, ultimoY);
 
-        var listaTiles = this.wallLayers.getRayCastTiles(this.linhaVisao, 15, true, true);
-        var menorDistancia = this.comprimentoLuz * 2;
+        listaTiles = this.wallLayers.getRayCastTiles(this.linhaVisao, 1, true, true);
+        menorDistancia = distAtual;
         for (var i = 0; i < listaTiles.length; i++) {
-            var xTile = listaTiles[i].x * listaTiles[i].width;
-            var yTile = listaTiles[i].y * listaTiles[i].height;
-            var xAtual = Math.abs(this.position.x - xTile);
-            var yAtual = Math.abs(this.position.y - yTile);
-            var distanciaAtual = Math.sqrt(xAtual * xAtual + yAtual * yAtual);
+            xTile = listaTiles[i].x * listaTiles[i].width;
+            yTile = listaTiles[i].y * listaTiles[i].height;
+            xAtual = Math.abs(this.position.x - xTile);
+            yAtual = Math.abs(this.position.y - yTile);
+            distanciaAtual = Math.sqrt(xAtual * xAtual + yAtual * yAtual);
             if (menorDistancia > distanciaAtual) {
                 menorDistancia = distanciaAtual;
                 ultimoX = xTile + listaTiles[i].width / 2;
@@ -201,7 +211,7 @@ Jogador.prototype.desenhaLuz = function (radianos) {
         }
         this.luz.lineTo(ultimoX, ultimoY);
     }
-    this.luz.lineTo(this.position.x, this.position.y - this.height / 2);
+    this.luz.lineTo(this.position.x, this.position.y);
     this.luz.endFill();
 };
 
