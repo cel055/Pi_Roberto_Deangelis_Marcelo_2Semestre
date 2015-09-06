@@ -195,7 +195,7 @@ Jogador.prototype.desenhaLuz = function (radianos) {
         this.linhaVisao.start.set(this.position.x, this.position.y);
         this.linhaVisao.end.set(ultimoX, ultimoY);
 
-        listaTiles = this.wallLayers.getRayCastTiles(this.linhaVisao, 1, true, true);
+        listaTiles = this.wallLayers.getRayCastTiles(this.linhaVisao, 16, true, true);
         menorDistancia = distAtual;
         for (var i = 0; i < listaTiles.length; i++) {
             xTile = listaTiles[i].x * listaTiles[i].width;
