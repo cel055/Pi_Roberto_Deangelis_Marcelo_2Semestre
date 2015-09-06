@@ -5,6 +5,7 @@ Calciumtrice.Preload = function(){};
 Calciumtrice.Preload.prototype ={
     preload: function(){
         this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loading');
+        this.preloadBar.anchor.setTo(0,5);
         this.load.setPreloadSprite(this.preloadBar);
         
         this.load.tilemap('fase_01', 'assets/tilemap/fase_01.json', null, Phaser.Tilemap.TILED_JSON);
@@ -14,10 +15,12 @@ Calciumtrice.Preload.prototype ={
         this.load.tilemap('mapaGlobalJSON', 'assets/tilemap/mapacomCasa.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('casaJSON', 'assets/tilemap/casa.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('pathTeste', 'assets/tilemap/mapaFinderTeste.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('testeMapZumbiPath', 'assets/tilemap/mapaComVariosZombies.json', null, Phaser.Tilemap.TILED_JSON);
         
         this.load.image('grassLandTileset', 'assets/tileset/grassland.png');
         this.load.image('door', 'assets/sprites/porta.png');
         this.load.spritesheet('heroi', 'assets/sprites/char.png', 55.5, 64.8);
+        this.load.spritesheet('tilesetSpriteSheet', 'assets/sprites/dungeon_tileset_calciumtrice.png', 16, 16);
         this.load.spritesheet('tiro', 'assets/sprites/bala.png', 14, 8);
         this.load.spritesheet('botaoExemplo', 'assets/sprites/button_sprite_sheet.png', 193, 71);
     },

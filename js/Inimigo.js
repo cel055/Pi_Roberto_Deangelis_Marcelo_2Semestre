@@ -1,5 +1,11 @@
 var Inimigo = function(_game, _x, _y, _key, _frame){
     Phaser.Sprite.call(this, _game, _x, _y, _key, _frame);
+    
+    //alterações feitas pelo roberto e na linah 109 3 111
+    this.x = _x;
+    this.y = _y;
+    //-----------------------------
+    
     this.direcao;
     this.parado = false;
     this.velocidade = 90;  
@@ -99,7 +105,10 @@ Inimigo.prototype.criaSombra = function () {
     this.game.physics.arcade.enable(this.shadow);
     this.shadow.alpha = 0;
     this.shadow.anchor.setTo(0.5, 1);
-    this.shadow.position.set(100, 100);
+    
+//    this.shadow.position.set(100, 100);
+    
+    this.shadow.position.set(this.x, this.y);
 };
 
 Inimigo.prototype.update = function(){

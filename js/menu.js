@@ -12,6 +12,6 @@ create: function(){
         
     },
     novoJogo: function(){
-        this.game.state.start('fase_01');   
+        this.game.state.start('mapaComVariosZombies');   
     }
 }

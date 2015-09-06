@@ -13,6 +13,7 @@ function main(){
     Calciumtrice.game.state.add('fase_01', Calciumtrice.Fase_01);
     Calciumtrice.game.state.add('fase_02', Calciumtrice.Fase_02);
     Calciumtrice.game.state.add('fase_03', Calciumtrice.Fase_03);
+    Calciumtrice.game.state.add('mapaComVariosZombies', Calciumtrice.MapaComVariosZombies);
     
     Calciumtrice.game.state.start('boot');
 }

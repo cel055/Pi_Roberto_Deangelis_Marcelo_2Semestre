@@ -9,7 +9,6 @@ Calciumtrice.Mapa_Dinamico.prototype = {
         this.mapaGlobal = new Module(this.game, 'mapaGlobalJSON');
         this.modules = {};
         this.modules['casa-00'] = new Module(this.game, 'casaJSON');
-        console.log(this.mapaGlobal);
         
         this.mapaGlobal.addTilesetImage('tileset_tiled', 'grassLandTileset');
         this.layerChao = this.mapaGlobal.createLayer('chao');
