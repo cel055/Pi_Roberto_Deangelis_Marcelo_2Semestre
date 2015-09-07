@@ -1,17 +1,19 @@
-var Inimigo = function(_game, _x, _y, _key, _frame){
+var Inimigo = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi) {
     Phaser.Sprite.call(this, _game, _x, _y, _key, _frame);
-    
+    this.easyStar = _easyStar;
+    this.layer = _layer;
+    this.heroi = _heroi;
     //alterações feitas pelo roberto e na linah 109 3 111
     this.x = _x;
     this.y = _y;
     //-----------------------------
-    
+
     this.direcao;
     this.parado = false;
-    this.velocidade = 90;  
-    
+    this.velocidade = 180;
+
     this.tint = 0xFE2E2E;
-    
+
     this.shadow;
 }
 
@@ -27,17 +29,17 @@ Inimigo.prototype.nordeste = [26, 25, 24, 23, 22, 21, 20, 19, 18];
 Inimigo.prototype.suldoeste = [53, 52, 51, 50, 49, 48, 47, 46, 45];
 Inimigo.prototype.suldeste = [71, 70, 69, 68, 67, 66, 65, 64, 63];
 
-Inimigo.prototype.cria = function(){
+Inimigo.prototype.cria = function () {
     this.game.physics.enable(this);
     this.enableBody = true;
-    this.body.immovable = true;   
-    this.anchor.setTo(0.5, 1); 
-    
+    this.body.immovable = true;
+    this.anchor.setTo(0.5, 1);
+
     this.criaSombra();
     this.criaAnimacoes();
 };
 
-Inimigo.prototype.criaAnimacoes = function(){
+Inimigo.prototype.criaAnimacoes = function () {
     this.animations.add('N', this.norte, 10, true);
     this.animations.add('S', this.sul, 10, true);
     this.animations.add('L', this.leste, 10, true);
@@ -45,113 +47,92 @@ Inimigo.prototype.criaAnimacoes = function(){
     this.animations.add('NO', this.noroeste, 10, true);
     this.animations.add('NL', this.nordeste, 10, true);
     this.animations.add('SO', this.suldoeste, 10, true);
-    this.animations.add('SL', this.suldeste, 10, true);   
+    this.animations.add('SL', this.suldeste, 10, true);
 }
 
-Inimigo.prototype.pathFind = function(easystar, layer, heroi){
-    var xInimigo = layer.getTileX(this.shadow.x), 
-        yInimigo = layer.getTileY(this.shadow.y), 
-        xHeroi = layer.getTileX(heroi.x), 
-        yHeroi = layer.getTileY(heroi.y),
-        esteInimigo = this;
-    
-    easystar.findPath(xInimigo, yInimigo, xHeroi, yHeroi, function(path){
-        esteInimigo.pathFinded(path);
-    });
-    
-    easystar.calculate();
+Inimigo.prototype.pathFind = function () {
+    var xInimigo = this.layer.getTileX(this.shadow.position.x),
+            yInimigo = this.layer.getTileY(this.shadow.position.y),
+            xHeroi = this.layer.getTileX(this.heroi.position.x),
+            yHeroi = this.layer.getTileY(this.heroi.position.y),
+            esteInimigo = this;
+
+    if (Math.abs(xInimigo - xHeroi) > 5 || Math.abs(yInimigo - yHeroi) > 5) {
+        this.parado = true;
+        return;
+    } else {
+        this.easyStar.findPath(xInimigo, yInimigo, xHeroi, yHeroi, function (path) {
+            esteInimigo.pathFinded(path);
+        });
+        this.easyStar.calculate();
+    }
 };
 
-Inimigo.prototype.pathFinded = function(path){
-    if(!path){
+Inimigo.prototype.pathFinded = function (path) {
+    if (!path || !path[1]) {
         this.parado = true;
         return;
     }
     this.parado = false;
-    proximoPontoX = path[1].x;
-    proximoPontoY = path[1].y;
-    atualPontoX = path[0].x;
-    atualPontoY = path[0].y;
+    var proximoPontoX = path[1].x;
+    var proximoPontoY = path[1].y;
+    var atualPontoX = path[0].x;
+    var atualPontoY = path[0].y;
 
-    if (proximoPontoX < atualPontoX && proximoPontoY < atualPontoY){
+    if (proximoPontoX < atualPontoX && proximoPontoY < atualPontoY) {
         this.direcao = "NO";
         this.animations.play("NO");
-    }else if (proximoPontoX == atualPontoX && proximoPontoY < atualPontoY){
+        this.shadow.body.velocity.x = -this.velocidade;
+        this.shadow.body.velocity.y = -this.velocidade;
+    } else if (proximoPontoX == atualPontoX && proximoPontoY < atualPontoY) {
         this.direcao = "N";
         this.animations.play("N");
-    }else if (proximoPontoX > atualPontoX && proximoPontoY < atualPontoY){
+        this.shadow.body.velocity.y = -this.velocidade;
+    } else if (proximoPontoX > atualPontoX && proximoPontoY < atualPontoY) {
         this.direcao = "NL";
         this.animations.play("NL");
-    }else if (proximoPontoX < atualPontoX && proximoPontoY == atualPontoY){
+        this.shadow.body.velocity.x = this.velocidade;
+        this.shadow.body.velocity.y = -this.velocidade;
+    } else if (proximoPontoX < atualPontoX && proximoPontoY == atualPontoY) {
         this.direcao = "O";
         this.animations.play("O");
-    }else if (proximoPontoX > atualPontoX && proximoPontoY == atualPontoY){
+        this.shadow.body.velocity.x = -this.velocidade;
+    } else if (proximoPontoX > atualPontoX && proximoPontoY == atualPontoY) {
         this.direcao = "L";
         this.animations.play("L");
-    }else if (proximoPontoX > atualPontoX && proximoPontoY > atualPontoY){
+        this.shadow.body.velocity.x = this.velocidade;
+    } else if (proximoPontoX > atualPontoX && proximoPontoY > atualPontoY) {
         this.direcao = "SL";
         this.animations.play("SL");
-    }else if (proximoPontoX == atualPontoX && proximoPontoY > atualPontoY){
+        this.shadow.body.velocity.x = this.velocidade;
+        this.shadow.body.velocity.y = this.velocidade;
+    } else if (proximoPontoX == atualPontoX && proximoPontoY > atualPontoY) {
         this.direcao = "S";
         this.animations.play("S");
-    }else if (proximoPontoX < atualPontoX && proximoPontoY > atualPontoY){
+        this.shadow.body.velocity.y = this.velocidade;
+    } else if (proximoPontoX < atualPontoX && proximoPontoY > atualPontoY) {
         this.direcao = "SO";
         this.animations.play("SO");
+        this.shadow.body.velocity.x = -this.velocidade;
+        this.shadow.body.velocity.y = this.velocidade;
     }
-}
+    this.position.setTo(this.shadow.position.x, this.shadow.position.y);
+//    this.anda();
+};
 
 Inimigo.prototype.criaSombra = function () {
     this.shadow = this.game.add.sprite(this.position.x, this.position.y, 'tilesetSpriteSheet', 960);
     this.game.physics.arcade.enable(this.shadow);
     this.shadow.alpha = 0;
     this.shadow.anchor.setTo(0.5, 1);
-    
+
 //    this.shadow.position.set(100, 100);
-    
+
     this.shadow.position.set(this.x, this.y);
 };
 
-Inimigo.prototype.update = function(){
-    this.body.velocity.x = 0;
-    this.body.velocity.y = 0;
-    if(this.parado){
-        return;
-    }
-    if (this.direcao == "N") {
-        this.shadow.body.velocity.y = -this.velocidade;
-    }
-    else if (this.direcao == "S")
-    {
-        this.shadow.body.velocity.y = this.velocidade;
-    }
-    else if (this.direcao == "L") {
-        this.shadow.body.velocity.x = this.velocidade;
-    }
-    else if (this.direcao == "O")
-    {
-        this.shadow.body.velocity.x = -this.velocidade;
-    }
-    else if (this.direcao == "SL")
-    {
-        this.shadow.body.velocity.x = this.velocidade;
-        this.shadow.body.velocity.y = this.velocidade;
-    }
-    else if (this.direcao == "NO")
-    {
-        this.shadow.body.velocity.x = -this.velocidade;
-        this.shadow.body.velocity.y = -this.velocidade;   	
-    }
-    else if (this.direcao == "SO")
-    {
-        this.shadow.body.velocity.x = -this.velocidade;
-        this.shadow.body.velocity.y = this.velocidade;    	
-    }
-
-    else if (this.direcao == "NL")
-    {
-        this.shadow.body.velocity.x = this.velocidade;
-        this.shadow.body.velocity.y = -this.velocidade;
-    }
-    
-    this.position.setTo(this.shadow.position.x, this.shadow.position.y);
-}
+Inimigo.prototype.update = function () {
+    this.shadow.body.velocity.x = 0;
+    this.shadow.body.velocity.y = 0;
+    this.pathFind();
+};

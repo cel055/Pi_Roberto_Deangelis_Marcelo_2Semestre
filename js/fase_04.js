@@ -38,7 +38,7 @@ Calciumtrice.MapaComVariosZombies.prototype = {
             var inimigoI = this.inimigosLocal[i];
             var x = inimigoI.x;
             var y = inimigoI.y;
-            var inimigo = new Inimigo(this.game, x, y, 'heroi', 0);
+            var inimigo = new Inimigo(this.game, x, y, 'heroi', 0, this.easystar, this.layerChao, this.jogador.shadow);
             inimigo.cria();
 //            inimigo.mask = this.jogador.luz;
             this.inimigos.add(inimigo);
@@ -106,9 +106,9 @@ Calciumtrice.MapaComVariosZombies.prototype = {
         
         this.game.physics.arcade.overlap(this.jogador.shadow, this.doorGroup, this.doorHandler, null, this);
         
-        this.inimigos.forEach(function(inimigo){
-            inimigo.pathFind(this.easystar, this.layerChao, this.jogador.shadow);
-        }, this);
+//        this.inimigos.forEach(function(inimigo){
+//            inimigo.pathFind(this.easystar, this.layerChao, this.jogador.shadow);
+//        }, this);
         
         this.inimigos.sort('y', Phaser.Group.SORT_ASCENDING);
     }
