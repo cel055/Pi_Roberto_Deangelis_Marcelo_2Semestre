@@ -29,8 +29,11 @@ Calciumtrice.MapaComVariosZombies.prototype = {
         
         this.easystar.setAcceptableTiles([7]); 
         
+        this.tirosJogador = this.game.add.text(100, 500, '25/25', { font: "32px Arial", fill: "#ffffff", align: "center" });
+        this.tirosJogador.fixedToCamera = true;
+        
         this.jogador = this.mapaGlobal.createFromObject('objetos', 9, 'heroi', 0, true, true, Jogador);
-        this.jogador.cria(this.layerParede);
+        this.jogador.cria(this.layerParede, this.tirosJogador);
         
         this.inimigos = this.game.add.group();
         this.inimigosLocal = this.mapaGlobal.findObjectsByType('spawnInimigo');
@@ -70,8 +73,7 @@ Calciumtrice.MapaComVariosZombies.prototype = {
         this.vidaJogador = this.game.add.text(100, 450, this.jogador.vida + '/100', { font: "32px Arial", fill: "#ffffff", align: "center" });
         this.vidaJogador.fixedToCamera = true;
         
-        this.tirosJogador = this.game.add.text(100, 500, this.jogador.numTiros + '/25', { font: "32px Arial", fill: "#ffffff", align: "center" });
-        this.tirosJogador.fixedToCamera = true;
+        this.jogador.setGroupInimigos(this.inimigos);
     },
     convert: function(_obj){
         var elemento = [];

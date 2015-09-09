@@ -8,13 +8,16 @@ var Jogador = function (_game, _x, _y, _key, _frame) {
     this.vida = 100;
 
     this.mira;
-    this.numTiros = 12;
+    this.numTiros = 25;
     this.tempoProximoTiro = 0;
     this.carregando = false;
+    this.hud;
 
     this.tiros;
     this.luz;
     this.shadow;
+    
+    this.groupInimigos;
 
     this.norte = [17, 16, 15, 14, 13, 12, 11, 10, 9];
     this.sul = [62, 61, 60, 59, 58, 57, 56, 55, 54];
@@ -50,7 +53,7 @@ Jogador.prototype.mouse;
 
 Jogador.prototype.direcoes = ["N", "S", "L", "O", "NO", "NL", "SO", "SL"];
 
-Jogador.prototype.cria = function (layerOfWall) {
+Jogador.prototype.cria = function (layerOfWall, _hud) {
     this.wallLayers = layerOfWall;
     this.game.physics.arcade.enable(this);
     this.enableBody = true;
@@ -67,6 +70,7 @@ Jogador.prototype.cria = function (layerOfWall) {
     this.criaTiros();
     this.mira = this.game.add.sprite(0, 0, 'mira');
     this.mira.anchor.setTo(0.5);
+    this.hud = _hud;
 };
 
 Jogador.prototype.criaTiros = function () {
@@ -123,7 +127,12 @@ Jogador.prototype.criaSombra = function () {
     this.shadow.body.immovable = true;
 };
 
+Jogador.prototype.setGroupInimigos = function (_groupInimigos){
+    this.groupInimigos = _groupInimigos;
+};
+
 Jogador.prototype.update = function () {
+    var _self = this;
     this.shadow.body.velocity.y = 0;
     this.shadow.body.velocity.x = 0;
     var radianos = Math.atan2(this.y - this.mouse.worldY, this.x - this.mouse.worldX);
@@ -142,6 +151,13 @@ Jogador.prototype.update = function () {
         this.jogadorAnda(direcao);
     }
     this.position.setTo(this.shadow.position.x, this.shadow.position.y);
+    
+    this.tiros.forEach(function (_bala){
+        _self.game.physics.arcade.collide(_bala, _self.groupInimigos, _self.mataBala);
+        _self.game.physics.arcade.collide(_bala, _self.wallLayers, _self.mataBalaParede);
+    },this);
+    
+    this.hud.setText(this.numTiros + "/25");
 };
 
 Jogador.prototype.recarrega = function () {
@@ -328,6 +344,11 @@ Jogador.prototype.recebeAtaque = function (ataque) {
     return true;
 };
 
-Jogador.prototype.mataBala = function (bala) {
+Jogador.prototype.mataBala = function (bala, _inimigo) {
+    bala.kill();
+    _inimigo.kill();
+};
+
+Jogador.prototype.mataBalaParede = function (bala, parede){
     bala.kill();
 };
