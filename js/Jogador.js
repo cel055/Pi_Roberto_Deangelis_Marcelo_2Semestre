@@ -14,7 +14,7 @@ var Jogador = function (_game, _x, _y, _key, _frame) {
     this.hud;
 
     this.tiros;
-    this.luz;
+    this.luz = this.game.add.graphics(0, 0);
     this.shadow;
     
     this.groupInimigos;
@@ -27,6 +27,13 @@ var Jogador = function (_game, _x, _y, _key, _frame) {
     this.nordeste = [26, 25, 24, 23, 22, 21, 20, 19, 18];
     this.suldoeste = [53, 52, 51, 50, 49, 48, 47, 46, 45];
     this.suldeste = [71, 70, 69, 68, 67, 66, 65, 64, 63];
+    
+    
+    this.game.physics.arcade.enable(this);
+    this.enableBody = true;
+    this.anchor.setTo(0.5, 0.8);
+    this.game.camera.follow(this);
+    this.criaSombra();
 };
 
 Jogador.prototype = Object.create(Phaser.Sprite.prototype);
@@ -55,18 +62,12 @@ Jogador.prototype.direcoes = ["N", "S", "L", "O", "NO", "NL", "SO", "SL"];
 
 Jogador.prototype.cria = function (layerOfWall, _hud) {
     this.wallLayers = layerOfWall;
-    this.game.physics.arcade.enable(this);
-    this.enableBody = true;
-    this.anchor.setTo(0.5, 0.8);
-    this.game.camera.follow(this);
     this.criaAnimacoes();
 
     if (!this.tecla_Norte || !this.tecla_Sul || !this.tecla_Leste || !this.tecla_Oeste || !this.mouse) {
         this.criaInputs();
     }
 
-    this.luz = this.game.add.graphics(0, 0);
-    this.criaSombra();
     this.criaTiros();
     this.mira = this.game.add.sprite(0, 0, 'mira');
     this.mira.anchor.setTo(0.5);

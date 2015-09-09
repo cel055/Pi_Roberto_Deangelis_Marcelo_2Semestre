@@ -44,8 +44,16 @@ Calciumtrice.Fase_05.prototype = {
         this.tirosJogador = this.game.add.text(100, 500, '25/25', { font: "32px Arial", fill: "#ffffff", align: "center" });
         this.tirosJogador.fixedToCamera = true;
         
+        this.doorGroup = this.game.add.group();
+        var tiledDoors = this.mapaGlobal.findObjectsByType('porta');
+        this.doors = {};
+        for(var i = 0 ; i < tiledDoors.length; i++){
+            var doorSprite = this.mapaGlobal.spriteFromObject(tiledDoors[i], this.doorGroup);
+            Door.init(this.game);
+            this.doors[doorSprite.properties.casa] = new Door(this.game, doorSprite); 
+        };
+        
         this.jogador = this.mapaGlobal.createFromObject('objetos', 9, 'heroi', 0, true, true, Jogador);
-        this.jogador.cria(this.layerParede, this.tirosJogador);
         
         this.inimigos = this.game.add.group();
         this.inimigosLocal = this.mapaGlobal.findObjectsByType('spawnInimigo');
@@ -62,15 +70,7 @@ Calciumtrice.Fase_05.prototype = {
         this.layerChao.mask = this.jogador.luz;
         
         this.inimigos.sort();
-        
-        this.doorGroup = this.game.add.group();
-        var tiledDoors = this.mapaGlobal.findObjectsByType('porta');
-        this.doors = {};
-        for(var i = 0 ; i < tiledDoors.length; i++){
-            var doorSprite = this.mapaGlobal.spriteFromObject(tiledDoors[i], this.doorGroup);
-            Door.init(this.game);
-            this.doors[doorSprite.properties.casa] = new Door(this.game, doorSprite); 
-        }        
+        this.jogador.cria(this.layerParede, this.tirosJogador);
     },
     convert: function(_obj){
         var elemento = [];
