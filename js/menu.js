@@ -14,6 +14,6 @@ Calciumtrice.Menu.prototype = {
         this.mira.position.setTo(this.game.input.mousePointer.worldX, this.game.input.mousePointer.worldY);
     },
     novoJogo: function(){
-        this.game.state.start('mapaComVariosZombies');
+        this.game.state.start('fase_05');
     }
 }

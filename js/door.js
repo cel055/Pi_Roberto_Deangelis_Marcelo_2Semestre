@@ -14,7 +14,7 @@
     this.dentro = false;
 
     this.game.physics.arcade.enable(this.sprite);
-     this.sprite.anchor.setTo(0.5);
+     this.sprite.anchor.setTo(0.0, 0.5);
 };
 
 Door.prototype = Object.create(Phaser.Sprite.prototype);

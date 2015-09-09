@@ -16,9 +16,10 @@ Calciumtrice.Preload.prototype ={
         this.load.tilemap('casaJSON', 'assets/tilemap/casa.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('pathTeste', 'assets/tilemap/mapaFinderTeste.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('testeMapZumbiPath', 'assets/tilemap/mapaComVariosZombies.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('mapaSimples', 'assets/tilemap/mapaTesteTelhado.json', null, Phaser.Tilemap.TILED_JSON);
         
         this.load.image('grassLandTileset', 'assets/tileset/grassland.png');
-        this.load.image('door', 'assets/sprites/porta.png');
+        this.load.image('porta', 'assets/sprites/porta.png');
         this.load.spritesheet('heroi', 'assets/sprites/char.png', 55.5, 64.8);
         this.load.spritesheet('tilesetSpriteSheet', 'assets/sprites/dungeon_tileset_calciumtrice.png', 16, 16);
         this.load.spritesheet('tiro', 'assets/sprites/bala.png', 14, 8);

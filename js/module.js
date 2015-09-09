@@ -18,7 +18,7 @@ Module.prototype.constructor = Module;
 Module.prototype.createLayers = function(args) {
         var result = {};
         var key;
-        for (var i = 0; i < arguments.length; i++) {
+        for (var i = 0; i < args.length; i++) {
             key = arguments[i];
             result[key] = this.tilemap.createLayer(key);
         }
@@ -59,7 +59,7 @@ Module.prototype.findObjectsByType = function(type) {
     };
 
     Module.prototype.spriteFromObject = function(element, group) {
-        var sprite = group.create(element.x, element.y, element.properties.sprite);
+        var sprite = group.create(element.x, element.y, element.type);
 
         // Copy all properties to the sprite
         sprite.properties = {};
