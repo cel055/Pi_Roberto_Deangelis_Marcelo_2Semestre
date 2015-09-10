@@ -11,10 +11,13 @@ var Inimigo = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi) 
     this.direcao;
     this.parado = false;
     this.velocidade = 180;
+	this.vida = 100;
+	this.dano = 10;
 
     this.tint = 0xFE2E2E;
 
     this.shadow;
+	this.distancia = 15;
 }
 
 Inimigo.prototype = Object.create(Phaser.Sprite.prototype);
@@ -57,7 +60,7 @@ Inimigo.prototype.pathFind = function () {
             yHeroi = this.layer.getTileY(this.heroi.position.y),
             esteInimigo = this;
 
-    if (Math.abs(xInimigo - xHeroi) > 5 || Math.abs(yInimigo - yHeroi) > 5) {
+    if (Math.abs(xInimigo - xHeroi) > this.distancia || Math.abs(yInimigo - yHeroi) > this.distancia) {
         this.parado = true;
         return;
     } else {
@@ -130,6 +133,25 @@ Inimigo.prototype.criaSombra = function () {
 
     this.shadow.position.set(this.x, this.y);
 };
+
+Inimigo.prototype.recebeDano = function () {
+	var dano = 20;
+	this.vida -= dano;
+	if(this.vida <= 0){
+		this.kill();
+	}else{
+		this.explode();
+	}
+}
+
+Inimigo.prototype.explode = function () {
+	this.toon = this.game.add.sprite(this.position.x, this.position.y - 30, 'toon');
+	this.toon.anchor.setTo(0.5);
+    this.toon.animations.add('toon', null, 200, false);
+	this.toon.angle = Math.random()*360;
+	this.toon.scale.set(0.5);
+    this.toon.animations.play("toon");	
+}
 
 Inimigo.prototype.update = function () {
     this.shadow.body.velocity.x = 0;

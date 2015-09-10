@@ -24,6 +24,7 @@ Calciumtrice.Preload.prototype ={
         this.load.spritesheet('tilesetSpriteSheet', 'assets/sprites/dungeon_tileset_calciumtrice.png', 16, 16);
         this.load.spritesheet('tiro', 'assets/sprites/bala.png', 14, 8);
         this.load.spritesheet('botaoExemplo', 'assets/sprites/button_sprite_sheet.png', 193, 71);
+        this.load.spritesheet('toon', 'assets/sprites/toon.png', 96, 96);
         
         this.load.image('mira', 'assets/sprites/aim.png');
     },
