@@ -12,7 +12,8 @@ var Jogador = function (_game, _x, _y, _key, _frame) {
     this.tempoProximoTiro = 0;
     this.carregando = false;
     this.danoTiro = 25;
-    this.hud;
+    this.hudTiro;
+    this.hudVida;
 
     this.tiros;
     this.luz = this.game.add.graphics(0, 0);
@@ -61,7 +62,7 @@ Jogador.prototype.mouse;
 
 Jogador.prototype.direcoes = ["N", "S", "L", "O", "NO", "NL", "SO", "SL"];
 
-Jogador.prototype.cria = function (layerOfWall, _hud) {
+Jogador.prototype.cria = function (layerOfWall, _hudTiro, _hudVida) {
     this.wallLayers = layerOfWall;
     this.criaAnimacoes();
 
@@ -72,7 +73,8 @@ Jogador.prototype.cria = function (layerOfWall, _hud) {
     this.criaTiros();
     this.mira = this.game.add.sprite(0, 0, 'mira');
     this.mira.anchor.setTo(0.5);
-    this.hud = _hud;
+    this.hudTiro = _hudTiro;
+    this.hudVida = _hudVida;
 };
 
 Jogador.prototype.criaTiros = function () {
@@ -159,7 +161,8 @@ Jogador.prototype.update = function () {
         _self.game.physics.arcade.collide(_bala, _self.wallLayers, _self.mataBalaParede);
     },this);
     
-    this.hud.setText(this.numTiros + "/25");
+    this.hudTiro.setText(this.numTiros + "/25");
+    this.hudVida.setText(this.vida + "/100");
 };
 
 Jogador.prototype.recarrega = function () {
