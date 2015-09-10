@@ -71,6 +71,7 @@ Calciumtrice.Fase_05.prototype = {
         
         this.inimigos.sort();
         this.jogador.cria(this.layerParede, this.tirosJogador);
+        this.jogador.setGroupInimigos(this.inimigos);
     },
     convert: function(_obj){
         var elemento = [];

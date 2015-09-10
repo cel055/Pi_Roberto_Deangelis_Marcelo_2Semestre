@@ -11,6 +11,7 @@ var Jogador = function (_game, _x, _y, _key, _frame) {
     this.numTiros = 25;
     this.tempoProximoTiro = 0;
     this.carregando = false;
+    this.danoTiro = 25;
     this.hud;
 
     this.tiros;
@@ -347,7 +348,7 @@ Jogador.prototype.recebeAtaque = function (ataque) {
 
 Jogador.prototype.mataBala = function (bala, _inimigo) {
     bala.kill();
-    _inimigo.kill();
+    _inimigo.recebeDano(this.danoTiro);
 };
 
 Jogador.prototype.mataBalaParede = function (bala, parede){
