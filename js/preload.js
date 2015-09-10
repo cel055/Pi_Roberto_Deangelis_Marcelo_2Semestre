@@ -16,7 +16,7 @@ Calciumtrice.Preload.prototype ={
         this.load.tilemap('casaJSON', 'assets/tilemap/casa.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('pathTeste', 'assets/tilemap/mapaFinderTeste.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('testeMapZumbiPath', 'assets/tilemap/mapaComVariosZombies.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('mapaSimples', 'assets/tilemap/mapaTesteTelhado.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('mapaSimples', 'assets/tilemap/mapa01.json', null, Phaser.Tilemap.TILED_JSON);
         
         this.load.image('grassLandTileset', 'assets/tileset/grassland.png');
         this.load.image('porta', 'assets/sprites/porta.png');
