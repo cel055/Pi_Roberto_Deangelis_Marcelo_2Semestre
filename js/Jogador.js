@@ -160,14 +160,18 @@ Jogador.prototype.update = function () {
     this.position.setTo(this.shadow.position.x, this.shadow.position.y);
     
     this.tiros.forEach(function (_bala){
-        _self.game.physics.arcade.collide(_bala, _self.groupInimigos, _self.mataBala);
-        _self.game.physics.arcade.collide(_bala, _self.wallLayers, _self.mataBalaParede);
+        _self.game.physics.arcade.collide(_bala, _self.groupInimigos, function(_Bala, _inimigo){
+            _self.mataBala(_Bala, _inimigo);
+        });
+        _self.game.physics.arcade.collide(_bala, _self.wallLayers, function(_Bala, parede){
+            _self.mataBalaParede(_Bala, parede);
+        });
     },this);
     
     this.game.physics.arcade.overlap(this.shadow, this.groupInimigos, function(_sombra, _inimigo){
         _self.recebeAtaque(_inimigo);
     });
-    this.hudTiro.setText(this.numTiros + "/25");
+    this.hudTiro.setText(this.numTiros);
     this.hudVida.setText(this.vida + "/100");
 };
 
@@ -360,8 +364,19 @@ Jogador.prototype.recebeAtaque = function (_inimigo) {
 Jogador.prototype.mataBala = function (bala, _inimigo) {
     bala.kill();
     _inimigo.recebeDano(this.danoTiro);
+    this.animacaoBala(bala);
 };
 
 Jogador.prototype.mataBalaParede = function (bala, parede){
     bala.kill();
+    this.animacaoBala(bala);
+};
+
+Jogador.prototype.animacaoBala = function(_bala){
+    this.toon = this.game.add.sprite(_bala.position.x, _bala.position.y, 'toon');
+    this.toon.anchor.setTo(0.5);
+    var animacao = this.toon.animations.add('toon', null, 200, false);
+    animacao.angle = Math.random() * 360;
+    this.toon.scale.set(0.5);
+    animacao.play(200,false,true);
 };
