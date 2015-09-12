@@ -29,6 +29,7 @@ Calciumtrice.Preload.prototype ={
         this.load.spritesheet('toon', 'assets/sprites/toon.png', 96, 96);
         
         this.load.audio('somMenu', 'assets/som/somMenu.ogg');
+        this.load.audio('somFase', 'assets/som/somDeFundoCalmo.ogg');
         this.load.audio('somZumbi', 'assets/som/sonsZumbi.ogg');
         
         this.load.image('mira', 'assets/sprites/aim.png');

@@ -30,7 +30,7 @@ var Forte = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _s
 	this.velocidade = 50;
 	this.dano = 50;
 	this.tint = 0xFF0000;
-	this.distancia = 20;
+	this.distancia = 15;
     this.velocidadeAtaque = 3;
 };
 

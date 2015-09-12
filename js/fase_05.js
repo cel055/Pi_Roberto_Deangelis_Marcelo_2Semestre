@@ -4,7 +4,11 @@ Calciumtrice.Fase_05 = function () {};
 
 Calciumtrice.Fase_05.prototype = {
     create: function () {
-        this.game.physics.startSystem(Phaser.Physics.ARCADE);
+        this.game.physics.startSystem(Phaser.Physics.ARCADE);		
+		
+        this.somFase = this.game.add.audio('somFase');
+        this.somFase.volume = 0.1;
+        this.somFase.loopFull();
         
         this.easystar = new EasyStar.js();
         
