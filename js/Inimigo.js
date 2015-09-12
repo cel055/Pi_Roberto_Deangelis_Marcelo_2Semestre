@@ -13,6 +13,8 @@ var Inimigo = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi) 
     this.velocidade = 180;
     this.vida = 100;
     this.dano = 10;
+    this.velocidadeAtaque = 1;
+    this.modoAtacando = true;
 
     this.tint = 0xFE2E2E;
 
@@ -158,3 +160,12 @@ Inimigo.prototype.update = function () {
     this.shadow.body.velocity.y = 0;
     this.pathFind();
 };
+
+Inimigo.prototype.ataque(){
+	if(this.modoAtacando){
+		this.modoAtacando = false;
+		this.game.time.events.add(Phaser.Timer.SECOND * this.velocidadeAtaque, function(){this.modoAtacando = true;}, this);
+		return true;
+	}
+	return false;
+}

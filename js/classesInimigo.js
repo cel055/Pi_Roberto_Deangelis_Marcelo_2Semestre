@@ -5,6 +5,7 @@ var Fraco = function  (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi) {
 	this.dano = 10;
 	this.tint = 0x00FF00;
 	this.distancia = 15;
+    this.velocidadeAtaque = 1;
 };
 
 Fraco.prototype = Object.create(Inimigo.prototype);
@@ -17,6 +18,7 @@ var Medio = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _t
 	this.dano = 15;
 	this.tint = 0x0000FF;
 	this.distancia = 13;
+    this.velocidadeAtaque = 2;
 };
 
 Medio.prototype = Object.create(Inimigo.prototype);
@@ -29,6 +31,7 @@ var Forte = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _t
 	this.dano = 50;
 	this.tint = 0xFF0000;
 	this.distancia = 50;
+    this.velocidadeAtaque = 3;
 };
 
 Forte.prototype = Object.create(Inimigo.prototype);
