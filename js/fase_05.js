@@ -4,15 +4,15 @@ Calciumtrice.Fase_05 = function () {};
 
 Calciumtrice.Fase_05.prototype = {
     create: function () {
-        this.game.physics.startSystem(Phaser.Physics.ARCADE);		
-		
+        this.game.physics.startSystem(Phaser.Physics.ARCADE);
+        
         this.somFase = this.game.add.audio('somFase');
         this.somFase.volume = 0.1;
         this.somFase.loopFull();
         
         this.easystar = new EasyStar.js();
         
-        this.mapaGlobal = new Module(this.game, 'mapaSimples');
+        this.mapaGlobal = new TileMap(this.game, 'mapaSimples');
         
         this.mapaGlobal.addTilesetImage('tileset_tiled', 'grassLandTileset');
         
@@ -46,61 +46,48 @@ Calciumtrice.Fase_05.prototype = {
         this.tirosJogador = this.game.add.text(76, 442, '25', { font: "24px Arial", fill: "#fdb317", align: "center" });
         this.tirosJogador.fixedToCamera = true;
         
-        this.doorGroup = this.game.add.group();
-        var tiledDoors = this.mapaGlobal.findObjectsByType('porta');
-        this.doors = {};
-        for(var i = 0 ; i < tiledDoors.length; i++){
-            var doorSprite = this.mapaGlobal.spriteFromObject(tiledDoors[i], this.doorGroup);
-            Door.init(this.game);
-            this.doors[doorSprite.properties.casa] = new Door(this.game, doorSprite); 
-        };
+        this.grupoPorta = this.game.add.group();
+        this.criaPortas('porta', this.mapaGlobal);
         
         this.jogador = this.mapaGlobal.createFromObject('objetos', 9, 'heroi', 0, true, true, Jogador);
-        this.criaAudio();
-        
-        this.inimigos = this.game.add.group();
-        this.inimigosFacilLocal = this.mapaGlobal.findObjectsByType('spawnInimigoFacil');
-        for(var i= 0;i <  this.inimigosFacilLocal.length; i++){
-            var inimigoI = this.inimigosFacilLocal[i];
-            var x = inimigoI.x;
-            var y = inimigoI.y;
-            var inimigo = new Fraco(this.game, x, y, 'heroi', 0, this.easystar, this.layerChao, this.jogador.shadow, this.somZumbi);
-            inimigo.cria();
-            inimigo.mask = this.jogador.luz;
-            this.inimigos.add(inimigo);
-        };
-        
-        this.inimigosMedioLocal = this.mapaGlobal.findObjectsByType('spawnInimigoMedio');
-        for(var i= 0; i < this.inimigosMedioLocal.length; i++){
-            var inimigoI = this.inimigosMedioLocal[i];
-            var x = inimigoI.x;
-            var y = inimigoI.y;
-            var inimigo = new Medio(this.game, x, y, 'heroi', 0, this.easystar, this.layerChao, this.jogador.shadow, this.somZumbi);
-            inimigo.cria();
-            inimigo.mask = this.jogador.luz;
-            this.inimigos.add(inimigo);
-        };
-        
-        this.inimigosDificilLocal = this.mapaGlobal.findObjectsByType('spawnInimigoDificil');
-        for(var i= 0; i < this.inimigosDificilLocal.length; i++){
-            var inimigoI = this.inimigosDificilLocal[i];
-            var x = inimigoI.x;
-            var y = inimigoI.y;
-            var inimigo = new Forte(this.game, x, y, 'heroi', 0, this.easystar, this.layerChao, this.jogador.shadow, this.somZumbi);
-            inimigo.cria();
-            inimigo.mask = this.jogador.luz;
-            this.inimigos.add(inimigo);
-        };
-        
         this.layerChao.mask = this.jogador.luz;
         
+        this.inimigos = this.game.add.group();
+        this.criaAudio();
+        this.criaInimigo('spawnInimigoFacil', Fraco);
+        this.criaInimigo('spawnInimigoMedio', Medio);
+        this.criaInimigo('spawnInimigoDificil', Forte);
         this.inimigos.sort();
         
         this.jogador.cria(this.layerParede, this.tirosJogador, this.vidaJogador);
         this.jogador.setGroupInimigos(this.inimigos);
     },
+    criaPortas: function(_tipo, _mapa){
+        var tiledDoors = _mapa.findObjectsByType(_tipo);
+        this.doors = {};
+        for(var i = 0 ; i < tiledDoors.length; i++){
+            var portaI = tiledDoors[i];
+            var x = tiledDoors[i].x;
+            var y = tiledDoors[i].y;
+            var doorSprite = _mapa.spriteFromObject(tiledDoors[i], this.grupoPorta);
+            this.doors[doorSprite.properties.casa] = new Door(this.game, doorSprite); 
+        };
+            Door.init(this.game);
+    },
+    criaInimigo: function(tipo, nivel){
+        this.inimigosLocal = this.mapaGlobal.findObjectsByType(tipo);
+        for(var i= 0;i <  this.inimigosLocal.length; i++){
+            var inimigoI = this.inimigosLocal[i];
+            var x = inimigoI.x;
+            var y = inimigoI.y;
+            var inimigo = new nivel(this.game, x, y, 'heroi', 0, this.easystar, this.layerChao, this.jogador.shadow, this.somZumbi);
+            inimigo.cria();
+            inimigo.mask = this.jogador.luz;
+            this.inimigos.add(inimigo);
+        };  
+    },
     criaAudio: function(){
-      this.somZumbi = this.game.add.audio('somZumbi');
+        this.somZumbi = this.game.add.audio('somZumbi');
         this.somZumbi.allowMultiple = true;
         this.somZumbi.addMarker('zumbi1', 0, 0.850);
         this.somZumbi.addMarker('zumbi2', 0.850, 1.560);
@@ -137,35 +124,15 @@ Calciumtrice.Fase_05.prototype = {
         }
     return elemento;
     },
-    doorHandler: function(player, doorSprite) {
+    macaneta: function(player, doorSprite) {
         var door = this.doors[doorSprite.properties.casa];
-
-        // This will update the doors "delta", telling us how far over the player is.
-//        door.overlapTrigger(player);
-        
-//        var alpha = door.delta;
-//        var alpha = door.delta;
         var _layer;
         for(var layer in this.layersTelhados){
             if(this.layersTelhados[layer].layer.name == doorSprite.properties.telhado){
-//                _layer = this.mapaGlobal.layers[i];
-//                _layer.alpha = -1;
-                console.log('porta');
                 door.overlapTrigger(player);
-//                this.mapaGlobal.layers[i].alpha = door.delta;
                 this.layersTelhados[layer].alpha = door.delta;
             }
         }
-//        this.subMaps[doorSprite.properties.parent].setIndoorAlpha(alpha);
-//        this.subMaps[doorSprite.properties.parent].setOutdoorAlpha(alpha);
-//        var _layer = this.mapaGlobal.layers[doorSprite.properties.telhado];
-        
-//        _layer.alpha = alpha;
-        
-//        this.isOutdoors = !door.isOpen();
-        
-        
-        
     },
     fimDeJogo: function(){
         
@@ -178,12 +145,8 @@ Calciumtrice.Fase_05.prototype = {
         this.game.physics.arcade.collide(this.inimigos.shadow, this.layerParede);        
         this.game.physics.arcade.collide(this.jogador.shadow, this.inimigos.shadow);
         
-        this.game.physics.arcade.overlap(this.jogador.shadow, this.doorGroup, this.doorHandler, null, this);
-        
-//        this.inimigos.forEach(function(inimigo){
-//            inimigo.pathFind(this.easystar, this.layerChao, this.jogador.shadow);
-//        }, this);
-        
+        this.game.physics.arcade.overlap(this.jogador.shadow, this.grupoPorta, this.macaneta, null, this);
+
         this.inimigos.sort('y', Phaser.Group.SORT_ASCENDING);
     },
     render: function(){
