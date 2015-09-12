@@ -62,7 +62,6 @@ Inimigo.prototype.pathFind = function () {
             yHeroi = this.layer.getTileY(this.heroi.position.y),
             esteInimigo = this;
     
-	this.easyStar.calculate();
 	
     if (Math.abs(xInimigo - xHeroi) > this.distancia || Math.abs(yInimigo - yHeroi) > this.distancia) {
         this.parado = true;
@@ -72,6 +71,7 @@ Inimigo.prototype.pathFind = function () {
 		this.easyStar.findPath(xInimigo, yInimigo, xHeroi, yHeroi, function (path) {
 			esteInimigo.pathFinded(path);
 		});
+		this.easyStar.calculate();
     }
 };
 
