@@ -2,6 +2,7 @@
 
 var Jogador = function (_game, _x, _y, _key, _frame) {
     Phaser.Sprite.call(this, _game, _x, _y, _key, _frame);
+    var self = this;
     this.wallLayers;
     this.linhaVisao = new Phaser.Line();
 
@@ -161,7 +162,9 @@ Jogador.prototype.update = function () {
         _self.game.physics.arcade.collide(_bala, _self.wallLayers, _self.mataBalaParede);
     },this);
     
-    this.game.physics.arcade.collide(this.shadow, this.groupInimigos, this.recebeAtaque);
+    this.game.physics.arcade.overlap(this.shadow, this.groupInimigos, function(_sombra, _inimigo){
+        _self.recebeAtaque(_inimigo);
+    });
     this.hudTiro.setText(this.numTiros + "/25");
     this.hudVida.setText(this.vida + "/100");
 };
@@ -342,7 +345,7 @@ Jogador.prototype.jogadorAnda = function (direcao) {
     this.animations.play(animacao);
 };
 
-Jogador.prototype.recebeAtaque = function (_heroi, _inimigo) {
+Jogador.prototype.recebeAtaque = function (_inimigo) {
     if(_inimigo.ataque()){
         this.vida -= _inimigo.dano;
     }
