@@ -1,4 +1,4 @@
-var Inimigo = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi) {
+var Inimigo = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _som) {
     Phaser.Sprite.call(this, _game, _x, _y, _key, _frame);
     this.easyStar = _easyStar;
     this.layer = _layer;
@@ -16,8 +16,7 @@ var Inimigo = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi) 
     this.velocidadeAtaque = 1;
     this.modoAtacando = true;
 	
-	this.sound;
-	this.soundTocando;
+	this.somZumbi = _som;
     this.tint = 0xFE2E2E;
 
     this.shadow;
@@ -69,8 +68,7 @@ Inimigo.prototype.pathFind = function () {
         this.parado = true;
         return;
     } else {	
-		this.soundTocando = this.game.rnd.pick(this.sound);	
-		this.soundTocando.play();
+		this.somZumbi.play(('zumbi' + (Math.ceil(Math.random()*24))));
 		this.easyStar.findPath(xInimigo, yInimigo, xHeroi, yHeroi, function (path) {
 			esteInimigo.pathFinded(path);
 		});

@@ -1,5 +1,5 @@
-var Fraco = function  (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi) {
-	Inimigo.call(this, _game, _x, _y, _key, _frame, _easyStar, _layer, _heroi);
+var Fraco = function  (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _som) {
+	Inimigo.call(this, _game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _som);
 	this.vida = 50;
 	this.velocidade = 150;
 	this.dano = 10;
@@ -11,8 +11,8 @@ var Fraco = function  (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi) {
 Fraco.prototype = Object.create(Inimigo.prototype);
 Fraco.prototype.constructor = Fraco;
 
-var Medio = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _toon) {
-	Inimigo.call(this, _game, _x, _y, _key, _frame, _easyStar, _layer, _heroi);
+var Medio = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _som) {
+	Inimigo.call(this, _game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _som);
 	this.vida = 75;
 	this.velocidade = 100;
 	this.dano = 15;
@@ -24,8 +24,8 @@ var Medio = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _t
 Medio.prototype = Object.create(Inimigo.prototype);
 Medio.prototype.constructor = Medio;
 
-var Forte = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _toon) {
-	Inimigo.call(this, _game, _x, _y, _key, _frame, _easyStar, _layer, _heroi);
+var Forte = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _som) {
+	Inimigo.call(this, _game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _som);
 	this.vida = 200;
 	this.velocidade = 50;
 	this.dano = 50;
