@@ -31,6 +31,8 @@ Calciumtrice.Preload.prototype ={
         this.load.audio('somMenu', 'assets/som/somMenu.ogg');
         this.load.audio('somFase', 'assets/som/somDeFundoCalmo.ogg');
         this.load.audio('somZumbi', 'assets/som/sonsZumbi.ogg');
+        this.load.audio('somPortaA', 'assets/som/doorOpen_1.ogg');
+        this.load.audio('somPortaF', 'assets/som/doorClose_4.ogg');
         
         this.load.image('mira', 'assets/sprites/aim.png');
         

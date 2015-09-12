@@ -11,7 +11,6 @@
     this.id = sprite.properties.id;
     // The percent this door is open, [0, 1]
     this.delta = 0;
-    this.dentro = false;
 
     this.game.physics.arcade.enable(this.sprite);
      this.sprite.anchor.setTo(0.0, 0.5);
@@ -21,8 +20,8 @@ Door.prototype = Object.create(Phaser.Sprite.prototype);
 Door.prototype.constructor = Door;
 
 Door.init = function(game) {
-//    Door.sound_open = game.add.audio('doorOpen_1');
-//    Door.sound_close = game.add.audio('doorClose_4');
+    Door.sound_open = game.add.audio('somPortaA');
+    Door.sound_close = game.add.audio('somPortaF');
 };
 
 Door.prototype.isOpen = function() {
@@ -51,11 +50,11 @@ Door.prototype.overlapTrigger = function(player) {
         this.delta = alpha;
 
         var isOpen = this.isOpen();
-    //        if (wasOpen !== isOpen) {
-    //            if (wasOpen) {
-    //                Door.sound_close.play();
-    //            } else {
-    //                Door.sound_open.play();
-    //            }
-    //        }
+            if (wasOpen !== isOpen) {
+                if (wasOpen) {
+                    Door.sound_close.play();
+                } else {
+                    Door.sound_open.play();
+                }
+            }
 };

@@ -1,5 +1,6 @@
 var TileMap = function (_game, _key, _tileWidth, _tileHeight, _width, _heigth) {
     Phaser.Tilemap.call(this, _game, _key, _tileWidth, _tileHeight, _width, _heigth);
+    this.tilemap = _game.add.tilemap(_key);
 };
 
 TileMap.prototype = Object.create(Phaser.Tilemap.prototype);
@@ -54,3 +55,27 @@ TileMap.prototype.createFromObject = function (name, gid, key, frame, exists, au
         }
     }
 };
+
+TileMap.prototype.spriteFromObject = function(element, group) {
+        var sprite = group.create(element.x, element.y, element.type);
+        sprite.properties = {};
+        Object.keys(element.properties).forEach(function(key){
+            sprite.properties[key] = element.properties[key];
+        });
+        return sprite;
+    };
+
+TileMap.prototype.findObjectsByType = function(type) {
+        var self = this;
+        var result = [];
+        this.tilemap.objects['objetos'].forEach(function(element) {
+            if (element.type === type) {
+                // Phaser uses top left, Tiled bottom left so we have to adjust the y position
+                // also keep in mind that the cup images are a bit smaller than the tile which is 16x16
+                // so they might not be placed in the exact pixel position as in Tiled
+                element.y -= self.tilemap.tileHeight;
+                result.push(element);
+            }
+        });
+        return result;
+    };

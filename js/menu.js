@@ -5,7 +5,7 @@ Calciumtrice.Menu = function () {
 
 Calciumtrice.Menu.prototype = {
     create: function () {
-        this.somMenu = this.game.add.audio('somMenu');
+        this.somMenu = this.game.add.audio('somMenu', undefined, undefined, 0.2);
         this.somMenu.play();
         this.game.add.sprite(0, 0, 'fundoMenu');
         this.btNovoJogo = this.add.button(this.game.world.centerX, this.game.world.centerY + 100, 'botaoMenu', this.novoJogo, this, 1, 0, 1);
