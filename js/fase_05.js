@@ -156,6 +156,6 @@ Calciumtrice.Fase_05.prototype = {
         this.inimigos.sort('y', Phaser.Group.SORT_ASCENDING);
     },
     render: function(){
-        Calciumtrice.game.debug.text(Calciumtrice.game.time.fps, 2, 14, "#00ff00"); 
+        Calciumtrice.game.debug.text(Calciumtrice.game.time.fps || '--', 2, 14, "#00ff00"); 
     }
 }
