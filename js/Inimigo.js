@@ -85,6 +85,7 @@ Inimigo.prototype.pathFinded = function (path) {
     var proximoPontoY = path[1].y;
     var atualPontoX = path[0].x;
     var atualPontoY = path[0].y;
+	
 
     if (proximoPontoX < atualPontoX && proximoPontoY < atualPontoY) {
         this.direcao = "NO";
@@ -124,6 +125,7 @@ Inimigo.prototype.pathFinded = function (path) {
         this.shadow.body.velocity.y = this.velocidade;
     }
     this.position.setTo(this.shadow.position.x, this.shadow.position.y);
+	
 //    this.anda();
 };
 
