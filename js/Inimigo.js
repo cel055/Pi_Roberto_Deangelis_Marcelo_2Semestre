@@ -16,6 +16,7 @@ var Inimigo = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, 
     this.velocidadeAtaque = 1;
     this.modoAtacando = true;
 	
+	this.tocando = true;
 	this.somZumbi = _som;
     this.tint = 0xFE2E2E;
 
@@ -66,9 +67,10 @@ Inimigo.prototype.pathFind = function () {
 	
     if (Math.abs(xInimigo - xHeroi) > this.distancia || Math.abs(yInimigo - yHeroi) > this.distancia) {
         this.parado = true;
+		this.tocando = true;
         return;
     } else {	
-		this.somZumbi.play(('zumbi' + (Math.ceil(Math.random()*24))));
+		if(this.tocando){this.somZumbi.play(('zumbi' + (Math.ceil(Math.random()*24)))); this.tocando = false}
 		this.easyStar.findPath(xInimigo, yInimigo, xHeroi, yHeroi, function (path) {
 			esteInimigo.pathFinded(path);
 		});
