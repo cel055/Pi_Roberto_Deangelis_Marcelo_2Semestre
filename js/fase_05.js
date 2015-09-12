@@ -70,6 +70,7 @@ Calciumtrice.Fase_05.prototype = {
         this.layerChao.mask = this.jogador.luz;
         
         this.inimigos.sort();
+        
         this.jogador.cria(this.layerParede, this.tirosJogador, this.vidaJogador);
         this.jogador.setGroupInimigos(this.inimigos);
     },
