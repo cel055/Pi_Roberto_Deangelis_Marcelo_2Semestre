@@ -50,7 +50,7 @@ Jogador.prototype.maxTiros = 50;
 Jogador.prototype.tempoRecarregamentoArma = 1;
 
 Jogador.prototype.aberturaLuz = Math.PI * 2;
-Jogador.prototype.comprimentoLuz = 100;
+Jogador.prototype.comprimentoLuz = 75;
 Jogador.prototype.raiosLuz = 360;
 
 Jogador.prototype.tecla_Norte;
@@ -251,67 +251,67 @@ Jogador.prototype.direcaoJogador = function (radianos) {
     }
     if (angulo > -112 && angulo < -67) {
         //cima N
-        return this.direcoes[0];
+        return 0;
     }
     if (angulo > 67 && angulo < 112) {
         //baixo S
-        return this.direcoes[1];
+        return 1;
     }
     if (angulo > -22 && angulo < 22) {
         //direita L
-        return this.direcoes[2];
+        return 2;
     }
     if (angulo > 157 || angulo < -157) {
         //esquerda O
-        return this.direcoes[3];
+        return 3;
     }
     if (angulo > -157 && angulo < -112) {
         //cima esquerda NO
-        return this.direcoes[4];
+        return 4;
     }
     if (angulo > -67 && angulo < -22) {
         //cima direita NE
-        return this.direcoes[5];
+        return 5;
     }
     if (angulo > 112 && angulo < 157) {
         //baixo esquerda SO
-        return this.direcoes[6];
+        return 6;
     }
     //baixao direita SE
-    return this.direcoes[7];
+    return 7;
 };
 
 Jogador.prototype.jogadorGira = function (direcao) {
     switch (direcao) {
-        case this.direcoes[0]:
+        case 0:
             this.frame = 17;
             break;
-        case this.direcoes[1]:
+        case 1:
             this.frame = 62;
             break;
-        case this.direcoes[2]:
+        case 2:
             this.frame = 35;
             break;
         case this.direcoes[3]:
             this.frame = 44;
             break;
-        case this.direcoes[4]:
+        case 4:
             this.frame = 8;
             break;
-        case this.direcoes[5]:
+        case 5:
             this.frame = 24;
             break;
-        case this.direcoes[6]:
+        case 6:
             this.frame = 52;
             break;
-        case this.direcoes[7]:
+        case 7:
             this.frame = 71;
             break;
     }
 };
 
 Jogador.prototype.jogadorAnda = function (direcao) {
-    var animacao = direcao;
+    var animacao = this.direcoes[direcao];
     var invertido = false;
     var velocidadeAtual = this.velocidade;
 
@@ -321,13 +321,13 @@ Jogador.prototype.jogadorAnda = function (direcao) {
 
     if (this.tecla_Norte.isDown) {
         this.shadow.body.velocity.y -= velocidadeAtual;
-        if (direcao.indexOf("S") != -1) {
+        if (this.direcoes[direcao].indexOf("S") != -1) {
             animacao = "rev_" + animacao;
             invertido = true;
         }
     } else if (this.tecla_Sul.isDown) {
         this.shadow.body.velocity.y += velocidadeAtual;
-        if (direcao.indexOf("N") != -1) {
+        if (this.direcoes[direcao].indexOf("N") != -1) {
             animacao = "rev_" + animacao;
             invertido = true;
         }
@@ -335,12 +335,12 @@ Jogador.prototype.jogadorAnda = function (direcao) {
 
     if (this.tecla_Oeste.isDown) {
         this.shadow.body.velocity.x -= velocidadeAtual;
-        if (direcao.indexOf("L") != -1 && !invertido) {
+        if (this.direcoes[direcao].indexOf("L") != -1 && !invertido) {
             animacao = "rev_" + animacao;
         }
     } else if (this.tecla_Leste.isDown) {
         this.shadow.body.velocity.x += velocidadeAtual;
-        if (direcao.indexOf("O") != -1 && !invertido) {
+        if (this.direcoes[direcao].indexOf("O") != -1 && !invertido) {
             animacao = "rev_" + animacao;
         }
     }
