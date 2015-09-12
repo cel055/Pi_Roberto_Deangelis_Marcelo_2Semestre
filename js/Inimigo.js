@@ -161,7 +161,7 @@ Inimigo.prototype.update = function () {
     this.pathFind();
 };
 
-Inimigo.prototype.ataque(){
+Inimigo.prototype.ataque = function (){
 	if(this.modoAtacando){
 		this.modoAtacando = false;
 		this.game.time.events.add(Phaser.Timer.SECOND * this.velocidadeAtaque, function(){this.modoAtacando = true;}, this);
