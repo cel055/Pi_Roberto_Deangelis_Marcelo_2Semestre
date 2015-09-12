@@ -160,7 +160,7 @@ Jogador.prototype.update = function () {
         _self.game.physics.arcade.collide(_bala, _self.groupInimigos, _self.mataBala);
         _self.game.physics.arcade.collide(_bala, _self.wallLayers, _self.mataBalaParede);
     },this);
-    
+    this.game.physics.arcade.collide(this, this.groupInimigos, this.recebeAtaque);
     this.hudTiro.setText(this.numTiros + "/25");
     this.hudVida.setText(this.vida + "/100");
 };
@@ -341,8 +341,10 @@ Jogador.prototype.jogadorAnda = function (direcao) {
     this.animations.play(animacao);
 };
 
-Jogador.prototype.recebeAtaque = function (ataque) {
-    this.vida -= ataque;
+Jogador.prototype.recebeAtaque = function (_heroi, _inimigo) {
+    if(_inimigo.ataque()){
+        this.vida -= _inimigo.dano;
+    }
     if (this.vida <= 0) {
         return false;
     }
