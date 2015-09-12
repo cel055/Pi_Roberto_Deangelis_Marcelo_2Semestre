@@ -148,18 +148,7 @@ Inimigo.prototype.recebeDano = function () {
     this.vida -= dano;
     if (this.vida <= 0) {
         this.kill();
-    } else {
-        this.explode();
     }
-};
-
-Inimigo.prototype.explode = function () {
-    this.toon = this.game.add.sprite(this.position.x, this.position.y - 30, 'toon');
-    this.toon.anchor.setTo(0.5);
-    var animacao = this.toon.animations.add('toon', null, 200, false);
-    animacao.angle = Math.random() * 360;
-    this.toon.scale.set(0.5);
-    animacao.play(200,false,true);
 };
 
 Inimigo.prototype.update = function () {
