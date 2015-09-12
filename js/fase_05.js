@@ -33,12 +33,13 @@ Calciumtrice.Fase_05.prototype = {
         this.easystar.setAcceptableTiles([7]); 
         
         this.hud = this.game.add.sprite(50, 400, 'hud');
+        this.hud.scale.set(0.6);
         this.hud.fixedToCamera = true;
         
-        this.vidaJogador = this.game.add.text(100, 450, '100/100', { font: "32px Arial", fill: "#ffffff", align: "center" });
+        this.vidaJogador = this.game.add.text(76, 502, '100/100', { font: "24px Arial", fill: "#fdb317", align: "center" });
         this.vidaJogador.fixedToCamera = true;
         
-        this.tirosJogador = this.game.add.text(100, 500, '25/25', { font: "32px Arial", fill: "#ffffff", align: "center" });
+        this.tirosJogador = this.game.add.text(76, 442, '25', { font: "24px Arial", fill: "#fdb317", align: "center" });
         this.tirosJogador.fixedToCamera = true;
         
         this.doorGroup = this.game.add.group();
