@@ -138,10 +138,12 @@ Jogador.prototype.setGroupInimigos = function (_groupInimigos){
 
 Jogador.prototype.update = function () {
     var _self = this;
+    var mouseX = this.mouse.worldX;
+    var mouseY = this.mouse.worldY;
     this.shadow.body.velocity.y = 0;
     this.shadow.body.velocity.x = 0;
-    var radianos = Math.atan2(this.y - this.mouse.worldY, this.x - this.mouse.worldX);
-    this.mira.position.setTo(this.mouse.worldX, this.mouse.worldY);
+    var radianos = Math.atan2(this.y - mouseY, this.x - mouseX);
+    this.mira.position.setTo(mouseX, mouseY);
     this.desenhaLuz(radianos);
     var direcao = this.direcaoJogador(radianos);
     if (this.tecla_Recarrega.isDown && !this.carregando) {
@@ -150,10 +152,10 @@ Jogador.prototype.update = function () {
     if (this.mouse.isDown) {
         this.atira();
     }
-    if (this.tecla_Norte.isUp && this.tecla_Sul.isUp && this.tecla_Leste.isUp && this.tecla_Oeste.isUp) {
-        this.jogadorGira(direcao);
-    } else {
+    if (this.tecla_Norte.isDown || this.tecla_Sul.isDown || this.tecla_Leste.isDown || this.tecla_Oeste.isDown) {
         this.jogadorAnda(direcao);
+    } else {
+        this.jogadorGira(direcao);
     }
     this.position.setTo(this.shadow.position.x, this.shadow.position.y);
     
