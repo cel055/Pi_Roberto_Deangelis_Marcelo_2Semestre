@@ -55,21 +55,45 @@ Calciumtrice.Fase_05.prototype = {
         
         this.jogador = this.mapaGlobal.createFromObject('objetos', 9, 'heroi', 0, true, true, Jogador);
         
-        this.inimigos = this.game.add.group();
-        this.inimigosLocal = this.mapaGlobal.findObjectsByType('spawnInimigo');
-        for(var i= 0, inimigoLenght = this.inimigosLocal.length; i < inimigoLenght; i++){
-            var inimigoI = this.inimigosLocal[i];
+        this.inimigosFacil = this.game.add.group();
+        this.inimigosFacilLocal = this.mapaGlobal.findObjectsByType('spawnInimigoFacil');
+        for(var i= 0;i <  this.inimigosFacilLocal.length; i++){
+            var inimigoI = this.inimigosFacilLocal[i];
             var x = inimigoI.x;
             var y = inimigoI.y;
-            var inimigo = new Inimigo(this.game, x, y, 'heroi', 0, this.easystar, this.layerChao, this.jogador.shadow);
+            var inimigo = new Fraco(this.game, x, y, 'heroi', 0, this.easystar, this.layerChao, this.jogador.shadow);
             inimigo.cria();
             inimigo.mask = this.jogador.luz;
-            this.inimigos.add(inimigo);
+            this.inimigosFacil.add(inimigo);
+        };
+        
+        this.inimigosMedio = this.game.add.group();
+        this.inimigosMedioLocal = this.mapaGlobal.findObjectsByType('spawnInimigoMedio');
+        for(var i= 0; i < this.inimigosMedioLocal.length; i++){
+            var inimigoI = this.inimigosMedioLocal[i];
+            var x = inimigoI.x;
+            var y = inimigoI.y;
+            var inimigo = new Medio(this.game, x, y, 'heroi', 0, this.easystar, this.layerChao, this.jogador.shadow);
+            inimigo.cria();
+            inimigo.mask = this.jogador.luz;
+            this.inimigosMedio.add(inimigo);
+        };
+        
+        this.inimigosDificil = this.game.add.group();
+        this.inimigosDificilLocal = this.mapaGlobal.findObjectsByType('spawnInimigoDificil');
+        for(var i= 0; i < this.inimigosDificilLocal.length; i++){
+            var inimigoI = this.inimigosDificilLocal[i];
+            var x = inimigoI.x;
+            var y = inimigoI.y;
+            var inimigo = new Forte(this.game, x, y, 'heroi', 0, this.easystar, this.layerChao, this.jogador.shadow);
+            inimigo.cria();
+            inimigo.mask = this.jogador.luz;
+            this.inimigosDificil.add(inimigo);
         };
         
         this.layerChao.mask = this.jogador.luz;
         
-        this.inimigos.sort();
+//        this.inimigos.sort();
         
         this.jogador.cria(this.layerParede, this.tirosJogador, this.vidaJogador);
         this.jogador.setGroupInimigos(this.inimigos);
@@ -115,10 +139,16 @@ Calciumtrice.Fase_05.prototype = {
         
     },
     update: function () {   
-        this.game.physics.arcade.collide(this.jogador.shadow, this.layerParede);        
-        this.game.physics.arcade.collide(this.inimigos, this.layerParede);        
-        this.game.physics.arcade.collide(this.inimigos.shadow, this.layerParede);
-        this.game.physics.arcade.collide(this.jogador.shadow, this.inimigos.shadow);
+        this.game.physics.arcade.collide(this.jogador.shadow, this.layerParede);   
+        
+        this.game.physics.arcade.collide(this.inimigosMedio.shadow, this.layerParede);        
+        this.game.physics.arcade.collide(this.jogador.shadow, this.inimigosMedio.shadow);
+        
+        this.game.physics.arcade.collide(this.inimigosDificil.shadow, this.layerParede);        
+        this.game.physics.arcade.collide(this.jogador.shadow, this.inimigosDificil.shadow);
+        
+        this.game.physics.arcade.collide(this.inimigosFacil.shadow, this.layerParede);        
+        this.game.physics.arcade.collide(this.jogador.shadow, this.inimigosFacil.shadow);
         
         this.game.physics.arcade.overlap(this.jogador.shadow, this.doorGroup, this.doorHandler, null, this);
         
@@ -126,6 +156,6 @@ Calciumtrice.Fase_05.prototype = {
 //            inimigo.pathFind(this.easystar, this.layerChao, this.jogador.shadow);
 //        }, this);
         
-        this.inimigos.sort('y', Phaser.Group.SORT_ASCENDING);
+//        this.inimigos.sort('y', Phaser.Group.SORT_ASCENDING);
     }
 }

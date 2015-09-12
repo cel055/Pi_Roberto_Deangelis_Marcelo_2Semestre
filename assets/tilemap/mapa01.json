@@ -142,54 +142,6 @@
                 {
                  "gid":6,
                  "height":32,
-                 "id":5,
-                 "name":"inimigo",
-                 "properties":
-                    {
-                     "local":"global"
-                    },
-                 "rotation":0,
-                 "type":"spawnInimigo",
-                 "visible":true,
-                 "width":32,
-                 "x":1911.27,
-                 "y":161.455
-                }, 
-                {
-                 "gid":6,
-                 "height":32,
-                 "id":6,
-                 "name":"inimigo",
-                 "properties":
-                    {
-                     "local":"global"
-                    },
-                 "rotation":0,
-                 "type":"spawnInimigo",
-                 "visible":true,
-                 "width":32,
-                 "x":1302.18,
-                 "y":108.242
-                }, 
-                {
-                 "gid":6,
-                 "height":32,
-                 "id":7,
-                 "name":"inimigo",
-                 "properties":
-                    {
-                     "local":"global"
-                    },
-                 "rotation":0,
-                 "type":"spawnInimigo",
-                 "visible":true,
-                 "width":32,
-                 "x":314.303,
-                 "y":102.182
-                }, 
-                {
-                 "gid":6,
-                 "height":32,
                  "id":8,
                  "name":"inimigo",
                  "properties":
@@ -197,75 +149,11 @@
                      "local":"global"
                     },
                  "rotation":0,
-                 "type":"spawnInimigo",
+                 "type":"spawnInimigoChefe",
                  "visible":true,
                  "width":32,
-                 "x":99.1515,
-                 "y":2129.45
-                }, 
-                {
-                 "gid":6,
-                 "height":32,
-                 "id":9,
-                 "name":"inimigo",
-                 "properties":
-                    {
-                     "local":"global"
-                    },
-                 "rotation":0,
-                 "type":"spawnInimigo",
-                 "visible":true,
-                 "width":32,
-                 "x":1947.64,
-                 "y":2026.42
-                }, 
-                {
-                 "gid":6,
-                 "height":32,
-                 "id":10,
-                 "name":"inimigo",
-                 "properties":
-                    {
-                     "local":"global"
-                    },
-                 "rotation":0,
-                 "type":"spawnInimigo",
-                 "visible":true,
-                 "width":32,
-                 "x":1202.18,
-                 "y":1226.42
-                }, 
-                {
-                 "gid":6,
-                 "height":32,
-                 "id":11,
-                 "name":"inimigo",
-                 "properties":
-                    {
-                     "local":"casa04"
-                    },
-                 "rotation":0,
-                 "type":"spawnInimigo",
-                 "visible":true,
-                 "width":32,
-                 "x":250.667,
-                 "y":1726.42
-                }, 
-                {
-                 "gid":6,
-                 "height":32,
-                 "id":12,
-                 "name":"inimigo",
-                 "properties":
-                    {
-                     "local":"casa01"
-                    },
-                 "rotation":0,
-                 "type":"spawnInimigo",
-                 "visible":true,
-                 "width":32,
-                 "x":498.667,
-                 "y":486.667
+                 "x":2016.78786363636,
+                 "y":2103.23787878788
                 }, 
                 {
                  "gid":9,
@@ -280,8 +168,104 @@
                  "type":"spawnPlayer",
                  "visible":true,
                  "width":32,
-                 "x":32.5152,
-                 "y":1280.76
+                 "x":64.2424727272727,
+                 "y":1279.57818181818
+                }, 
+                {
+                 "gid":6,
+                 "height":32,
+                 "id":14,
+                 "name":"inimigo",
+                 "properties":
+                    {
+                     "local":"global"
+                    },
+                 "rotation":0,
+                 "type":"spawnInimigoFacil",
+                 "visible":true,
+                 "width":32,
+                 "x":156,
+                 "y":644.333333333333
+                }, 
+                {
+                 "gid":6,
+                 "height":32,
+                 "id":15,
+                 "name":"inimigo",
+                 "properties":
+                    {
+                     "local":"global"
+                    },
+                 "rotation":0,
+                 "type":"spawnInimigoMedio",
+                 "visible":true,
+                 "width":32,
+                 "x":1135.33333333333,
+                 "y":1129.33333333333
+                }, 
+                {
+                 "gid":6,
+                 "height":32,
+                 "id":16,
+                 "name":"inimigo",
+                 "properties":
+                    {
+                     "local":"global"
+                    },
+                 "rotation":0,
+                 "type":"spawnInimigoDificil",
+                 "visible":true,
+                 "width":32,
+                 "x":1762.66666666667,
+                 "y":1128
+                }, 
+                {
+                 "gid":6,
+                 "height":32,
+                 "id":25,
+                 "name":"inimigo",
+                 "properties":
+                    {
+                     "local":"global"
+                    },
+                 "rotation":0,
+                 "type":"spawnInimigoFacil",
+                 "visible":true,
+                 "width":32,
+                 "x":502,
+                 "y":726
+                }, 
+                {
+                 "gid":6,
+                 "height":32,
+                 "id":26,
+                 "name":"inimigo",
+                 "properties":
+                    {
+                     "local":"global"
+                    },
+                 "rotation":0,
+                 "type":"spawnInimigoMedio",
+                 "visible":true,
+                 "width":32,
+                 "x":1390,
+                 "y":624
+                }, 
+                {
+                 "gid":6,
+                 "height":32,
+                 "id":27,
+                 "name":"inimigo",
+                 "properties":
+                    {
+                     "local":"global"
+                    },
+                 "rotation":0,
+                 "type":"spawnInimigoDificil",
+                 "visible":true,
+                 "width":32,
+                 "x":1962,
+                 "y":1300
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -290,7 +274,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":14,
+ "nextobjectid":28,
  "orientation":"orthogonal",
  "properties":
     {
