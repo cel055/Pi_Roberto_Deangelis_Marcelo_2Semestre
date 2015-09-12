@@ -15,7 +15,9 @@ var Inimigo = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi) 
     this.dano = 10;
     this.velocidadeAtaque = 1;
     this.modoAtacando = true;
-
+	
+	this.sound;
+	this.soundTocando;
     this.tint = 0xFE2E2E;
 
     this.shadow;
@@ -66,8 +68,9 @@ Inimigo.prototype.pathFind = function () {
     if (Math.abs(xInimigo - xHeroi) > this.distancia || Math.abs(yInimigo - yHeroi) > this.distancia) {
         this.parado = true;
         return;
-    } else {
-	
+    } else {	
+		this.soundTocando = this.game.rnd.pick(this.sound);	
+		this.soundTocando.play();
 		this.easyStar.findPath(xInimigo, yInimigo, xHeroi, yHeroi, function (path) {
 			esteInimigo.pathFinded(path);
 		});
