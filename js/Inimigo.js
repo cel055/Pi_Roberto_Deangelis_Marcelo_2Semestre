@@ -61,14 +61,15 @@ Inimigo.prototype.pathFind = function () {
             xHeroi = this.layer.getTileX(this.heroi.position.x),
             yHeroi = this.layer.getTileY(this.heroi.position.y),
             esteInimigo = this;
-
+	
+	this.easyStar.findPath(xInimigo, yInimigo, xHeroi, yHeroi, function (path) {
+		esteInimigo.pathFinded(path);
+	});
+	
     if (Math.abs(xInimigo - xHeroi) > this.distancia || Math.abs(yInimigo - yHeroi) > this.distancia) {
         this.parado = true;
         return;
     } else {
-        this.easyStar.findPath(xInimigo, yInimigo, xHeroi, yHeroi, function (path) {
-            esteInimigo.pathFinded(path);
-        });
         this.easyStar.calculate();
     }
 };
