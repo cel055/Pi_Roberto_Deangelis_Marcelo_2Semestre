@@ -27,6 +27,8 @@ Calciumtrice.Preload.prototype ={
         this.load.spritesheet('toon', 'assets/sprites/toon.png', 96, 96);
         
         this.load.image('mira', 'assets/sprites/aim.png');
+        
+        this.game.time.advancedTiming = true;
     },
     create: function(){
         this.state.start('menu');

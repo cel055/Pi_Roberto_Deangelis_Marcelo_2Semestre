@@ -136,7 +136,12 @@ Calciumtrice.Fase_05.prototype = {
         
         
     },
+    fimDeJogo: function(){
+        
+    },
     update: function () {   
+        var jogadoVivo = (this.jogador.vida == 0)? this.fimDeJogo(): null;
+        
         this.game.physics.arcade.collide(this.jogador.shadow, this.layerParede);   
         
         this.game.physics.arcade.collide(this.inimigos.shadow, this.layerParede);        
@@ -149,5 +154,8 @@ Calciumtrice.Fase_05.prototype = {
 //        }, this);
         
         this.inimigos.sort('y', Phaser.Group.SORT_ASCENDING);
+    },
+    render: function(){
+        Calciumtrice.game.debug.text(Calciumtrice.game.time.fps, 2, 14, "#00ff00"); 
     }
 }
