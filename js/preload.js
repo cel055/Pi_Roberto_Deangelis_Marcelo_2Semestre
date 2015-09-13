@@ -21,6 +21,7 @@ Calciumtrice.Preload.prototype ={
         this.load.image('grassLandTileset', 'assets/tileset/grassland.png');
         this.load.image('porta', 'assets/sprites/porta.png');
         this.load.image('hud', 'assets/sprites/hud.png');
+        this.load.image('faleceu', 'assets/sprites/fundo-game-over.png');
         this.load.image('fundoMenu', 'assets/sprites/fundo.png');
         this.load.spritesheet('heroi', 'assets/sprites/char.png', 55.5, 64.8);
         this.load.spritesheet('tilesetSpriteSheet', 'assets/sprites/dungeon_tileset_calciumtrice.png', 16, 16);
@@ -29,6 +30,7 @@ Calciumtrice.Preload.prototype ={
         this.load.spritesheet('toon', 'assets/sprites/toon.png', 96, 96);
         
         this.load.audio('somMenu', 'assets/som/somMenu.ogg');
+        this.load.audio('somFaleceu', 'assets/som/risada.ogg');
         this.load.audio('somFase', 'assets/som/somDeFundoCalmo.ogg');
         this.load.audio('somZumbi', 'assets/som/sonsZumbi.ogg');
         this.load.audio('somPortaA', 'assets/som/doorOpen_1.ogg');
