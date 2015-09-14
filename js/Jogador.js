@@ -194,6 +194,7 @@ Jogador.prototype.atira = function () {
         return;
     }
     if (this.game.time.now > this.tempoProximoTiro && this.tiros.countDead() > 0) {
+//        this.game.add.audio("");
         this.numTiros--;
         this.tempoProximoTiro = this.game.time.now + this.frequenciaTiro;
         var tiro = this.tiros.getFirstExists(false);
