@@ -66,6 +66,7 @@ Jogador.prototype.direcoes = ["N", "S", "L", "O", "NO", "NL", "SO", "SL"];
 Jogador.prototype.cria = function (layerOfWall, _hudTiro, _hudVida) {
     this.wallLayers = layerOfWall;
     this.criaAnimacoes();
+    this.criaAudio();
 
     if (!this.tecla_Norte || !this.tecla_Sul || !this.tecla_Leste || !this.tecla_Oeste || !this.mouse) {
         this.criaInputs();
@@ -77,6 +78,17 @@ Jogador.prototype.cria = function (layerOfWall, _hudTiro, _hudVida) {
     this.hudTiro = _hudTiro;
     this.hudVida = _hudVida;
 };
+
+Jogador.prototype.criaAudio = function(){
+    this.somJogador = this.game.add.audio('efeitos');
+    this.somJogador.allowMultiple = true;
+    this.somJogador.addMarker('tiro', 0, 0.629);
+    this.somJogador.addMarker('reload', 0.629, 1.000);
+    this.somJogador.addMarker('dano', 1.527, 2.807);
+    this.somJogador.addMarker('burn', 2.807, 4.466);
+    this.somJogador.addMarker('morte', 4.466, 5.613);
+    this.somJogador.addMarker('granada', 5.613, 7.703);
+}
 
 Jogador.prototype.criaTiros = function () {
     this.tiros = this.game.add.group();
@@ -176,6 +188,7 @@ Jogador.prototype.update = function () {
 };
 
 Jogador.prototype.recarrega = function () {
+    this.somJogador.play('reload');
     this.carregando = true;
     this.game.time.events.add(Phaser.Timer.SECOND * this.tempoRecarregamentoArma, this.fimRecarrega, this);
 };
@@ -194,7 +207,7 @@ Jogador.prototype.atira = function () {
         return;
     }
     if (this.game.time.now > this.tempoProximoTiro && this.tiros.countDead() > 0) {
-//        this.game.add.audio("");
+        this.somJogador.play('tiro');
         this.numTiros--;
         this.tempoProximoTiro = this.game.time.now + this.frequenciaTiro;
         var tiro = this.tiros.getFirstExists(false);
