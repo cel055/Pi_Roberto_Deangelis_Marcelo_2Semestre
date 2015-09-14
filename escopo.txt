@@ -1,0 +1,17 @@
+titulo: Krokodil
+plataforma: PC
+gênero: Ação/shooter
+high Concept:   Krokodil fará o jogador, que controla um soldado, lutar contra uma horda de zumbis que tentam comer sua carne. O                 jogador pode andar e correr, atirar para matar os inimigos, e deve sobreviver para chegar em um local seguro -                   quando é morto ou chega no boss, o jogo termina.
+
+objetivo:   O jogador chegar até uma casa segura, onde o jogador deve sobreviver dos zumbis. Quando o jogador chega a                       essa casa passa de nivel.
+
+recursos:   O mundo do jogo consiste em vários mapas cidades com casas onde o jogador pode entrar.
+            O jogador controla um soldado - pode andar e correr, virar para as oito direções, atirar.
+            O jogo termina quando o jogador mata o boss, ou morre.
+            O jogador recebe pontos para cada inimigo morto.
+            Os inimigos tem três tipos de nivel: fácil, médio, dificil - onde os atributos variam.
+            O jogador tem um campo de visão no qual os inimigos só podem ser vistos quando estiverem dentro.
+            O jogo só é salvo a cada avanço de fase.
+            
+controle:   mouse - movimentação do campo de visão e direção do jogador e atirar
+            teclas - w, a, s, d para movimentação do jogador, shift - correr            
