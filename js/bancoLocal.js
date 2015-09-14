@@ -1,4 +1,4 @@
-function inicia(_fase1){
+function iniciaBanco(_fase1){
     if(!window.localStorage.getItem("fase")){
         setFase(_fase1);
     }

@@ -26,6 +26,6 @@ Calciumtrice.Menu.prototype = {
     },
     continuaJogo: function(){
         this.somMenu.stop();
-        
+        this.game.state.start(getFase());
     },
 }

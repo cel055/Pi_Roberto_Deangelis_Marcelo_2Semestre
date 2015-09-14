@@ -43,6 +43,7 @@ Calciumtrice.Preload.prototype ={
         
     },
     create: function(){
+        iniciaBanco('fase_05');
         this.state.start('menu');
     }
 };
