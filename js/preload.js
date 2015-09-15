@@ -28,6 +28,7 @@ Calciumtrice.Preload.prototype ={
         this.load.spritesheet('tiro', 'assets/sprites/bala.png', 14, 8);
         this.load.spritesheet('botaoMenu', 'assets/sprites/botao.png', 454, 58);
         this.load.spritesheet('toon', 'assets/sprites/toon.png', 96, 96);
+        this.load.spritesheet('botaoTentarNovamente', 'assets/sprites/final.png', 409, 52);
         
         this.load.audio('somMenu', 'assets/som/somMenu.ogg');
         this.load.audio('somFaleceu', 'assets/som/risada.ogg');

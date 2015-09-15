@@ -10,9 +10,7 @@ function main(){
     Calciumtrice.game.state.add('menu', Calciumtrice.Menu);
     Calciumtrice.game.state.add('mapaDinamico', Calciumtrice.Mapa_Dinamico);
     Calciumtrice.game.state.add('tutorial', Calciumtrice.Mapa_tutorial);
-    Calciumtrice.game.state.add('fase_01', Calciumtrice.Fase_01);
-    Calciumtrice.game.state.add('fase_02', Calciumtrice.Fase_02);
-    Calciumtrice.game.state.add('fase_03', Calciumtrice.Fase_03);
+    Calciumtrice.game.state.add('faleceuState', Calciumtrice.Faleceu);
     Calciumtrice.game.state.add('fase_05', Calciumtrice.Fase_05);
     Calciumtrice.game.state.add('mapaComVariosZombies', Calciumtrice.MapaComVariosZombies);
     

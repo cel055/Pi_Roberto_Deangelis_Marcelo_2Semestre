@@ -4,6 +4,7 @@ Calciumtrice.Fase_05 = function () {};
 
 Calciumtrice.Fase_05.prototype = {
     create: function () {
+        setFase('fase_05');
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         
         this.somFase = this.game.add.audio('somFase');
@@ -136,17 +137,15 @@ Calciumtrice.Fase_05.prototype = {
     },
     fimDeJogo: function(){        
         this.somFase.pause();
-        this.somFaleceu = this.game.add.audio('somFaleceu');
-//        this.somFaleceu.volume = 0.01;
-        this.somFaleceu.play();
+        
         var telaFimDeJogo = this.game.add.sprite(0, 0, "faleceu");
         telaFimDeJogo.fixedToCamera = true;
         telaFimDeJogo.alpha = 0.01;
-        this.game.time.events.add(Phaser.Timer.SECOND*1.2, function(){
-        this.game.add.tween(telaFimDeJogo).to( { alpha: 1 }, 2000, "Linear", true);
+        this.game.add.tween(telaFimDeJogo).to( { alpha: 0.5 }, 2000, "Linear", true);
+        this.game.time.events.add(Phaser.Timer.SECOND*3, function(){
             telaFimDeJogo.destroy();
-            this.somFaleceu.destroy();
-                this.state.start('boot', true, true);
+            this.somFase.destroy();
+                this.state.start('faleceuState');
             }, this);
     },
     update: function () {   
