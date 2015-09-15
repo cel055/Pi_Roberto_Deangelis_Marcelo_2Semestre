@@ -83,11 +83,11 @@ Jogador.prototype.criaAudio = function(){
     this.somJogador = this.game.add.audio('efeitos');
     this.somJogador.allowMultiple = true;
     this.somJogador.addMarker('tiro', 0, 0.629);
-    this.somJogador.addMarker('reload', 0.629, 1.000);
-    this.somJogador.addMarker('dano', 1.527, 2.807);
-    this.somJogador.addMarker('burn', 2.807, 4.466);
-    this.somJogador.addMarker('morte', 4.466, 5.613);
-    this.somJogador.addMarker('granada', 5.613, 7.703);
+    this.somJogador.addMarker('reload', 0.629, 0.970);
+    this.somJogador.addMarker('dano', 1.599, 1.182);
+    this.somJogador.addMarker('burn', 2.789, 1.652);
+    this.somJogador.addMarker('morte', 4.441, 1.152);
+    this.somJogador.addMarker('granada', 5.593, 2.110);
 }
 
 Jogador.prototype.criaTiros = function () {
@@ -365,8 +365,8 @@ Jogador.prototype.jogadorAnda = function (direcao) {
 };
 
 Jogador.prototype.recebeAtaque = function (_inimigo) {
-    this.somJogador.play('dano');
     if(_inimigo.ataque()){
+    	this.somJogador.play('dano');
         this.vida -= _inimigo.dano;
     }
     if (this.vida <= 0) {
