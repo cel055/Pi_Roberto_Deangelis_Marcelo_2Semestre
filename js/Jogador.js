@@ -200,7 +200,6 @@ Jogador.prototype.fimRecarrega = function () {
 
 Jogador.prototype.atira = function () {
     if (this.numTiros <= 0) {
-        this.recarrega();
         return;
     }
     if (this.carregando) {
@@ -366,6 +365,7 @@ Jogador.prototype.jogadorAnda = function (direcao) {
 };
 
 Jogador.prototype.recebeAtaque = function (_inimigo) {
+    this.somJogador.play('dano');
     if(_inimigo.ataque()){
         this.vida -= _inimigo.dano;
     }
