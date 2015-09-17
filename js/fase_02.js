@@ -1,10 +1,10 @@
 var Calciumtrice = Calciumtrice || {};
 
-Calciumtrice.Fase_05 = function () {};
+Calciumtrice.Fase_02 = function () {};
 
-Calciumtrice.Fase_05.prototype = {
+Calciumtrice.Fase_02.prototype = {
     create: function () {
-        setFase('fase_05');
+        setFase('fase_02');
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         
         this.somFase = this.game.add.audio('somFase');
@@ -13,7 +13,7 @@ Calciumtrice.Fase_05.prototype = {
         
         this.easystar = new EasyStar.js();
         
-        this.mapaGlobal = new TileMap(this.game, 'mapaSimples');
+        this.mapaGlobal = new TileMap(this.game, 'mapa02');
         
         this.mapaGlobal.addTilesetImage('tileset_tiled', 'grassLandTileset');
         
@@ -35,7 +35,7 @@ Calciumtrice.Fase_05.prototype = {
         
         this.easystar.setGrid(this.mapaAtual);
         
-        this.easystar.setAcceptableTiles([7]); 
+        this.easystar.setAcceptableTiles([7, 4]); 
         
         this.hud = this.game.add.sprite(50, 400, 'hud');
         this.hud.scale.set(0.6);
@@ -49,6 +49,10 @@ Calciumtrice.Fase_05.prototype = {
         
         this.grupoPorta = this.game.add.group();
         this.criaPortas('porta', this.mapaGlobal);
+        
+        this.saida = this.mapaGlobal.createFromObject('objetos', 5, 'porta');
+        this.game.physics.arcade.enable(this.saida);
+        this.saida.enableBody = true;
         
         this.jogador = this.mapaGlobal.createFromObject('objetos', 9, 'heroi', 0, true, true, Jogador);
         this.layerChao.mask = this.jogador.luz;
@@ -148,12 +152,16 @@ Calciumtrice.Fase_05.prototype = {
                 this.state.start('faleceuState');
             }, this);
     },
+    passaFase:function(){
+        Calciumtrice.game.state.start('fase_03'); 
+    },
     update: function () {   
         if(this.jogador.vida < 1){
             this.fimDeJogo()   
         };
         
-        this.game.physics.arcade.collide(this.jogador.shadow, this.layerParede);   
+        this.game.physics.arcade.collide(this.jogador.shadow, this.layerParede); 
+        this.game.physics.arcade.collide(this.jogador.shadow, this.saida, this.passaFase);  
         
         this.game.physics.arcade.collide(this.inimigos.shadow, this.layerParede);        
         this.game.physics.arcade.collide(this.jogador.shadow, this.inimigos.shadow);

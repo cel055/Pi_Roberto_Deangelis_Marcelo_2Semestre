@@ -22,7 +22,7 @@ Calciumtrice.Menu.prototype = {
     },
     novoJogo: function(){
         this.somMenu.stop();
-        this.game.state.start('fase_05');
+        this.game.state.start('fase_01');
     },
     continuaJogo: function(){
         this.somMenu.stop();

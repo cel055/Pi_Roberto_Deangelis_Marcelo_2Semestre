@@ -12,14 +12,14 @@ Calciumtrice.Preload.prototype ={
         this.load.tilemap('fase_02', 'assets/tilemap/fase_02.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('fase_03', 'assets/tilemap/fase_03.json', null, Phaser.Tilemap.TILED_JSON);        
         
-        this.load.tilemap('mapaGlobalJSON', 'assets/tilemap/mapacomCasa.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('casaJSON', 'assets/tilemap/casa.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('pathTeste', 'assets/tilemap/mapaFinderTeste.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('testeMapZumbiPath', 'assets/tilemap/mapaComVariosZombies.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('mapaSimples', 'assets/tilemap/mapa01.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('mapa01', 'assets/tilemap/mapa01.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('mapa02', 'assets/tilemap/mapa02.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('mapa03', 'assets/tilemap/mapa03.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('mapa04', 'assets/tilemap/mapa04.json', null, Phaser.Tilemap.TILED_JSON);
         
         this.load.image('grassLandTileset', 'assets/tileset/grassland.png');
         this.load.image('porta', 'assets/sprites/porta.png');
+        this.load.image('zero', 'assets/sprites/zero.png');
         this.load.image('hud', 'assets/sprites/hud.png');
         this.load.image('faleceu', 'assets/sprites/fundo-game-over.png');
         this.load.image('fundoMenu', 'assets/sprites/fundo.png');
