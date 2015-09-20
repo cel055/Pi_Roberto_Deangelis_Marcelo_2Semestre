@@ -6,11 +6,7 @@ Calciumtrice.Preload.prototype ={
     preload: function(){
         this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loading');
         this.preloadBar.anchor.setTo(0,5);
-        this.load.setPreloadSprite(this.preloadBar);
-        
-        this.load.tilemap('fase_01', 'assets/tilemap/fase_01.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('fase_02', 'assets/tilemap/fase_02.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('fase_03', 'assets/tilemap/fase_03.json', null, Phaser.Tilemap.TILED_JSON);        
+        this.load.setPreloadSprite(this.preloadBar);       
         
         this.load.tilemap('mapa01', 'assets/tilemap/mapa01.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('mapa02', 'assets/tilemap/mapa02.json', null, Phaser.Tilemap.TILED_JSON);
@@ -24,6 +20,8 @@ Calciumtrice.Preload.prototype ={
         this.load.image('faleceu', 'assets/sprites/fundo-game-over.png');
         this.load.image('fundoMenu', 'assets/sprites/fundo.png');
         this.load.spritesheet('heroi', 'assets/sprites/char.png', 55.5, 64.8);
+        this.load.spritesheet('hellKnight', 'assets/sprites/hellKnight.png', 70, 81);
+        this.load.spritesheet('commando', 'assets/sprites/commando.png', 72, 67);
         this.load.spritesheet('tilesetSpriteSheet', 'assets/sprites/dungeon_tileset_calciumtrice.png', 16, 16);
         this.load.spritesheet('tiro', 'assets/sprites/bala.png', 14, 8);
         this.load.spritesheet('botaoMenu', 'assets/sprites/botao.png', 454, 58);
@@ -45,7 +43,7 @@ Calciumtrice.Preload.prototype ={
         
     },
     create: function(){
-        iniciaBanco('fase_05');
+        iniciaBanco('mapa01');
         this.state.start('menu');
     }
 };

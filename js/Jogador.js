@@ -63,7 +63,7 @@ Jogador.prototype.mouse;
 
 Jogador.prototype.direcoes = ["N", "S", "L", "O", "NO", "NL", "SO", "SL"];
 
-Jogador.prototype.cria = function (layerOfWall, _hudTiro, _hudVida) {
+Jogador.prototype.cria = function (layerOfWall) {
     this.wallLayers = layerOfWall;
     this.criaAnimacoes();
     this.criaAudio();
@@ -75,8 +75,6 @@ Jogador.prototype.cria = function (layerOfWall, _hudTiro, _hudVida) {
     this.criaTiros();
     this.mira = this.game.add.sprite(0, 0, 'mira');
     this.mira.anchor.setTo(0.5);
-    this.hudTiro = _hudTiro;
-    this.hudVida = _hudVida;
 };
 
 Jogador.prototype.criaAudio = function(){
@@ -146,6 +144,11 @@ Jogador.prototype.criaSombra = function () {
 
 Jogador.prototype.setGroupInimigos = function (_groupInimigos){
     this.groupInimigos = _groupInimigos;
+};
+
+Jogador.prototype.setHud = function (_hudTiro, _hudVida){
+    this.hudTiro = _hudTiro;
+    this.hudVida = _hudVida;
 };
 
 Jogador.prototype.update = function () {

@@ -1,8 +1,8 @@
-var Inimigo = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, _som) {
+var Inimigo = function (_game, _x, _y, _key, _frame, _easyStar, _layer) {
     Phaser.Sprite.call(this, _game, _x, _y, _key, _frame);
     this.easyStar = _easyStar;
     this.layer = _layer;
-    this.heroi = _heroi;
+    this.heroi;
     //alterações feitas pelo roberto e na linah 109 3 111
     this.x = _x;
     this.y = _y;
@@ -15,10 +15,8 @@ var Inimigo = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi, 
     this.dano = 10;
     this.velocidadeAtaque = 1;
     this.modoAtacando = true;
-	
-	this.tocando = true;
-	this.somZumbi = _som;
-    this.tint = 0xFE2E2E;
+
+    this.tocando = true;
 
     this.shadow;
     this.distancia = 15;
@@ -36,6 +34,8 @@ Inimigo.prototype.nordeste = [26, 25, 24, 23, 22, 21, 20, 19, 18];
 Inimigo.prototype.suldoeste = [53, 52, 51, 50, 49, 48, 47, 46, 45];
 Inimigo.prototype.suldeste = [71, 70, 69, 68, 67, 66, 65, 64, 63];
 
+Inimigo.prototype.somZumbi;
+
 Inimigo.prototype.cria = function () {
     this.game.physics.enable(this);
     this.enableBody = true;
@@ -44,6 +44,7 @@ Inimigo.prototype.cria = function () {
 
     this.criaSombra();
     this.criaAnimacoes();
+    this.criaAudio();
 };
 
 Inimigo.prototype.criaAnimacoes = function () {
@@ -57,24 +58,62 @@ Inimigo.prototype.criaAnimacoes = function () {
     this.animations.add('SL', this.suldeste, 10, true);
 };
 
+Inimigo.prototype.criaAudio = function () {
+    if (!this.somZumbi) {
+        Inimigo.prototype.somZumbi = this.game.add.audio('somZumbi');
+        this.somZumbi.allowMultiple = true;
+        this.somZumbi.addMarker('zumbi1', 0, 0.850);
+        this.somZumbi.addMarker('zumbi2', 0.850, 1.560);
+        this.somZumbi.addMarker('zumbi3', 1.560, 2.143);
+        this.somZumbi.addMarker('zumbi4', 2.143, 2.871);
+        this.somZumbi.addMarker('zumbi5', 2.871, 3.373);
+        this.somZumbi.addMarker('zumbi6', 3.373, 3.912);
+        this.somZumbi.addMarker('zumbi7', 3.912, 4.495);
+        this.somZumbi.addMarker('zumbi8', 4.495, 5.332);
+        this.somZumbi.addMarker('zumbi9', 5.332, 6.205);
+        this.somZumbi.addMarker('zumbi10', 6.205, 6.892);
+        this.somZumbi.addMarker('zumbi11', 6.892, 7.399);
+        this.somZumbi.addMarker('zumbi12', 7.399, 8.186);
+        this.somZumbi.addMarker('zumbi13', 8.186, 8.746);
+        this.somZumbi.addMarker('zumbi14', 8.746, 9.411);
+        this.somZumbi.addMarker('zumbi15', 9.411, 10.289);
+        this.somZumbi.addMarker('zumbi16', 10.289, 11.727);
+        this.somZumbi.addMarker('zumbi17', 11.727, 13.310);
+        this.somZumbi.addMarker('zumbi18', 13.310, 14.413);
+        this.somZumbi.addMarker('zumbi19', 14.413, 15.390);
+        this.somZumbi.addMarker('zumbi20', 15.390, 16.354);
+        this.somZumbi.addMarker('zumbi21', 16.354, 17.434);
+        this.somZumbi.addMarker('zumbi22', 17.434, 18.099);
+        this.somZumbi.addMarker('zumbi23', 18.099, 18.913);
+        this.somZumbi.addMarker('zumbi24', 18.913, 19.244);
+    }
+};
+
+Inimigo.prototype.setAlvoDoInimigo = function (alvo) {
+    this.heroi = alvo;
+};
+
 Inimigo.prototype.pathFind = function () {
     var xInimigo = this.layer.getTileX(this.shadow.position.x),
             yInimigo = this.layer.getTileY(this.shadow.position.y),
             xHeroi = this.layer.getTileX(this.heroi.position.x),
             yHeroi = this.layer.getTileY(this.heroi.position.y),
             esteInimigo = this;
-    
-	
+
+
     if (Math.abs(xInimigo - xHeroi) > this.distancia || Math.abs(yInimigo - yHeroi) > this.distancia) {
         this.parado = true;
-		this.tocando = true;
+        this.tocando = true;
         return;
-    } else {	
-		if(this.tocando){this.somZumbi.play(('zumbi' + (Math.ceil(Math.random()*24)))); this.tocando = false}
-		this.easyStar.findPath(xInimigo, yInimigo, xHeroi, yHeroi, function (path) {
-			esteInimigo.pathFinded(path);
-		});
-		this.easyStar.calculate();
+    } else {
+        if (this.tocando) {
+            this.somZumbi.play(('zumbi' + (Math.ceil(Math.random() * 24))));
+            this.tocando = false
+        }
+        this.easyStar.findPath(xInimigo, yInimigo, xHeroi, yHeroi, function (path) {
+            esteInimigo.pathFinded(path);
+        });
+        this.easyStar.calculate();
     }
 };
 
@@ -88,7 +127,7 @@ Inimigo.prototype.pathFinded = function (path) {
     var proximoPontoY = path[1].y;
     var atualPontoX = path[0].x;
     var atualPontoY = path[0].y;
-	
+
 
     if (proximoPontoX < atualPontoX && proximoPontoY < atualPontoY) {
         this.direcao = "NO";
@@ -128,8 +167,6 @@ Inimigo.prototype.pathFinded = function (path) {
         this.shadow.body.velocity.y = this.velocidade;
     }
     this.position.setTo(this.shadow.position.x, this.shadow.position.y);
-	
-//    this.anda();
 };
 
 Inimigo.prototype.criaSombra = function () {
@@ -157,11 +194,13 @@ Inimigo.prototype.update = function () {
     this.pathFind();
 };
 
-Inimigo.prototype.ataque = function (){
-	if(this.modoAtacando){
-		this.modoAtacando = false;
-		this.game.time.events.add(Phaser.Timer.SECOND * this.velocidadeAtaque, function(){this.modoAtacando = true;}, this);
-		return true;
-	}
-	return false;
+Inimigo.prototype.ataque = function () {
+    if (this.modoAtacando) {
+        this.modoAtacando = false;
+        this.game.time.events.add(Phaser.Timer.SECOND * this.velocidadeAtaque, function () {
+            this.modoAtacando = true;
+        }, this);
+        return true;
+    }
+    return false;
 }

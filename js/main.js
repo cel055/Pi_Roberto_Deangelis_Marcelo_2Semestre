@@ -1,7 +1,5 @@
 window.addEventListener('load', main);
 
-var Calciumtrice = Calciumtrice || {};
-
 function main(){
     Calciumtrice.game = new Phaser.Game(800, 600, Phaser.AUTO, 'divGame');
     Calciumtrice.game.state.add('boot',Calciumtrice.Boot);
@@ -10,10 +8,10 @@ function main(){
     Calciumtrice.game.state.add('menu', Calciumtrice.Menu);
     Calciumtrice.game.state.add('faleceuState', Calciumtrice.Faleceu);
     Calciumtrice.game.state.add('zero', Calciumtrice.Zero);
-    Calciumtrice.game.state.add('fase_01', Calciumtrice.Fase_01);
-    Calciumtrice.game.state.add('fase_02', Calciumtrice.Fase_02);
-    Calciumtrice.game.state.add('fase_03', Calciumtrice.Fase_03);
-    Calciumtrice.game.state.add('fase_04', Calciumtrice.Fase_04);
+    Calciumtrice.game.state.add('fase_01', Fase_01);
+    Calciumtrice.game.state.add('fase_02', Fase_02);
+    Calciumtrice.game.state.add('fase_03', Fase_03);
+    Calciumtrice.game.state.add('fase_04', Fase_04);
     
     Calciumtrice.game.state.start('boot');
 }
