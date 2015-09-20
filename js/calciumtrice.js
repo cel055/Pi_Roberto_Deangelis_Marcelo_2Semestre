@@ -68,6 +68,8 @@ Calciumtrice.prototype.criaInimigos = function (listaInimigos) {
         for (j = 0, maxJ = inimigosDoMapa.length; j < maxJ; j++) {
             inimigo = new listaInimigos[i].Classe(this.game, inimigosDoMapa[j].x, inimigosDoMapa[j].y, listaInimigos[i].key, 0, this.easystar, this.layerChao);
             inimigo.cria();
+            inimigo.outOfBoundsKill = true;
+            inimigo.checkWorldBounds = true;
             this.inimigos.add(inimigo);
         }
     }

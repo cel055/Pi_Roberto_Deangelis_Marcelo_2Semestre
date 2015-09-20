@@ -7,9 +7,11 @@ Fase_01.prototype.create = function () {
     this.setFase('fase_01');
     this.iniciaFase();
 
-    this.mapaGlobal = new TileMap(this.game, 'mapa01');
+    this.mapaGlobal = new TileMap(this.game, 'fase01');
+    this.mapaGlobal.outOfBoundsKill = true;
+    this.mapaGlobal.checkWorldBounds = true;
 
-    this.mapaGlobal.addTilesetImage('tileset_tiled', 'grassLandTileset');
+    this.mapaGlobal.addTilesetImage('tileSetFinalFantasy32X32', 'finalFantasyTileset');
 
     this.layerChao = this.mapaGlobal.createLayer('chao');
     this.layerChaoVisivel = this.mapaGlobal.createLayer('chao');
@@ -20,13 +22,23 @@ Fase_01.prototype.create = function () {
 
     this.mapaGlobal.setCollisionBetween(1, 1000, true, 'paredes');
 
-    this.criaPathFinder(this.mapaGlobal.layer.data, [1]);
+    this.criaPathFinder(this.mapaGlobal.layer.data, [104, 103, 56, 55]);
 
-    this.saida = this.mapaGlobal.createFromObject('objetos', 5, 'porta');
+    this.saida = this.mapaGlobal.createFromObject('objetos', 3, 'porta');
     this.game.physics.arcade.enable(this.saida);
     this.saida.enableBody = true;
 
     var listaInimigos = [
+        {
+            nome: 'spawnInimigoFacil',
+            key: 'heroi',
+            Classe: Fraco
+        },
+        {
+            nome: 'spawnInimigoMedio',
+            key: 'commando',
+            Classe: Commando
+        },
         {
             nome: 'spawnInimigoDificil',
             key: 'hellKnight',
@@ -35,7 +47,7 @@ Fase_01.prototype.create = function () {
     ];
     this.criaInimigos(listaInimigos);
 
-    this.jogador = this.mapaGlobal.createFromObject('objetos', 9, 'heroi', 0, true, true, Jogador);
+    this.jogador = this.mapaGlobal.createFromObject('objetos', 774, 'heroi', 0, true, true, Jogador);
     this.jogador.cria(this.layerParede, this.tirosJogador, this.vidaJogador);
     this.jogador.setGroupInimigos(this.inimigos);
 

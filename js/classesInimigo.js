@@ -1,10 +1,10 @@
 var Fraco = function (_game, _x, _y, _key, _frame, _easyStar, _layer, _heroi) {
     Inimigo.call(this, _game, _x, _y, _key, _frame, _easyStar, _layer, _heroi);
     this.vida = 50;
-    this.velocidade = 250;
+    this.velocidade = 200;
     this.dano = 10;
     this.tint = 0x00FF00;
-    this.distancia = 15;
+    this.distancia = 9;
     this.velocidadeAtaque = 1;
 };
 
@@ -14,10 +14,10 @@ Fraco.prototype.constructor = Fraco;
 var Medio = function (_game, _x, _y, _key, _frame, _easyStar, _layer) {
     Inimigo.call(this, _game, _x, _y, _key, _frame, _easyStar, _layer);
     this.vida = 75;
-    this.velocidade = 150;
+    this.velocidade = 125;
     this.dano = 15;
     this.tint = 0x0000FF;
-    this.distancia = 10;
+    this.distancia = 7;
     this.velocidadeAtaque = 2;
 };
 
@@ -30,7 +30,7 @@ var Forte = function (_game, _x, _y, _key, _frame, _easyStar, _layer) {
     this.velocidade = 50;
     this.dano = 50;
     this.tint = 0xFF0000;
-    this.distancia = 15;
+    this.distancia = 8;
     this.velocidadeAtaque = 3;
 };
 
@@ -43,8 +43,7 @@ var HellKnight = function (_game, _x, _y, _key, _frame, _easyStar, _layer) {
     this.vida = 200;
     this.velocidade = 50;
     this.dano = 50;
-//    this.tint = 0xFF0000;
-    this.distancia = 15;
+    this.distancia = 8;
     this.velocidadeAtaque = 3;
 
     this.norte = [12, 44, 12, 4];
@@ -63,9 +62,9 @@ HellKnight.prototype.constructor = HellKnight;
 var Commando = function (_game, _x, _y, _key, _frame, _easyStar, _layer) {
     Inimigo.call(this, _game, _x, _y, _key, _frame, _easyStar, _layer);
     this.vida = 75;
-    this.velocidade = 150;
+    this.velocidade = 125;
     this.dano = 15;
-    this.distancia = 10;
+    this.distancia = 7;
     this.velocidadeAtaque = 2;
 
     this.norte = [12, 20, 12, 4];
