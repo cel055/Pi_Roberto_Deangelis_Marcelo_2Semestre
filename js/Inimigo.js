@@ -191,7 +191,9 @@ Inimigo.prototype.recebeDano = function () {
 Inimigo.prototype.update = function () {
     this.shadow.body.velocity.x = 0;
     this.shadow.body.velocity.y = 0;
-    this.pathFind();
+    if (this.alive) {
+        this.pathFind();
+    }
 };
 
 Inimigo.prototype.ataque = function () {

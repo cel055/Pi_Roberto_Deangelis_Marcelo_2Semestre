@@ -19,7 +19,7 @@ var Jogador = function (_game, _x, _y, _key, _frame) {
     this.tiros;
     this.luz = this.game.add.graphics(0, 0);
     this.shadow;
-    
+
     this.groupInimigos;
 
     this.norte = [17, 16, 15, 14, 13, 12, 11, 10, 9];
@@ -30,11 +30,11 @@ var Jogador = function (_game, _x, _y, _key, _frame) {
     this.nordeste = [26, 25, 24, 23, 22, 21, 20, 19, 18];
     this.suldoeste = [53, 52, 51, 50, 49, 48, 47, 46, 45];
     this.suldeste = [71, 70, 69, 68, 67, 66, 65, 64, 63];
-    
-    
+
+
     this.game.physics.arcade.enable(this);
     this.enableBody = true;
-    this.anchor.setTo(0.5, 0.8);
+    this.anchor.setTo(0.5, 0.98);
     this.game.camera.follow(this);
     this.criaSombra();
 };
@@ -77,7 +77,7 @@ Jogador.prototype.cria = function (layerOfWall) {
     this.mira.anchor.setTo(0.5);
 };
 
-Jogador.prototype.criaAudio = function(){
+Jogador.prototype.criaAudio = function () {
     this.somJogador = this.game.add.audio('efeitos');
     this.somJogador.allowMultiple = true;
     this.somJogador.addMarker('tiro', 0, 0.629);
@@ -94,7 +94,7 @@ Jogador.prototype.criaTiros = function () {
     this.tiros.enableBody = true;
     this.tiros.createMultiple(30, "tiro", 0, false);
     this.tiros.forEach(function (sprite) {
-        sprite.anchor.setTo(0, 0.5);
+        sprite.anchor.setTo(1, 0.5);
         sprite.outOfBoundsKill = true;
         sprite.checkWorldBounds = true;
         sprite.animations.add('inicioTiro');
@@ -142,11 +142,11 @@ Jogador.prototype.criaSombra = function () {
     this.shadow.body.immovable = true;
 };
 
-Jogador.prototype.setGroupInimigos = function (_groupInimigos){
+Jogador.prototype.setGroupInimigos = function (_groupInimigos) {
     this.groupInimigos = _groupInimigos;
 };
 
-Jogador.prototype.setHud = function (_hudTiro, _hudVida){
+Jogador.prototype.setHud = function (_hudTiro, _hudVida) {
     this.hudTiro = _hudTiro;
     this.hudVida = _hudVida;
 };
@@ -163,9 +163,8 @@ Jogador.prototype.update = function () {
     var direcao = this.direcaoJogador(radianos);
     if (this.tecla_Recarrega.isDown && !this.carregando) {
         this.recarrega();
-    }
-    if (this.mouse.isDown) {
-        this.atira();
+    } else if (this.mouse.isDown) {
+        this.atira(mouseX, mouseY);
     }
     if (this.tecla_Norte.isDown || this.tecla_Sul.isDown || this.tecla_Leste.isDown || this.tecla_Oeste.isDown) {
         this.jogadorAnda(direcao);
@@ -173,17 +172,17 @@ Jogador.prototype.update = function () {
         this.jogadorGira(direcao);
     }
     this.position.setTo(this.shadow.position.x, this.shadow.position.y);
-    
-    this.tiros.forEach(function (_bala){
-        _self.game.physics.arcade.collide(_bala, _self.groupInimigos, function(_Bala, _inimigo){
+
+    this.tiros.forEach(function (_bala) {
+        _self.game.physics.arcade.collide(_bala, _self.groupInimigos, function (_Bala, _inimigo) {
             _self.mataBala(_Bala, _inimigo);
         });
-        _self.game.physics.arcade.collide(_bala, _self.wallLayers, function(_Bala, parede){
+        _self.game.physics.arcade.collide(_bala, _self.wallLayers, function (_Bala, parede) {
             _self.mataBalaParede(_Bala, parede);
         });
-    },this);
-    
-    this.game.physics.arcade.overlap(this.shadow, this.groupInimigos, function(_sombra, _inimigo){
+    }, this);
+
+    this.game.physics.arcade.overlap(this.shadow, this.groupInimigos, function (_sombra, _inimigo) {
         _self.recebeAtaque(_inimigo);
     });
     this.hudTiro.setText(this.numTiros);
@@ -201,7 +200,7 @@ Jogador.prototype.fimRecarrega = function () {
     this.carregando = false;
 };
 
-Jogador.prototype.atira = function () {
+Jogador.prototype.atira = function (mouseX, mouseY) {
     if (this.numTiros <= 0) {
         return;
     }
@@ -213,7 +212,11 @@ Jogador.prototype.atira = function () {
         this.numTiros--;
         this.tempoProximoTiro = this.game.time.now + this.frequenciaTiro;
         var tiro = this.tiros.getFirstExists(false);
-        tiro.reset(this.position.x, this.position.y - this.height / 2);
+        if (mouseX > this.world.x) {
+            tiro.reset(this.position.x - 15, this.position.y - this.height / 2);
+        } else {
+            tiro.reset(this.position.x + 15, this.position.y - this.height / 2);
+        }
         tiro.rotation = this.game.physics.arcade.moveToPointer(tiro, this.velocidadeTiro, this.mouse);
         tiro.animations.play("inicioTiro");
     }
@@ -224,7 +227,7 @@ Jogador.prototype.desenhaLuz = function (radianos) {
     var comprimentoPequeno = this.comprimentoLuz;
     var distAtual, anguloRaio, ultimoX, ultimoY, listaTiles, menorDistancia;
     var xTile, yTile, xAtual, yAtual, distanciaAtual;
-    
+
     this.luz.clear();
     this.luz.lineStyle(1, 0xFFFF00, 1);
     this.luz.beginFill(0xffff00);
@@ -368,8 +371,8 @@ Jogador.prototype.jogadorAnda = function (direcao) {
 };
 
 Jogador.prototype.recebeAtaque = function (_inimigo) {
-    if(_inimigo.ataque()){
-    	this.somJogador.play('dano');
+    if (_inimigo.ataque()) {
+        this.somJogador.play('dano');
         this.vida -= _inimigo.dano;
     }
     if (this.vida <= 0) {
@@ -384,16 +387,16 @@ Jogador.prototype.mataBala = function (bala, _inimigo) {
     this.animacaoBala(bala);
 };
 
-Jogador.prototype.mataBalaParede = function (bala, parede){
+Jogador.prototype.mataBalaParede = function (bala, parede) {
     bala.kill();
     this.animacaoBala(bala);
 };
 
-Jogador.prototype.animacaoBala = function(_bala){
+Jogador.prototype.animacaoBala = function (_bala) {
     this.toon = this.game.add.sprite(_bala.position.x, _bala.position.y, 'toon');
     this.toon.anchor.setTo(0.5);
     var animacao = this.toon.animations.add('toon', null, 200, false);
     animacao.angle = Math.random() * 360;
     this.toon.scale.set(0.5);
-    animacao.play(200,false,true);
+    animacao.play(200, false, true);
 };

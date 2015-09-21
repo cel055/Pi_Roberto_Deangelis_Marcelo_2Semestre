@@ -1,5 +1,6 @@
 var Fase_02 = function () {
     Calciumtrice.call(this);
+    this.layerChaoVisivel;
 };
 
 Fase_02.prototype = Object.create(Calciumtrice.prototype);
@@ -8,45 +9,50 @@ Fase_02.prototype.create = function () {
     this.setFase('fase_02');
     this.iniciaFase();
 
-    this.mapaGlobal = new TileMap(this.game, 'mapa02');
-
-    this.mapaGlobal.addTilesetImage('tileset_tiled', 'grassLandTileset');
-
-    this.layerChao = this.mapaGlobal.createLayer('chao');
-    this.layerChaoVisivel = this.mapaGlobal.createLayer('chao');
-    this.layerChaoVisivel.alpha = 0.5;
-    this.layerParede = this.mapaGlobal.createLayer('paredes');
+    this.mapaGlobal = this.criaLayersDaFase();
 
     this.criaLayersTelhados();
 
-    this.layerChao.resizeWorld();
-
-    this.mapaGlobal.setCollisionBetween(1, 1000, true, 'paredes');
-
-    this.criaPathFinder(this.mapaGlobal.layer.data, [7, 4]);
+    this.criaPathFinder(this.mapaGlobal.layer.data, [259, 260, 307, 308]);
 
     this.grupoPorta = this.game.add.group();
     this.criaPortas('porta', this.mapaGlobal);
 
     this.layersTelhados = this.criaLayersTelhados();
-    this.saida = this.mapaGlobal.createFromObject('objetos', 5, 'porta');
+    this.saida = this.mapaGlobal.createFromObject('objetos', 3, 'porta');
     this.game.physics.arcade.enable(this.saida);
     this.saida.enableBody = true;
 
     var listaClassesInimigos = this.criaListaInimigosComClasses();
     this.criaInimigos(listaClassesInimigos);
 
-    this.jogador = this.mapaGlobal.createFromObject('objetos', 9, 'heroi', 0, true, true, Jogador);
+    this.jogador = this.mapaGlobal.createFromObject('objetos', 774, 'heroi', 0, true, true, Jogador);
     this.jogador.cria(this.layerParede, this.tirosJogador, this.vidaJogador);
     this.jogador.setGroupInimigos(this.inimigos);
 
     this.criaHud();
     this.setAlvoDosInimigos(this.jogador.shadow, this.inimigos);
-    this.aplicaMascara(this.jogador.luz, [this.layerChao, this.inimigos]);
+    this.aplicaMascara(this.jogador.luz, [this.layerChaoVisivel, this.inimigos]);
     this.jogador.setHud(this.tirosJogador, this.vidaJogador);
 };
 
-Fase_02.prototype.criaListaInimigosComClasses = function (){
+Fase_02.prototype.criaLayersDaFase = function () {
+    var mapaLocal = new TileMap(this.game, 'fase02');
+
+    mapaLocal.addTilesetImage('tileSetFinalFantasy32X32', 'finalFantasyTileset');
+
+    var layerChao = mapaLocal.createLayer('chao');
+    layerChao.resizeWorld();
+    layerChao.alpha = 0.5;
+    this.layerChaoVisivel = mapaLocal.createLayer('chao');
+
+    this.layerParede = mapaLocal.createLayer('paredes');
+
+    mapaLocal.setCollisionBetween(1, 1000, true, 'paredes');
+    return mapaLocal;
+};
+
+Fase_02.prototype.criaListaInimigosComClasses = function () {
     var listaInimigos = [
         {
             nome: 'spawnInimigoFacil',
@@ -72,7 +78,8 @@ Fase_02.prototype.criaLayersTelhados = function () {
         this.mapaGlobal.createLayer('telhadoCasa01'),
         this.mapaGlobal.createLayer('telhadoCasa02'),
         this.mapaGlobal.createLayer('telhadoCasa03'),
-        this.mapaGlobal.createLayer('telhadoCasa04')
+        this.mapaGlobal.createLayer('telhadoCasa04'),
+        this.mapaGlobal.createLayer('telhadoCasa05')
     ];
     return layersTelhados;
 };

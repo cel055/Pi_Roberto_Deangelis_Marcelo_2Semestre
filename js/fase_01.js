@@ -28,24 +28,7 @@ Fase_01.prototype.create = function () {
     this.game.physics.arcade.enable(this.saida);
     this.saida.enableBody = true;
 
-    var listaInimigos = [
-        {
-            nome: 'spawnInimigoFacil',
-            key: 'heroi',
-            Classe: Fraco
-        },
-        {
-            nome: 'spawnInimigoMedio',
-            key: 'commando',
-            Classe: Commando
-        },
-        {
-            nome: 'spawnInimigoDificil',
-            key: 'hellKnight',
-            Classe: HellKnight
-        }
-    ];
-    this.criaInimigos(listaInimigos);
+    this.criaInimigos(this.criaListaInimigosComClasses());
 
     this.jogador = this.mapaGlobal.createFromObject('objetos', 774, 'heroi', 0, true, true, Jogador);
     this.jogador.cria(this.layerParede, this.tirosJogador, this.vidaJogador);
@@ -76,4 +59,30 @@ Fase_01.prototype.update = function () {
 
 Fase_01.prototype.render = function () {
     Calciumtrice.game.debug.text(Calciumtrice.game.time.fps || '--', 2, 14, "#00ff00");
+};
+
+Fase_01.prototype.criaListaInimigosComClasses = function (){
+    var listaInimigos = [
+        {
+            nome: 'spawnInimigoFacil',
+            key: 'heroi',
+            Classe: Fraco
+        },
+        {
+            nome: 'spawnInimigoMedio',
+            key: 'commando',
+            Classe: Commando
+        },
+        {
+            nome: 'spawnInimigoDificil',
+            key: 'hellKnight',
+            Classe: HellKnight
+        }
+    ];
+    return listaInimigos;
+};
+
+Fase_01.prototype.criaLayersTelhados = function () {
+    var layersTelhados = [];
+    return layersTelhados;
 };

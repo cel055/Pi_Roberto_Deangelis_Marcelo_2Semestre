@@ -13,6 +13,7 @@ Calciumtrice.Preload.prototype ={
         this.load.tilemap('mapa03', 'assets/tilemap/mapa03.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('mapa04', 'assets/tilemap/mapa04.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('fase01', 'assets/tilemap/fase01.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('fase02', 'assets/tilemap/fase02.json', null, Phaser.Tilemap.TILED_JSON);
         
         this.load.image('grassLandTileset', 'assets/tileset/grassland.png');
         this.load.image('finalFantasyTileset', 'assets/tileset/tileSetFinalFantasy32X32.png');
