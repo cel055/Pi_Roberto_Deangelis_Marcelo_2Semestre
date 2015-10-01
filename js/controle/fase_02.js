@@ -11,14 +11,14 @@ Fase_02.prototype.create = function () {
 
     this.mapaGlobal = this.criaLayersDaFase();
 
-    this.criaLayersTelhados();
+//    this.criaLayersTelhados();
 
     this.criaPathFinder(this.mapaGlobal.layer.data, [259, 260, 307, 308]);
 
     this.grupoPorta = this.game.add.group();
     this.criaPortas('porta', this.mapaGlobal);
 
-    this.layersTelhados = this.criaLayersTelhados();
+//    this.layersTelhados = this.criaLayersTelhados();
     this.saida = this.mapaGlobal.createFromObject('objetos', 3, 'porta');
     this.game.physics.arcade.enable(this.saida);
     this.saida.enableBody = true;
@@ -99,7 +99,7 @@ Fase_02.prototype.update = function () {
     this.game.physics.arcade.collide(this.inimigos.shadow, this.layerParede);
     this.game.physics.arcade.collide(this.jogador.shadow, this.inimigos.shadow);
 
-    this.game.physics.arcade.overlap(this.jogador.shadow, this.grupoPorta, this.macaneta, null, this);
+//    this.game.physics.arcade.overlap(this.jogador.shadow, this.grupoPorta, this.macaneta, null, this);
 
     this.inimigos.sort('y', Phaser.Group.SORT_ASCENDING);
 };

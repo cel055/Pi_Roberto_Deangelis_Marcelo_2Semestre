@@ -4,7 +4,7 @@ var Fase_04 = function () {
 
 Fase_04.prototype = Object.create(Calciumtrice.prototype);
 
-Fase_04.create = function () {
+Fase_04.prototype.create = function () {
     this.setFase('fase_04');
     this.iniciaFase();
 
@@ -19,7 +19,12 @@ Fase_04.create = function () {
 
     this.mapaGlobal.setCollisionBetween(1, 1000, true, 'paredes');
 
-    this.criaPathFinder(this.mapaGlobal.layer.data, [4]);
+    var listaTilesPath = [];
+    for(var i = 1; i < 1001; i++){
+        listaTilesPath.push(i);
+    }
+
+    this.criaPathFinder(this.mapaGlobal.layer.data, listaTilesPath);
 
     var listaInimigos = [
         {
@@ -40,7 +45,7 @@ Fase_04.create = function () {
     this.jogador.setHud(this.tirosJogador, this.vidaJogador);
 };
 
-Fase_04.update = function () {
+Fase_04.prototype.update = function () {
     if (this.jogador.vida < 1) {
         this.fimDeJogo();
     }
@@ -60,6 +65,6 @@ Fase_04.update = function () {
     this.inimigos.sort('y', Phaser.Group.SORT_ASCENDING);
 };
 
-Fase_04.render = function () {
+Fase_04.prototype.render = function () {
     Calciumtrice.game.debug.text(Calciumtrice.game.time.fps || '--', 2, 14, "#00ff00");
 };

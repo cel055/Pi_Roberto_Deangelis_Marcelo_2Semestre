@@ -1,3 +1,5 @@
+/* global Phaser, Calciumtrice */
+
 window.addEventListener('load', main);
 
 function main(){
